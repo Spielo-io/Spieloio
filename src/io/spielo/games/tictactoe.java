@@ -1,9 +1,10 @@
+package io.spielo.games;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.GridLayout;
