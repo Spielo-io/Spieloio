@@ -1,23 +1,37 @@
 package fourwins;
 
 public class Board {
-	//public
-
+//public:
 	Board(){
-		setGameStatus(status.IDLE);
+		gameStatus = status.INITIALIZEING;
 	}
 	
-	public status getGameStatus() {
-		return gameStatus;
+	public void insertChip(int column) {
+		
 	}
 	
-	public void setGameStatus(status status) {
-		this.gameStatus = status;
+	public player[][] getBoard() {
+		return board;
 	}
+
 	
-	//private
+	public int getGameStatus() {
+		return gameStatus.ordinal() ;
+	}
+
+//private:
 	private status gameStatus;
-	private enum status  {
-		IDLE, YOURTURN, OPPONENTTURN
+	private player[][] board = new player[6][7];
+	
+	private int getWinner() {
+		return player.NONE.ordinal();
+	}
+	
+	private enum status {
+		LOST, WON, YOURTURN, OPPONENTTURN, INITIALIZEING
+	}
+	
+	private enum player {
+		YOU, OPPONENT, NONE
 	}
 }
