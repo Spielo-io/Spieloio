@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class tictactoe {
+public class Tictactoe {
 
 	private JFrame frame;
 	private JTextField xCount;
@@ -45,7 +45,7 @@ public class tictactoe {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					tictactoe window = new tictactoe();
+					Tictactoe window = new Tictactoe();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +57,7 @@ public class tictactoe {
 	/**
 	 * Create the application.
 	 */
-	public tictactoe() {
+	public Tictactoe() {
 		initialize();
 	}
 	
