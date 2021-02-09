@@ -1,9 +1,11 @@
+import fourwins.*;
 
 public class Spielo {
 
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
-		//das ist ein tolles Kommentar :)
+		System.out.println("---Start---");
+		Board board = new Board();
+		System.out.println(board.toString());
 	}
 
 }
