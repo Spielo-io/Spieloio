@@ -55,8 +55,38 @@ public class Board {
 	private int width = 6, height = 7;
 	private player[][] board = new player[width][height];
 	
-	private int getWinner() {
-		return player.NONE.ordinal();
+	public int getWinner() {
+		player winner = player.NONE;
+		
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height && winner == player.NONE; j++) {
+				if(board[i][j] != player.NONE) {
+					winner = checkVertical(i, j);
+					if(winner != player.NONE)
+						return winner.ordinal();
+					winner = checkHorizontal(i, j);
+					if(winner != player.NONE)
+						return winner.ordinal();
+					winner = checkDiagonal(i, j);
+					if(winner != player.NONE)
+						return winner.ordinal();
+				}
+			}
+		}
+		
+		return winner.ordinal();
+	}
+	
+	private player checkHorizontal(int x, int y) {
+		return player.NONE;
+	}
+	
+	private player checkVertical(int x, int y) {
+		return player.NONE;
+	}
+	
+	private player checkDiagonal(int x, int y) {
+		return player.NONE;
 	}
 	
 	private enum status {
