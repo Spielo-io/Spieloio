@@ -52,7 +52,7 @@ public class Board {
 
 //private:
 	private status gameStatus;
-	private int width = 6, height = 7;
+	private int width = 7, height = 6;
 	private player[][] board = new player[width][height];
 	
 	public int getWinner() {
@@ -64,9 +64,11 @@ public class Board {
 					winner = checkVertical(i, j);
 					if(winner != player.NONE)
 						return winner.ordinal();
+					
 					winner = checkHorizontal(i, j);
 					if(winner != player.NONE)
 						return winner.ordinal();
+					
 					winner = checkDiagonal(i, j);
 					if(winner != player.NONE)
 						return winner.ordinal();
@@ -78,6 +80,19 @@ public class Board {
 	}
 	
 	private player checkHorizontal(int x, int y) {
+		if(x >= 0 && x < width - 3 && 
+		   y >= 0 && y < height) 
+		{
+			player currentChip = board[x][y];
+			int counter = 1;
+			for(int i = 1; i < 4; i++) {
+				if(board[x + i][y] == currentChip) {
+					counter++;
+				}
+			}
+			if(counter == 4)
+				return currentChip;
+		}
 		return player.NONE;
 	}
 	
