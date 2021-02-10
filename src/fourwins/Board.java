@@ -9,10 +9,25 @@ public class Board {
 				board[i][j] = player.NONE;
 			}
 		}
+		gameStatus = status.YOURTURN;
 	}
 	
 	public void insertChip(int column) {
-		
+		int height = 0;
+		while(board[column][height] != player.NONE) {
+			height++;
+		}
+		switch(gameStatus) {
+		case YOURTURN:
+			board[column][height] = player.YOU;
+			break;
+		case OPPONENTTURN:
+			board[column][height] = player.OPPONENT;
+			break;
+		default:
+			System.out.println("ERROR: unable to insert coin -> false game status");
+		}
+			
 	}
 	
 	public player[][] getBoard() {
@@ -26,10 +41,9 @@ public class Board {
 	
 	public String toString(){
 		String string = "";
-		for(int i = 0; i < width; i++) {
-			string = string + "|";
-			for(int j = 0; j < height; j++) {
-				string = string + board[i][j].ordinal() + "|";
+		for(int i = height - 1; i >= 0; i--) {
+			for(int j = 0; j < width; j++) {
+				string = string + board[j][i].ordinal() + "|";
 			}
 			string = string + "\n";
 		}
