@@ -37,7 +37,28 @@ public class Board {
 	
 	public int getGameStatus() {
 		return gameStatus.ordinal() ;
-	}
+	}	
+	
+	//debugging only
+/*	public void setGameStatus(int gameStatus) {
+		switch(gameStatus) {
+		case 0:
+			this.gameStatus = status.LOST;
+			break;
+		case 1:
+			this.gameStatus = status.WON;
+			break;
+		case 2:
+			this.gameStatus = status.YOURTURN;
+			break;
+		case 3:
+			this.gameStatus = status.OPPONENTTURN;
+			break;
+		case 4:
+			this.gameStatus = status.INITIALIZEING;
+			break;
+		}
+	}*/
 	
 	public String toString(){
 		String string = "";
@@ -97,10 +118,50 @@ public class Board {
 	}
 	
 	private player checkVertical(int x, int y) {
+		if(x >= 0 && x < width &&
+		   y >= 0 && y < height - 3) {
+			player currentChip = board[x][y];
+			int counter = 1;
+			for(int i = 1; i < 4; i++) {
+				if(board[x][y + i] == currentChip) {
+					counter++;
+				}
+			}
+			if(counter == 4)
+				return currentChip;
+			
+		}
 		return player.NONE;
 	}
 	
 	private player checkDiagonal(int x, int y) {
+		if(x >= 0 && x < width &&
+		   y >= 0 && y < height - 3) {
+			player currentChip = board[x][y];
+			int counter = 1;
+			if(x < width - 3) {
+				//diagonal right
+				for(int i = 1; i < 4; i++) {
+					if(board[x + i][y + i] == currentChip) {
+						counter++;
+					}
+				}					
+				if(counter == 4)
+					return currentChip;
+			}
+			counter = 1;
+			if(x > 3) {
+				//diagonal left
+				for(int i = 1; i < 4; i++) {
+					if(board[x - i][y + i] == currentChip) {
+						counter++;
+					}
+				}
+				if(counter == 4)
+					return currentChip;						
+			}
+			
+		}
 		return player.NONE;
 	}
 	
