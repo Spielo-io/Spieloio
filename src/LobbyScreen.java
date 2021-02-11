@@ -15,6 +15,7 @@ public class LobbyScreen extends SpieloView implements ActionListener {
     private JButton startGame_Button;
 
     private JPanel lobbySettings_Panel;
+    private boolean addedLobbySettingsPanel_bool;
 
     public LobbyScreen(){
         initializeElements();
@@ -34,6 +35,7 @@ public class LobbyScreen extends SpieloView implements ActionListener {
         leaveLobby_Button = new JButton("Lobby verlassen");
         startGame_Button = new JButton("Spiel starten");
 //        lobbySettings
+        addedLobbySettingsPanel_bool = false;
     }
 
     private void configureElements(){
@@ -46,7 +48,7 @@ public class LobbyScreen extends SpieloView implements ActionListener {
 //        heading
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, heading_Label, 1, 0, 1, 2, 0, new int[]{0, 0, 0, 0});
 //        player Label
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, player1_Label, 0, 1, 1, 1, 0, new int[]{0, 0, 20, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, player1_Label, 0, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, player1Name_Label, 1, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, player2_Label, 2, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, player2Name_Label, 3, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
@@ -65,8 +67,15 @@ public class LobbyScreen extends SpieloView implements ActionListener {
     }
 
     public void setLobbySettingsPanel(JPanel lobbySettings){
-        lobbySettings_Panel = lobbySettings;
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, lobbySettings_Panel, 0, 2, 5, 4, 0, new int[]{0, 0, 0, 0});
+        if(!addedLobbySettingsPanel_bool){
+            addedLobbySettingsPanel_bool = true;
+            lobbySettings_Panel = lobbySettings;
+            addElementToPanelUsingGridBagLayout(this, gridBagLayout, lobbySettings_Panel, 0, 2, 5, 4, 0, new int[]{0, 0, 0, 0});
+        }
+    }
+
+    public void resetAddedLobbySettingsPanel(){
+        addedLobbySettingsPanel_bool = false;
     }
 
     @Override
