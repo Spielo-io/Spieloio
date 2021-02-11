@@ -31,22 +31,24 @@ public class Spielo {
 		screens = new HashMap<String, SpieloView>();
 
 		lobbySettings = new LobbySettings();
-
 	}
 
 	private void configureJFrame(){
 
-		frame.setSize(700, 700);
+		frame.setSize(700, 500);
 		frame.setTitle("Spielo.io");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(cardLayout);
+//		frame.pack();
+
+		container.setPreferredSize(new Dimension(500, 300));
 	}
 
 	public static void changeView(String newView){
 		cardLayout.show(container, newView);
 		currentView = screens.get(newView);
-//		get username from StartScreen
+//				get username from StartScreen
 		if(!newView.equals("StartScreen")){
 			username = ((StartScreen)screens.get("StartScreen")).getUsername();
 		}
@@ -55,11 +57,14 @@ public class Spielo {
 			case "StartScreen" -> {
 				((StartScreen) currentView).clearJoinCodeTextfield();
 			}
-			case "LobbyScreen" -> {
+			case "LobbyScreen", "RandomLobby"-> {
 				((LobbyScreen) currentView).setLobbyAndGameSettings(username);
+				((LobbyCreateScreen)screens.get("LobbyCreateScreen")).resetAddedLobbySettingsPanel();
 				((LobbyScreen) currentView).setLobbySettingsPanel(lobbySettings);
+
 			}
-			case "LobbyCreateScreen", "RandomLobby" -> {
+			case "LobbyCreateScreen" -> {
+				((LobbyScreen)screens.get("LobbyScreen")).resetAddedLobbySettingsPanel();
 				((LobbyCreateScreen) currentView).setLobbySettingsPanel(lobbySettings);
 			}
 		}

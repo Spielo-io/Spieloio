@@ -22,7 +22,7 @@ public class StartScreen extends SpieloView implements ActionListener {
 
     private void initializeElements(){
         gridBagLayout = new GridBagLayout();
-        username_Label = new JLabel("Username:");
+        username_Label = new JLabel("Benutzername:");
         username_Textfield = new JTextField();
         createLobby_Button = new JButton("Lobby erstellen");
         searchLobby_Button = new JButton("Lobby suchen");
@@ -74,14 +74,14 @@ public class StartScreen extends SpieloView implements ActionListener {
                     Spielo.changeView("LobbyScreen");
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "You have to enter a Code to join a private Lobby!");
+                    JOptionPane.showMessageDialog(this, "Du musst einen Code eingeben, um einer privaten Lobby beizutreten!");
                 }
             } else if (e.getSource() == this.randomLobby_Button) {
                 Spielo.changeView("LobbyScreen");
             }
         }
         else{
-            JOptionPane.showMessageDialog(this, "You have to enter a username!");
+            JOptionPane.showMessageDialog(this, "Du hast noch keinen Benutzernamen gesetzt!");
         }
     }
 }

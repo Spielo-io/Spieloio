@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Enumeration;
 
 public class LobbySettings extends JPanel{
     private GridBagLayout gridBagLayout;
@@ -124,6 +126,22 @@ public class LobbySettings extends JPanel{
 
     private void addRadioButtonsToButtonGroup(ButtonGroup buttonGroup, JRadioButton [] radioButtons){
         for (JRadioButton radioButton : radioButtons) buttonGroup.add(radioButton);
+    }
+
+    private void setLobbySettings(String [] lobbySettings){
+        setSettingOfButtonGroup(gameSetting_ButtonGroup, lobbySettings[0] );
+        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, lobbySettings[1] );
+        setSettingOfButtonGroup(timerSetting_ButtonGroup, lobbySettings[2] );
+        setSettingOfButtonGroup(roundModeSetting_ButtonGroup, lobbySettings[3] );
+    }
+
+    private void setSettingOfButtonGroup(ButtonGroup buttonGroup, String singleSetting){
+        for(Enumeration<AbstractButton> e = buttonGroup.getElements(); e.hasMoreElements();){
+            AbstractButton button = e.nextElement();
+            if(button.getActionCommand().equals(singleSetting)){
+                button.doClick();
+            }
+        }
     }
 
     public String[] getLobbySettings(){
