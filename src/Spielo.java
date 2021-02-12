@@ -9,14 +9,6 @@ public class Spielo extends JFrame {
 	
 	private JPanel contentPane;
 
-	/*public static void main(String[] args) {
-		System.out.println("---Start---");
-		Board board = new Board();
-		board.insertChip(0);
-		System.out.println(board.toString());
-		System.out.println(board.getWinner());*/
-		
-		//----------------------------------------
 	public static void main(String[] args) {
 		
 		System.out.println("---Start---");
@@ -35,7 +27,7 @@ public class Spielo extends JFrame {
 				}
 			}
 		});
+		System.out.println("---end---");
 	}
-		//----------------------------------------
 
 }
