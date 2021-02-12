@@ -13,15 +13,12 @@ public class Spielo extends JFrame {
 		
 		System.out.println("---Start---");
 		Board board = new Board();
-		board.insertChip(0);
-		System.out.println(board.toString());
-		System.out.println(board.getWinner());
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI frame = new GUI();
-					frame.setVisible(true);
+					GUI gui = new GUI(board);
+					gui.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

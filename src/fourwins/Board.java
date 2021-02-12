@@ -15,17 +15,23 @@ public class Board {
 	public void insertChip(int column) {
 		int height = 0;
 		while(board[column][height] != player.NONE) {
+			if(height == this.height - 1) {
+				System.out.println("ERROR: unable to insert coin -> column" + column + "already full\n");
+				return;
+			}
 			height++;
 		}
 		switch(gameStatus) {
 		case YOURTURN:
 			board[column][height] = player.YOU;
+			gameStatus = status.OPPONENTTURN;
 			break;
 		case OPPONENTTURN:
 			board[column][height] = player.OPPONENT;
+			gameStatus = status.YOURTURN;
 			break;
 		default:
-			System.out.println("ERROR: unable to insert coin -> false game status");
+			System.out.println("ERROR: unable to insert coin -> false game status\n");
 		}
 			
 	}
