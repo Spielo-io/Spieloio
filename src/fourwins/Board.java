@@ -45,26 +45,9 @@ public class Board {
 		return gameStatus.ordinal() ;
 	}	
 	
-	//debugging only
-/*	public void setGameStatus(int gameStatus) {
-		switch(gameStatus) {
-		case 0:
-			this.gameStatus = status.LOST;
-			break;
-		case 1:
-			this.gameStatus = status.WON;
-			break;
-		case 2:
-			this.gameStatus = status.YOURTURN;
-			break;
-		case 3:
-			this.gameStatus = status.OPPONENTTURN;
-			break;
-		case 4:
-			this.gameStatus = status.INITIALIZEING;
-			break;
-		}
-	}*/
+	public void setGameStatus(status status) {
+		gameStatus = status;
+	}
 	
 	public String toString(){
 		String string = "";
