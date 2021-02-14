@@ -65,28 +65,43 @@ public class Board {
 	private int width = 7, height = 6;
 	private player[][] board = new player[width][height];
 	
-	public int getWinner() {
+	public player getWinner() {
 		player winner = player.NONE;
 		
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height && winner == player.NONE; j++) {
 				if(board[i][j] != player.NONE) {
 					winner = checkVertical(i, j);
-					if(winner != player.NONE)
-						return winner.ordinal();
+					if(winner != player.NONE) {
+						if(winner == player.YOU)
+							gameStatus = status.WON;
+						else
+							gameStatus = status.LOST;
+						return winner;
+					}
 					
 					winner = checkHorizontal(i, j);
-					if(winner != player.NONE)
-						return winner.ordinal();
+					if(winner != player.NONE) {
+						if(winner == player.YOU)
+							gameStatus = status.WON;
+						else
+							gameStatus = status.LOST;
+						return winner;
+					}
 					
 					winner = checkDiagonal(i, j);
-					if(winner != player.NONE)
-						return winner.ordinal();
+					if(winner != player.NONE) {
+						if(winner == player.YOU)
+							gameStatus = status.WON;
+						else
+							gameStatus = status.LOST;
+						return winner;						
+					}
 				}
 			}
 		}
 		
-		return winner.ordinal();
+		return winner;
 	}
 	
 	private player checkHorizontal(int x, int y) {
