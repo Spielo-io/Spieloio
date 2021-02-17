@@ -35,6 +35,7 @@ public class tictactoe {
 	private int b8=10;
 	private int b9=10;
 	private int i=0;
+	private String playersymbol;
 	
 	
 
@@ -63,116 +64,69 @@ public class tictactoe {
 	
 	//////////////////////Methode winningGame
 	
-	private void winningGame()
+	private void winningGame(int player)
 	{
-		//Für Player X
-		if(b1==1 && b2==1 && b3==1)
+		if (player == 0)
 		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
+			playersymbol = "O";
 		}
-		else if(b4==1 && b5==1 && b6==1)
+		else
 		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
+			playersymbol = "X";
 		}
-		else if(b7==1 && b8==1 && b9==1)
-		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
-		}
-		else if(b1==1 && b4==1 && b7==1)
-		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
-		}
-		else if(b2==1 && b5==1 && b8==1)
-		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
-		}
-		else if(b3==1 && b6==1 && b9==1)
-		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
-		}
-		else if(b1==1 && b5==1 && b9==1)
-		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
-		}
-		else if(b3==1 && b5==1 && b7==1)
-		{
-			JOptionPane.showMessageDialog(frame, "Player X wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			xCount1++;
-			xCount.setText(String.valueOf(xCount1));
-		}
-		
 
-		//////////////////////Für Player O
-		
-		else if(b1==0 && b2==0 && b3==0)
+		if(b1==player && b2==player && b3==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b4==0 && b5==0 && b6==0)
+		else if(b4==player && b5==player && b6==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b7==0 && b8==0 && b9==0)
+		else if(b7==player && b8==player && b9==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b1==0 && b4==0 && b7==0)
+		else if(b1==player && b4==player && b7==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b2==0 && b5==0 && b8==0)
+		else if(b2==player && b5==player && b8==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b3==0 && b6==0 && b9==0)
+		else if(b3==player && b6==player && b9==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b1==0 && b5==0 && b9==0)
+		else if(b1==player && b5==player && b9==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
-		else if(b3==0 && b5==0 && b7==0)
+		else if(b3==player && b5==player && b7==player)
 		{
-			JOptionPane.showMessageDialog(frame, "Player O wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
-			oCount1++;
-			oCount.setText(String.valueOf(oCount1));
-		}
-		else if(i==9)
-		{
-			JOptionPane.showMessageDialog(frame, "No one wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "Player " + playersymbol + " wins", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			xCount1++;
+			xCount.setText(String.valueOf(xCount1));
 		}
 	}
-		//////////////////////Methode choosePlayer
-
+	
+	//////////////////////Methode choosePlayer
+	
 	private void choosePlayer()
 	{
 		if(startGame.equalsIgnoreCase("X"))
@@ -223,7 +177,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn1.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -253,7 +208,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn2.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -283,7 +239,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn3.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -337,7 +294,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn4.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -367,7 +325,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn5.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -397,7 +356,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn6.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -451,7 +411,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn7.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -480,7 +441,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn8.setFont(new Font("Lucida Grande", Font.BOLD, 80));
@@ -510,7 +472,8 @@ public class tictactoe {
 					i++;
 				}
 				choosePlayer();
-				winningGame();
+				winningGame(0);
+				winningGame(1);
 			}
 		});
 		btn9.setFont(new Font("Lucida Grande", Font.BOLD, 80));
