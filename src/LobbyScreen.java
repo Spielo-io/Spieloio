@@ -32,7 +32,7 @@ public class LobbyScreen extends SpieloView implements ActionListener {
 //        heading
         heading_Label = new JLabel(StyleSheet.underlineHeading("Lobby"));
 //        joinCode
-        joinCode_Label = new JLabel("Beitritts-Code:");
+        joinCode_Label = new JLabel("Beitritts-Code: ");
 //        player Label
         player1_Label = new JLabel("Spieler 1: ");
         player1Name_Label = new JLabel("username1");
@@ -77,8 +77,42 @@ public class LobbyScreen extends SpieloView implements ActionListener {
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, leaveLobby_Button, 2, 7, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
-    public void setLobbyAndGameSettings(String usernamePlayer1){
+    public void setNameForPlayerOne(String usernamePlayer1){
         player1Name_Label.setText(usernamePlayer1);
+    }
+
+    public void setNameForPlayerTwo(String usernamePlayer2){
+        player2Name_Label.setText(usernamePlayer2);
+    }
+
+    public void setLobbySettings(String [] lobbySettings, boolean userIsHost){
+        lobbySettings_Panel.setLobbySettings(lobbySettings, userIsHost);
+    }
+
+    public String [] getLobbySettings(){
+        return lobbySettings_Panel.getLobbySettings();
+    }
+
+    public void activateJoinCodeLabel(boolean lobbyIsPrivat){
+        if(lobbyIsPrivat){
+            setJoinCodeLabel("");
+        }
+        else{
+            setJoinCodeLabel("Beitritts-Code: ");
+        }
+    }
+
+    public void setJoinCodeLabel(String joinCode){
+        joinCode_Label.setText("Betritts-Code: " + joinCode);
+    }
+
+    public void setStartGameButton(boolean userIsHost){
+        if(userIsHost){
+            startGame_Button.setText("Spiel starten");
+        }
+        else{
+            startGame_Button.setText("Spielstart zustimmen");
+        }
     }
 
     private void addActionListeners(){
@@ -86,14 +120,13 @@ public class LobbyScreen extends SpieloView implements ActionListener {
         startGame_Button.addActionListener(this);
     }
 
-    private void setJoinCodeLabel(String joinCode){
-        joinCode_Label.setText("Betritts-Code: " + joinCode);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == leaveLobby_Button){
-            Spielo.changeView("StartScreen");
+            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?");
+            if(answer == JOptionPane.YES_OPTION) {
+                Spielo.changeView("StartScreen");
+            }
         }
         else if(e.getSource() == startGame_Button){
             Spielo.changeView("GameScreen");
