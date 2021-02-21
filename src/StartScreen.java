@@ -88,7 +88,7 @@ public class StartScreen extends SpieloView implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 //        entered Username
-        if("".equals(username_Textfield.getText())) {
+        if(!"".equals(username_Textfield.getText())) {
 //                change to LobbyCreateScreen
             if (e.getSource() == this.createLobby_Button) {
                 Spielo.changeView("LobbyCreateScreen");
@@ -101,7 +101,7 @@ public class StartScreen extends SpieloView implements ActionListener {
                 if(!"".equals(joinCode_TextField.getText())){
 //                              valid joinCode
                     if(isValidJoinCode(getJoinCode())){
-                        Spielo.changeView("LobbyScreen");
+                        Spielo.changeView("LobbyScreenClientPrivat");
                     }
 //                              invalid joinCode
                     else{
@@ -114,7 +114,7 @@ public class StartScreen extends SpieloView implements ActionListener {
                 }
 //                change to LobbyScreen(RandomLobby)
             } else if (e.getSource() == this.randomLobby_Button) {
-                Spielo.changeView("LobbyScreen");
+                Spielo.changeView("LobbyScreenClientPublic");
             }
         }
 //      didn´t entered username
