@@ -8,7 +8,7 @@ public class LobbyCreateScreen extends SpieloView implements ActionListener {
 //    heading
     private JLabel heading_Label;
 //    lobbySettings
-    private LobbySettings lobbySettings_Panel;
+    public LobbySettings lobbySettings_Panel;
 //    buttons
     private JButton createLobby_Button;
     private JButton backToStartScreen_Button;
@@ -47,6 +47,14 @@ public class LobbyCreateScreen extends SpieloView implements ActionListener {
 //          Buttons
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, createLobby_Button, 0, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
+    }
+
+    public void setLobbySettings(String [] lobbySettings, boolean isHost){
+        lobbySettings_Panel.setLobbySettings(lobbySettings, true);
+    }
+
+    public String [] getLobbySettings(){
+        return lobbySettings_Panel.getLobbySettings();
     }
 
     private void addActionListeners() {
