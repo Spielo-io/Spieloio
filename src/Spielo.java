@@ -11,8 +11,9 @@ public class Spielo {
 	private static SpieloView currentView;
 	private static HashMap<String, SpieloView> screens;
 
+	public static boolean isHost;
+
 	public static String username;
-	public static JPanel lobbySettings;
 
 	public static void main(String[] args) {
 		new Spielo();
@@ -30,7 +31,7 @@ public class Spielo {
 		cardLayout = new CardLayout();
 		screens = new HashMap<String, SpieloView>();
 
-		lobbySettings = new LobbySettings();
+		isHost = false;
 	}
 
 	private void configureJFrame(){
@@ -45,6 +46,10 @@ public class Spielo {
 		container.setPreferredSize(new Dimension(500, 300));
 	}
 
+	public static boolean userIsHost(){
+		return isHost;
+	}
+
 	public static void changeView(String newView){
 		cardLayout.show(container, newView);
 		currentView = screens.get(newView);
@@ -56,20 +61,15 @@ public class Spielo {
 		switch (newView) {
 			case "StartScreen" -> {
 				((StartScreen) currentView).clearJoinCodeTextfield();
-			}
-			case "LobbyScreen", "RandomLobby"-> {
-				((LobbyScreen) currentView).setLobbyAndGameSettings(username);
-				((LobbyCreateScreen)screens.get("LobbyCreateScreen")).resetAddedLobbySettingsPanel();
-				((LobbyScreen) currentView).setLobbySettingsPanel(lobbySettings);
-
+				isHost = false;
 			}
 			case "LobbyCreateScreen" -> {
-				((LobbyScreen)screens.get("LobbyScreen")).resetAddedLobbySettingsPanel();
-				((LobbyCreateScreen) currentView).setLobbySettingsPanel(lobbySettings);
+				isHost = true;
+			}
+			case "LobbyScreen" -> {
+				((LobbyScreen)currentView).lobbySettings_Panel.activateRadioButtons(isHost);
 			}
 		}
-
-
 	}
 
 	private void loadScreens(){
