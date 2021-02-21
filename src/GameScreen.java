@@ -1,5 +1,3 @@
-import io.spielo.games.TicTacToe;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,9 +5,11 @@ import java.awt.event.ActionListener;
 
 public class GameScreen extends SpieloView implements ActionListener {
     private GridBagLayout gridBagLayout;
+//    heading
     private JLabel heading_Label;
+//    buttons
     private JButton exitGame_Button;
-
+//      gamePlay
     private JPanel playedGame_Panel;
 
     public GameScreen(){
@@ -19,16 +19,20 @@ public class GameScreen extends SpieloView implements ActionListener {
     }
     private void initializeElements(){
         gridBagLayout = new GridBagLayout();
-
+//          heading
         heading_Label = new JLabel("Game-Screen");
+//          gameplay
+//        playedGame_Panel =
+//        buttons
         exitGame_Button = new JButton("Spiel verlassen");
-
-        playedGame_Panel = new TicTacToe();
     }
 
     private void addElementsToLayout(){
+//        heading^^
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, heading_Label, 0, 0, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
+//        gamePlay
+//        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
+//        buttons
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, exitGame_Button, 0, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
     }
 
