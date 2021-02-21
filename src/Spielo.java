@@ -11,7 +11,8 @@ public class Spielo {
 	private static SpieloView currentView;
 	private static HashMap<String, SpieloView> screens;
 
-	public static boolean isHost;
+	private static boolean isHost;
+	private static boolean isPrivatLobby;
 
 	public static String username;
 
@@ -51,7 +52,6 @@ public class Spielo {
 	}
 
 	public static void changeView(String newView){
-		cardLayout.show(container, newView);
 		currentView = screens.get(newView);
 //				get username from StartScreen
 		if(!newView.equals("StartScreen")){
@@ -66,10 +66,21 @@ public class Spielo {
 			case "LobbyCreateScreen" -> {
 				isHost = true;
 			}
+			case "LobbySelectScreen" -> {
+				isPrivatLobby = false;
+			}
 			case "LobbyScreen" -> {
 				((LobbyScreen)currentView).lobbySettings_Panel.activateRadioButtons(isHost);
+				if(isHost){
+					((LobbyScreen)currentView).lobbySettings_Panel.setLobbySettings(((LobbyCreateScreen)screens.get("LobbyCreateScreen")).getLobbySettings(), isHost);
+
+				}
+				((LobbyScreen)currentView).lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
+				((LobbyScreen)currentView).setStartGameButton(isHost);
 			}
 		}
+//			actualize view
+		cardLayout.show(container, newView);
 	}
 
 	private void loadScreens(){
