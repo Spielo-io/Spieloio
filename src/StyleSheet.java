@@ -72,7 +72,7 @@ public class StyleSheet {
             if(comp instanceof JButton){
                 ((JButton)comp).setFont(lobbyScreenButtons_Font);
             }
-            else if(comp instanceof JLabel){
+            else if(comp instanceof JLabel && !((JLabel) comp).getText().equals("<html><u>Lobby</u></<html>")){
                 ((JLabel)comp).setFont(lobbyScreenLabels_Font);
             }
 

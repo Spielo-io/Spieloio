@@ -188,6 +188,10 @@ public class LobbySettings extends JPanel{
         return settings;
     }
 
+    public String getVisibilityLobbySetting(){
+        return visibilitySetting_ButtonGroup.getSelection().getActionCommand();
+    }
+
     private void addElementToPanelUsingGridBagLayout(Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
