@@ -5,40 +5,48 @@ import java.awt.event.ActionListener;
 
 public class LobbyCreateScreen extends SpieloView implements ActionListener {
     private GridBagLayout gridBagLayout;
+//    heading
     private JLabel heading_Label;
+//    lobbySettings
+    private LobbySettings lobbySettings_Panel;
+//    buttons
     private JButton createLobby_Button;
     private JButton backToStartScreen_Button;
-    private JPanel lobbySettings_Panel;
-
-    private boolean addedLobbySettingsPanel_bool;
 
     public LobbyCreateScreen(){
         initializeElements();
-        configureElements();
         addElementsToLayout();
+        configureElements();
         addActionListeners();
     }
 
     private void initializeElements(){
         gridBagLayout = new GridBagLayout();
-        heading_Label = new JLabel("Lobby-Einstellungen");
+//        heading
+        heading_Label = new JLabel(StyleSheet.underlineHeading("Lobby-Einstellungen"));
+//        lobbySettings
+        lobbySettings_Panel = new LobbySettings();
 //        Buttons
         createLobby_Button = new JButton("Lobby erstellen");
         backToStartScreen_Button = new JButton("Zum Startbildschirm");
-
-        addedLobbySettingsPanel_bool = false;
     }
 
     private void configureElements(){
+        heading_Label.setFont(StyleSheet.heading_Font);
         heading_Label.setHorizontalAlignment(JLabel.CENTER);
+//        font
+        StyleSheet.changeFontOfLobbyCreateScreenElements(this);
     }
 
     private void addElementsToLayout(){
         this.setLayout(gridBagLayout);
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, heading_Label, 1, 0, 1, 2, 0, new int[]{0, 0, 40, 0});
+//        heading
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, heading_Label, 1, 0, 1, 2, 0, new int[]{0, 0, 20, 0});
 //          lobbySettings
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, createLobby_Button, 0, 6, 1, 2, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 6, 1, 2, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, lobbySettings_Panel, 0, 1, 5, 4, 0, new int[]{0, 5, 0, 5});
+//          Buttons
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, createLobby_Button, 0, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
     private void addActionListeners() {
@@ -46,25 +54,10 @@ public class LobbyCreateScreen extends SpieloView implements ActionListener {
         backToStartScreen_Button.addActionListener(this);
     }
 
-    public void setLobbySettingsPanel(JPanel lobbySettings){
-        if(!addedLobbySettingsPanel_bool){
-            addedLobbySettingsPanel_bool = true;
-            lobbySettings_Panel = lobbySettings;
-            addElementToPanelUsingGridBagLayout(this, gridBagLayout, lobbySettings_Panel, 0, 1, 5, 4, 0, new int[]{0, 0, 0, 0});
-        }
-    }
-
-    public void resetAddedLobbySettingsPanel(){
-        addedLobbySettingsPanel_bool = false;
-    }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == backToStartScreen_Button){
             Spielo.changeView("StartScreen");
-//            System.out.println(gridBagLayout.getConstraints(lobbySettings_Panel).gridx + "x");
-//            System.out.println(gridBagLayout.getConstraints(lobbySettings_Panel).gridy + "y");
         }
         else if(e.getSource() == createLobby_Button){
                 Spielo.changeView("LobbyScreen");
