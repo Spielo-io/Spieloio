@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class SpieloView extends JPanel {
     public void addElementToPanelUsingGridBagLayout(JPanel panel, GridBagLayout layout, Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){
@@ -12,8 +13,6 @@ public class SpieloView extends JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.ipady = ipady;
         gridBagConstraints.insets = new Insets(insets[0], insets[1], insets[2], insets[3]);
-        if(yDimension == 4)
-            gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
 
         layout.setConstraints(element, gridBagConstraints);
         panel.add(element);
