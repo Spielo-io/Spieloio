@@ -127,7 +127,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Du musst zuerst eine Lobby auswählen!");
             }
             else{
-                Spielo.changeView("LobbyScreen");
+                Spielo.changeView("LobbyScreenClientPublic");
             }
         }
     }
