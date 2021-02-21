@@ -1,10 +1,14 @@
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Enumeration;
 
 public class LobbySettings extends JPanel{
+//    layout
     private GridBagLayout gridBagLayout;
+//    border
+    private EtchedBorder borderForPanel_Border;
 //    gameSetting
     private JLabel gameSetting_Label;
     private ButtonGroup gameSetting_ButtonGroup;
@@ -33,32 +37,36 @@ public class LobbySettings extends JPanel{
 
     public LobbySettings(){
         initializeElements();
-        configureElements();
         addElementsToLayout();
+        configureElements();
+//        hello();
     }
 
     private void initializeElements(){
+//        layout
         gridBagLayout = new GridBagLayout();
+//        border
+        borderForPanel_Border = new EtchedBorder(EtchedBorder.LOWERED);
 //        gameSetting
-        gameSetting_Label = new JLabel("Spiel:");
+        gameSetting_Label = new JLabel(StyleSheet.underlineHeading("Spiel:"));
         gameSetting_ButtonGroup = new ButtonGroup();
         ticTacToe_RadioButton = new JRadioButton("TicTacToe");
         fourWinds_RadioButton = new JRadioButton("4 Gewinnt");
         checkers_RadioButton = new JRadioButton("Dame");
         mill_RadioButton = new JRadioButton("Mühle");
 //        visibilitySetting
-        visibilitySetting_Label = new JLabel("Sichtbarkeit:");
+        visibilitySetting_Label = new JLabel(StyleSheet.underlineHeading("Sichtbarkeit:"));
         visibilitySetting_ButtonGroup = new ButtonGroup();
         publicVisibility_RadioButton = new JRadioButton("Öffentlich");
         privateVisibility_RadioButton = new JRadioButton("Privat");
 //        timerSetting
-        timerSetting_Label = new JLabel("Timer");
+        timerSetting_Label = new JLabel(StyleSheet.underlineHeading("Timer"));
         timerSetting_ButtonGroup = new ButtonGroup();
         offTimer_RadioButton = new JRadioButton("Aus");
         thirtySeconds_RadioButton = new JRadioButton("30 Sek.");
         oneMinute_RadioButton = new JRadioButton("1 Min.");
 //        roundModeSetting
-        roundModeSetting_Label = new JLabel("Rundenmodus:");
+        roundModeSetting_Label = new JLabel(StyleSheet.underlineHeading("Rundenmodus:"));
         roundModeSetting_ButtonGroup = new ButtonGroup();
         bestOfOne_RadioButton = new JRadioButton("Best of 1");
         bestOfThree_RadioButton = new JRadioButton("Best of 3");
@@ -68,6 +76,8 @@ public class LobbySettings extends JPanel{
     }
 
     private void configureElements(){
+//        border
+        this.setBorder(borderForPanel_Border);
 //        add RadioButtons to ButtonGroup
         addRadioButtonsToButtonGroup(gameSetting_ButtonGroup, new JRadioButton[] {ticTacToe_RadioButton, fourWinds_RadioButton, checkers_RadioButton, mill_RadioButton});
         addRadioButtonsToButtonGroup(visibilitySetting_ButtonGroup, new JRadioButton[] {publicVisibility_RadioButton, privateVisibility_RadioButton});
@@ -96,32 +106,34 @@ public class LobbySettings extends JPanel{
         bestOfThree_RadioButton.setActionCommand("Best of 3");
         bestOfFive_RadioButton.setActionCommand("Best of 5");
         bestOfSeven_RadioButton.setActionCommand("Best of 7");
+//        font
+        StyleSheet.changeFontOfLobbySettingsElements(this);
+
     }
 
     private void addElementsToLayout(){
         this.setLayout(gridBagLayout);
 //        gameSetting
-        addElementToPanelUsingGridBagLayout(gameSetting_Label, 0, 0, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(ticTacToe_RadioButton, 0, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout( fourWinds_RadioButton, 0, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(checkers_RadioButton, 0, 3, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(mill_RadioButton, 0, 4, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(gameSetting_Label, 0, 0, 1, 1, 0, new int[]{5, 10, 5, 0});
+        addElementToPanelUsingGridBagLayout(ticTacToe_RadioButton, 0, 1, 1, 1, 0, new int[]{0, 10, 0, 0});
+        addElementToPanelUsingGridBagLayout( fourWinds_RadioButton, 0, 2, 1, 1, 0, new int[]{0, 10, 0, 0});
+        addElementToPanelUsingGridBagLayout(checkers_RadioButton, 0, 3, 1, 1, 0, new int[]{0, 10, 0, 0});
+        addElementToPanelUsingGridBagLayout(mill_RadioButton, 0, 4, 1, 1, 0, new int[]{0, 10, 0, 0});
 //        visibilitySetting
-        addElementToPanelUsingGridBagLayout(visibilitySetting_Label, 1, 0, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(visibilitySetting_Label, 1, 0, 1, 1, 0, new int[]{5, 0, 5, 0});
         addElementToPanelUsingGridBagLayout(privateVisibility_RadioButton, 1, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout( publicVisibility_RadioButton, 1, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
 //        timerSetting
-        addElementToPanelUsingGridBagLayout(timerSetting_Label, 2, 0, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(timerSetting_Label, 2, 0, 1, 1, 0, new int[]{5, 0, 5, 0});
         addElementToPanelUsingGridBagLayout(offTimer_RadioButton, 2, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(thirtySeconds_RadioButton, 2, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(oneMinute_RadioButton, 2, 3, 1, 1, 0, new int[]{0, 0, 0, 0});
 //        roundModeSetting
-        addElementToPanelUsingGridBagLayout(roundModeSetting_Label, 3, 0, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(roundModeSetting_Label, 3, 0, 1, 1, 0, new int[]{5, 5, 0, 0});
         addElementToPanelUsingGridBagLayout(bestOfOne_RadioButton, 3, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(bestOfThree_RadioButton, 3, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(bestOfFive_RadioButton, 3, 3, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(bestOfSeven_RadioButton, 3, 4, 1, 1, 0, new int[]{0, 0, 0, 0});
-
     }
 
     private void addRadioButtonsToButtonGroup(ButtonGroup buttonGroup, JRadioButton [] radioButtons){
@@ -141,6 +153,21 @@ public class LobbySettings extends JPanel{
             if(button.getActionCommand().equals(singleSetting)){
                 button.doClick();
             }
+        }
+    }
+
+    public void activateRadioButtons(boolean activated){
+        for(Enumeration<AbstractButton> a = gameSetting_ButtonGroup.getElements(); a.hasMoreElements();) {
+            a.nextElement().setEnabled(activated);
+        }
+        for(Enumeration<AbstractButton> b = visibilitySetting_ButtonGroup.getElements(); b.hasMoreElements();) {
+            b.nextElement().setEnabled(activated);
+        }
+        for(Enumeration<AbstractButton> c = timerSetting_ButtonGroup.getElements(); c.hasMoreElements();) {
+            c.nextElement().setEnabled(activated);
+        }
+        for(Enumeration<AbstractButton> d = roundModeSetting_ButtonGroup.getElements(); d.hasMoreElements();) {
+            d.nextElement().setEnabled(activated);
         }
     }
 
