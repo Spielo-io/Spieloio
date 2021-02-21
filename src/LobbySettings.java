@@ -140,11 +140,13 @@ public class LobbySettings extends JPanel{
         for (JRadioButton radioButton : radioButtons) buttonGroup.add(radioButton);
     }
 
-    private void setLobbySettings(String [] lobbySettings){
+    public void setLobbySettings(String [] lobbySettings, boolean userIsHost){
+        activateRadioButtons(true);
         setSettingOfButtonGroup(gameSetting_ButtonGroup, lobbySettings[0] );
         setSettingOfButtonGroup(visibilitySetting_ButtonGroup, lobbySettings[1] );
         setSettingOfButtonGroup(timerSetting_ButtonGroup, lobbySettings[2] );
         setSettingOfButtonGroup(roundModeSetting_ButtonGroup, lobbySettings[3] );
+        activateRadioButtons(userIsHost);
     }
 
     private void setSettingOfButtonGroup(ButtonGroup buttonGroup, String singleSetting){
@@ -153,6 +155,12 @@ public class LobbySettings extends JPanel{
             if(button.getActionCommand().equals(singleSetting)){
                 button.doClick();
             }
+        }
+    }
+
+    public void disableVisibiltyButtonGroupSetting(){
+        for(Enumeration<AbstractButton> a = visibilitySetting_ButtonGroup.getElements(); a.hasMoreElements();) {
+            a.nextElement().setEnabled(false);
         }
     }
 

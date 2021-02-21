@@ -92,7 +92,6 @@ public class LobbySelectScreen extends SpieloView implements ActionListener {
                             }
                         }
                         listForLobbys_ListModel.addElement(output.toString());
-                        output = new StringBuilder();
                     }
             }
     }
