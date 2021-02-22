@@ -10,6 +10,8 @@ public class LobbyScreen extends SpieloView {
     protected JLabel player1Name_Label;
     protected JLabel player2_Label;
     protected JLabel player2Name_Label;
+
+    protected String nameOfPlayer2;
 //      lobbySettings
     protected LobbySettings lobbySettings_Panel;
 
@@ -24,10 +26,10 @@ public class LobbyScreen extends SpieloView {
 //        heading
         heading_Label = new JLabel(StyleSheet.underlineHeading("Lobby"));
 //        player Label
-        player1_Label = new JLabel("Spieler 1: ");
-        player1Name_Label = new JLabel("username1");
-        player2_Label = new JLabel("Spieler 2: ");
-        player2Name_Label = new JLabel("username2");
+        player1_Label = new JLabel("Du: ");
+        player1Name_Label = new JLabel("<html>username1</html>");
+        player2_Label = new JLabel("Dein Gegner: ");
+        player2Name_Label = new JLabel("<html>username2</html>");
 //        lobbySettings
         lobbySettings_Panel = new LobbySettings();
     }
@@ -40,6 +42,8 @@ public class LobbyScreen extends SpieloView {
         player2_Label.setHorizontalAlignment(JLabel.RIGHT);
         player1Name_Label.setHorizontalAlignment(JLabel.LEFT);
         player2Name_Label.setHorizontalAlignment(JLabel.LEFT);
+
+        nameOfPlayer2 = "username2";
 //        font
         heading_Label.setFont(StyleSheet.heading_Font);
     }
@@ -58,11 +62,20 @@ public class LobbyScreen extends SpieloView {
     }
 
     public void setNameForPlayerOne(String usernamePlayer1){
-        player1Name_Label.setText(usernamePlayer1);
+        player1Name_Label.setText("<html>" + usernamePlayer1 + "</html>");
     }
 
     public void setNameForPlayerTwo(String usernamePlayer2){
-        player2Name_Label.setText(usernamePlayer2);
+        nameOfPlayer2 = usernamePlayer2;
+        player2Name_Label.setText("<html>" + usernamePlayer2 + "</html>");
+    }
+
+    public void setStartConfirmedToPlayerOne(){
+        player1Name_Label.setText("<html>" + Spielo.username + " <b style=\"color:green;\">&#10004</html>");
+    }
+
+    public void setStartConfirmedToPlayerTwo(){
+        player2Name_Label.setText("<html>" + nameOfPlayer2 + " <b style=\"color:green;\">&#10004</b></html>");
     }
 
     public void setLobbySettings(String [] lobbySettings, boolean userIsHost){
