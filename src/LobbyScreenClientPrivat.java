@@ -45,21 +45,36 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
         joinCode_Label.setText("Betritts-Code: " + joinCode);
     }
 
+    public void startGame(){
+        Spielo.changeView("GameScreen");
+    }
+
+    public void preparePanelForNewLobby(){
+        confirmStart_Button.setText("Spielstart zustimmen");
+        confirmStart_Button.setEnabled(true);
+    }
+
     private void addActionListeners(){
         leaveLobby_Button.addActionListener(this);
         confirmStart_Button.addActionListener(this);
     }
 
+    public void alarmClientToConfirmStartOfGame(){
+        JOptionPane.showMessageDialog(this, "Dein Gegner will das Spiel starten!\nDrücke auf \"Spielstart zustimmen\", um das Spiel zu beginnen.");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == leaveLobby_Button){
-            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?");
+            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
             if(answer == JOptionPane.YES_OPTION) {
                 Spielo.changeView("StartScreen");
             }
         }
         else if(e.getSource() == confirmStart_Button){
-            Spielo.changeView("GameScreen");
+            confirmStart_Button.setText("Spielstart zugestimmt");
+            confirmStart_Button.setEnabled(false);
+            setStartConfirmedToPlayerOne();
         }
     }
 
