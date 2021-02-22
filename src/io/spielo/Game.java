@@ -81,7 +81,7 @@ public class Game {
 	
 	public enum player{
 		//contains all possible players
-		YOU, OPPONENT
+		YOU, OPPONENT, NONE
 	}
 	
 
