@@ -1,15 +1,20 @@
 package fourwins;
 
-public class Board {
+import io.spielo.Game;
+
+public class Board extends Game{
 //public:
-	public Board(){
-		gameStatus = status.INITIALIZEING;
+	public Board(boolean youStart){
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
-		gameStatus = status.YOURTURN;
+		
+		if(youStart) 
+			setPlayer(player.YOU);
+		else
+			setPlayer(player.OPPONENT);
 	}
 	
 	public void insertChip(int column) {
@@ -21,14 +26,14 @@ public class Board {
 			}
 			height++;
 		}
-		switch(gameStatus) {
-		case YOURTURN:
+		switch(getPlayer()) {
+		case YOU:
 			board[column][height] = player.YOU;
-			gameStatus = status.OPPONENTTURN;
+			setPlayer(player.OPPONENT);
 			break;
-		case OPPONENTTURN:
+		case OPPONENT:
 			board[column][height] = player.OPPONENT;
-			gameStatus = status.YOURTURN;
+			setPlayer(player.YOU);
 			break;
 		default:
 			System.out.println("ERROR: unable to insert coin -> false game status\n");
@@ -38,15 +43,6 @@ public class Board {
 	
 	public player[][] getBoard() {
 		return board;
-	}
-
-	
-	public int getGameStatus() {
-		return gameStatus.ordinal() ;
-	}	
-	
-	public void setGameStatus(status status) {
-		gameStatus = status;
 	}
 	
 	public String toString(){
@@ -61,7 +57,6 @@ public class Board {
 	}
 
 //private:
-	private status gameStatus;
 	private int width = 7, height = 6;
 	private player[][] board = new player[width][height];
 	
@@ -71,31 +66,31 @@ public class Board {
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height && winner == player.NONE; j++) {
 				if(board[i][j] != player.NONE) {
-					winner = checkVertical(i, j);
-					if(winner != player.NONE) {
-						if(winner == player.YOU)
-							gameStatus = status.WON;
-						else
-							gameStatus = status.LOST;
-						return winner;
+					switch(checkHorizontal(i, j)) {
+					case YOU:
+						addWin();
+						return player.YOU;
+					case OPPONENT:
+						addLoss();
+						return player.OPPONENT;
 					}
 					
-					winner = checkHorizontal(i, j);
-					if(winner != player.NONE) {
-						if(winner == player.YOU)
-							gameStatus = status.WON;
-						else
-							gameStatus = status.LOST;
-						return winner;
+					switch(checkVertical(i, j)) {
+					case YOU:
+						addWin();
+						return player.YOU;
+					case OPPONENT:
+						addLoss();
+						return player.OPPONENT;
 					}
 					
-					winner = checkDiagonal(i, j);
-					if(winner != player.NONE) {
-						if(winner == player.YOU)
-							gameStatus = status.WON;
-						else
-							gameStatus = status.LOST;
-						return winner;						
+					switch(checkDiagonal(i, j)) {
+					case YOU:
+						addWin();
+						return player.YOU;
+					case OPPONENT:
+						addLoss();
+						return player.OPPONENT;
 					}
 				}
 			}
@@ -167,13 +162,5 @@ public class Board {
 			
 		}
 		return player.NONE;
-	}
-	
-	private enum status {
-		LOST, WON, YOURTURN, OPPONENTTURN, INITIALIZEING
-	}
-	
-	private enum player {
-		NONE, YOU, OPPONENT
-	}
+	}	
 }

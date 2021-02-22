@@ -5,11 +5,15 @@ public class Message {
 		
 	}
 	
-	public void send(int message) {
-		
+	private int receiveMessage() {
+		boolean messageReceved = false;
+		while(!messageReceved) {
+			//TODO: receive Message
+		}
+		return -1;//return message
 	}
 	
-	public int receive() {
-		return -1;
+	private void sendMessage(/*TODO: message*/) {
+		//TODO: sendmessage
 	}
 }

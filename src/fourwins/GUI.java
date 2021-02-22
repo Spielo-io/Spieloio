@@ -102,5 +102,14 @@ public class GUI extends JFrame {
 		});
 		button_6.setBounds(466, 122, 70, 22);
 		getContentPane().add(button_6);
+		
+		Button button_7 = new Button("print  winner to console");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(board.getWinner());
+			}
+		});
+		button_7.setBounds(195, 10, 137, 43);
+		getContentPane().add(button_7);
 	}
 }

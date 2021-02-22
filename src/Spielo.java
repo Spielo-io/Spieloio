@@ -15,10 +15,10 @@ public class Spielo extends JFrame {
 		Game game = new Game();
 		game.setTimer(5000);
 		game.startTimer();
-		while(game.getTimer() > 0) {
+		//while(game.getTimer() > 0) {
 			//System.out.println(game.getTimer());			
-		}
-		Board board = new Board();
+		//}
+		Board board = new Board(true);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
