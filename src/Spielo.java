@@ -1,3 +1,4 @@
+import io.spielo.Game;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,8 +11,13 @@ public class Spielo extends JFrame {
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
-		
-		System.out.println("---Start---");
+		System.out.println("---start---");
+		Game game = new Game();
+		game.setTimer(5000);
+		game.startTimer();
+		while(game.getTimer() > 0) {
+			//System.out.println(game.getTimer());			
+		}
 		Board board = new Board();
 		
 		EventQueue.invokeLater(new Runnable() {
