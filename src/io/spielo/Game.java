@@ -31,7 +31,7 @@ public class Game {
 	}
 	
 	public void setTimer(long timer_in_ms) {
-		//sets the initial timer value in milliseconds
+		//sets the initial timer value in milliseconds -> counts down
 		timerStartValue = timer_in_ms;
 	}
 	
