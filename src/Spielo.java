@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class Spielo {
@@ -80,6 +78,10 @@ public class Spielo {
 		frame.add(lobbyScreenClientPublic);
 		frame.add(lobbyScreenClientPrivat);
 		frame.add(gameScreen);
+
+		UIManager.put("OptionPane.yesButtonText", "Ja");
+		UIManager.put("OptionPane.noButtonText", "Nein");
+		UIManager.put("OptionPane.cancelButtonText", "Abbrechen");
 	}
 
 	public static boolean userIsHost() {
@@ -89,8 +91,8 @@ public class Spielo {
 	public static void changeView(String newView) {
 		switch (newView) {
 			case "StartScreen" -> {
-				startScreen.clearJoinCodeTextfield();
 				isHost = false;
+				prepareAppForNewGame();
 			}
 			case "LobbyCreateScreen" -> {
 				isHost = true;
@@ -105,7 +107,6 @@ public class Spielo {
 			}
 			case "LobbyScreenClientPublic" -> {
 				currentLobbyScreen = lobbyScreenClientPublic;
-//				currentLobbyScreen.setLobbySettings(new String[]{"Dame", "", "", ""}, isHost);
 			}
 			case "LobbyScreenClientPrivat" -> {
 				currentLobbyScreen = lobbyScreenClientPrivat;
@@ -122,6 +123,16 @@ public class Spielo {
 
 //			actualize view
 		cardLayout.show(container, newView);
+	}
+
+	private static void prepareAppForNewGame(){
+		startScreen.clearJoinCodeTextfield();
+
+		lobbyScreenHostPublic.prepareLobbyForNewGame();
+		lobbyScreenHostPrivat.prepareLobbyForNewGame();
+		lobbyScreenClientPublic.preparePanelForNewLobby();
+		lobbyScreenClientPrivat.preparePanelForNewLobby();
+
 	}
 
 }
