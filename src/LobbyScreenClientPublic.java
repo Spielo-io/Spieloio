@@ -6,7 +6,7 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
 
     //          buttons
     private JButton leaveLobby_Button;
-    private JButton startGame_Button;
+    private JButton confirmStart_Button;
 
     public LobbyScreenClientPublic(){
         initializeElements();
@@ -18,7 +18,7 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
     private void initializeElements(){
 //        button
         leaveLobby_Button = new JButton("Lobby verlassen");
-        startGame_Button = new JButton("Spielstart zustimmen");
+        confirmStart_Button = new JButton("Spielstart zustimmen");
     }
 
     private void configureElements(){
@@ -26,29 +26,47 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
         lobbySettings_Panel.activateRadioButtons(false);
 
         StyleSheet.changeFontOfLobbyScreenElements(this);
+
+
     }
 
     private void addElementsToLayout(){
 //        button
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, leaveLobby_Button, 2, 7, 1, 2, 0, new int[]{20, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, startGame_Button, 0, 7, 1, 2, 0, new int[]{20, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, confirmStart_Button, 0, 7, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
     private void addActionListeners(){
         leaveLobby_Button.addActionListener(this);
-        startGame_Button.addActionListener(this);
+        confirmStart_Button.addActionListener(this);
     }
+
+    public void startGame(){
+        Spielo.changeView("GameScreen");
+    }
+
+    public void preparePanelForNewLobby(){
+        confirmStart_Button.setText("Spielstart zustimmen");
+        confirmStart_Button.setEnabled(true);
+    }
+
+    public void alarmClientToConfirmStartOfGame(){
+        JOptionPane.showMessageDialog(this, "Dein Gegner will das Spiel starten!\nDrücke auf \"Spielstart zustimmen\", um das Spiel zu beginnen.");
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == leaveLobby_Button){
-            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?");
+            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
             if(answer == JOptionPane.YES_OPTION) {
                 Spielo.changeView("StartScreen");
             }
         }
-        else if(e.getSource() == startGame_Button){
-            Spielo.changeView("GameScreen");
+        else if(e.getSource() == confirmStart_Button){
+            confirmStart_Button.setText("Spielstart zugestimmt");
+            confirmStart_Button.setEnabled(false);
+            setStartConfirmedToPlayerOne();
         }
     }
 
