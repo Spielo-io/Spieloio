@@ -108,8 +108,16 @@ public class LobbySelectScreen extends SpieloView implements ActionListener {
                     selectedLobby = lobbyList_Array[i];
                 }
             }
-            System.out.println(selectedLobby[0]);
             return selectedLobby;
+    }
+
+    private String [] getLobbyAndUsername(){
+            String [] settings = new String[5];
+            for(int i = 0; i<getSelectedLobby().length; i++){
+                settings[i] = getSelectedLobby()[i];
+            }
+            settings[4] = Spielo.username;
+            return settings;
     }
 
     private void addActionListeners(){
