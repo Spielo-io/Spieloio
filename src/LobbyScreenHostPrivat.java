@@ -8,6 +8,8 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
     //          buttons
     private JButton leaveLobby_Button;
     private JButton startGame_Button;
+//          boolean
+    private boolean opponentConfirmedStartOfGame;
 
     public LobbyScreenHostPrivat(){
         initializeElements();
@@ -22,6 +24,8 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
 //        button
         leaveLobby_Button = new JButton("Lobby verlassen");
         startGame_Button = new JButton("Spiel starten");
+//        boolean
+        opponentConfirmedStartOfGame = false;
     }
 
     private void configureElements(){
@@ -45,6 +49,15 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
         joinCode_Label.setText("Betritts-Code: " + joinCode);
     }
 
+    public void setOpponentConfirmedStartOfGame(){
+        setStartConfirmedToPlayerTwo();
+        opponentConfirmedStartOfGame = true;
+    }
+
+    public void prepareLobbyForNewGame(){
+        opponentConfirmedStartOfGame = false;
+    }
+
     private void addActionListeners(){
         leaveLobby_Button.addActionListener(this);
         startGame_Button.addActionListener(this);
@@ -53,13 +66,19 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == leaveLobby_Button){
-            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?");
+            int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
             if(answer == JOptionPane.YES_OPTION) {
                 Spielo.changeView("StartScreen");
             }
         }
         else if(e.getSource() == startGame_Button){
-            Spielo.changeView("GameScreen");
+            if(opponentConfirmedStartOfGame){
+                setStartConfirmedToPlayerOne();
+                Spielo.changeView("GameScreen");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Dein Gegner hat dem Spielstart noch nicht zugestimmt!");
+            }
         }
     }
 
