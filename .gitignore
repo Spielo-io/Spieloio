@@ -24,5 +24,13 @@ hs_err_pid*
 /bin/
  
 # ds store files
-.DS_Store 
+.DS_Store
+
+#intellij
+.idea
+
+#gradle
+!gradle-wrapper.jar
+.gradle
+build
 
