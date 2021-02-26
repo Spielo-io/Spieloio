@@ -1,4 +1,4 @@
-package pack1;
+package io.spielo.games;
 
 import java.awt.Image;
 import java.io.File;

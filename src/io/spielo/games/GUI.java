@@ -1,4 +1,4 @@
-package pack1;
+package io.spielo.games;
 import java.awt.Color;
 
 import javax.swing.JButton;
