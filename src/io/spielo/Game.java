@@ -1,5 +1,7 @@
 package io.spielo;
 
+import io.spielo.games.Message;
+
 public class Game {
 	public Game() {
 
@@ -95,6 +97,7 @@ public class Game {
 	private int gamesWon = 0;
 	private int gamesLost = 0;
 	private int gamesDrawn = 0;
+	public static Game message = new Game();
 	
 	
 }
