@@ -1,3 +1,7 @@
+import io.spielo.client.Client;
+import io.spielo.messages.ConnectMessage;
+
+import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,8 +10,6 @@ public class Spielo {
 	private JFrame frame;
 	private static CardLayout cardLayout;
 	private static Container container;
-//	private static SpieloView currentView;
-//	private static HashMap<String, SpieloView> screens;
 
 	private static StartScreen startScreen;
 	private static LobbyCreateScreen lobbyCreateScreen;
@@ -23,7 +25,9 @@ public class Spielo {
 
 	private static boolean isHost;
 
-	public static String username;
+	private static String username;
+
+//	public static Client client;
 
 	public static void main(String[] args) {
 		new Spielo();
@@ -38,7 +42,6 @@ public class Spielo {
 		frame = new JFrame();
 		container = frame.getContentPane();
 		cardLayout = new CardLayout();
-//		screens = new HashMap<String, SpieloView>();
 
 		startScreen = new StartScreen();
 		lobbyCreateScreen = new LobbyCreateScreen();
@@ -50,6 +53,12 @@ public class Spielo {
 		gameScreen = new GameScreen();
 
 		isHost = false;
+
+//		client = new Client("20.52.147.95");
+//		client.subscribe(lobbySelectScreen);
+//
+//		client.send(new ConnectMessage(System.currentTimeMillis()));
+
 	}
 
 	private void configureElements() {
@@ -98,11 +107,11 @@ public class Spielo {
 				isHost = true;
 			}
 			case "LobbyScreenHostPublic" -> {
-				lobbyScreenHostPublic.setLobbySettings(lobbyCreateScreen.getLobbySettings(), true);
+				lobbyScreenHostPublic.setLobbySettings(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSetting(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSetting(), lobbyCreateScreen.lobbySettings_Panel.getTimerSetting(), true);
 				currentLobbyScreen = lobbyScreenHostPublic;
 			}
 			case "LobbyScreenHostPrivat" -> {
-				lobbyScreenHostPrivat.setLobbySettings(lobbyCreateScreen.getLobbySettings(), true);
+				lobbyScreenHostPrivat.setLobbySettings(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSetting(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSetting(), lobbyCreateScreen.lobbySettings_Panel.getTimerSetting(), true);
 				currentLobbyScreen = lobbyScreenHostPrivat;
 			}
 			case "LobbyScreenClientPublic" -> {
@@ -133,6 +142,10 @@ public class Spielo {
 		lobbyScreenClientPublic.preparePanelForNewLobby();
 		lobbyScreenClientPrivat.preparePanelForNewLobby();
 
+	}
+
+	public static String getUsername(){
+		return username;
 	}
 
 }
