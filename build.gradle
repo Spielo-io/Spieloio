@@ -4,7 +4,13 @@ plugins {
     id 'maven'
 }
 
-mainClassName = 'test'
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+mainClassName = 'Spielo'
 
 group 'io.spielo'
 version System.getenv("VERSION")
@@ -42,8 +48,8 @@ sourceSets {
 }
 
 dependencies {
-    implementation 'io.spielo:messages:0.2.14'
-    implementation 'io.spielo:client:0.1.1'
+    implementation 'io.spielo:messages:0.3.2'
+    implementation 'io.spielo:client:1.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
