@@ -6,10 +6,5 @@ public class Main {
 		
 		new GUI();
 		new ImageLoader();
-		new Message();
-		
-		
-
 	}
-
 }

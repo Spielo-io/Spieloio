@@ -1,7 +1,5 @@
 package io.spielo;
 
-import io.spielo.games.Message;
-
 public class Game {
 	public Game() {
 

@@ -1,12 +1,9 @@
 package io.spielo.games;
-import java.awt.Color;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class GUI 
 {
-	
 	JFrame jf;
 	Draw draw;
 	
@@ -16,8 +13,6 @@ public class GUI
 	static int player = 0; //Welcher Spieler ist am Zug?
 	static boolean winner = false;
 	
-	
-
 	public GUI()
 	{
 		jf = new JFrame();

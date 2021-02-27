@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader 
 {
-	
 	static Image imgX;
 	static Image imgO;
 
@@ -21,5 +20,4 @@ public class ImageLoader
 			e.printStackTrace();
 		}
 	}
-
 }
