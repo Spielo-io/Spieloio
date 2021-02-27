@@ -65,77 +65,26 @@ public class GUI extends JFrame {
 	}
 	public void drawBoard(Board board) {
 		player [][] board_status = board.getBoard();
-		
+
 		int x_coordinate = 10;
 		int y_coordinate = 10;
 		
 		JButton[] buttons = new JButton[7];
 		JPanel[][] panels = new JPanel[7][6];
 		
-		buttons[0] = new JButton("Insert");
-		buttons[1] = new JButton("Insert");
-		buttons[2] = new JButton("Insert");
-		buttons[3] = new JButton("Insert");
-		buttons[4] = new JButton("Insert");
-		buttons[5] = new JButton("Insert");
-		buttons[6] = new JButton("Insert");
-		
-		panels[0][0] = new JPanel();
-		panels[0][1] = new JPanel();
-		panels[0][2] = new JPanel();
-		panels[0][3] = new JPanel();
-		panels[0][4] = new JPanel();
-		panels[0][5] = new JPanel();
-		panels[1][0] = new JPanel();
-		panels[1][1] = new JPanel();
-		panels[1][2] = new JPanel();
-		panels[1][3] = new JPanel();
-		panels[1][4] = new JPanel();
-		panels[1][5] = new JPanel();
-		panels[2][0] = new JPanel();
-		panels[2][1] = new JPanel();
-		panels[2][2] = new JPanel();
-		panels[2][3] = new JPanel();
-		panels[2][4] = new JPanel();
-		panels[2][5] = new JPanel();
-		panels[3][0] = new JPanel();
-		panels[3][1] = new JPanel();
-		panels[3][2] = new JPanel();
-		panels[3][3] = new JPanel();
-		panels[3][4] = new JPanel();
-		panels[3][5] = new JPanel();
-		panels[4][0] = new JPanel();
-		panels[4][1] = new JPanel();
-		panels[4][2] = new JPanel();
-		panels[4][3] = new JPanel();
-		panels[4][4] = new JPanel();
-		panels[4][5] = new JPanel();
-		panels[5][0] = new JPanel();
-		panels[5][1] = new JPanel();
-		panels[5][2] = new JPanel();
-		panels[5][3] = new JPanel();
-		panels[5][4] = new JPanel();
-		panels[5][5] = new JPanel();
-		panels[6][0] = new JPanel();
-		panels[6][1] = new JPanel();
-		panels[6][2] = new JPanel();
-		panels[6][3] = new JPanel();
-		panels[6][4] = new JPanel();
-		panels[6][5] = new JPanel();
-		
-		
 		int counter = 0;
 		//initialize buttons
-		for(int i = 0; i < 6; i++) {
+		for(int i = 0; i < 7; i++) {
 			if (counter != 0) {
 				x_coordinate += 55;
 			}
-			
+			buttons[i] = new JButton("insert");
 			buttons[i].setBounds(x_coordinate, 10, 48, 22);
 			getContentPane().add(buttons[i]);
 			counter++;
 		}
 		counter = 0;
+		
 		//Action Listeners for Buttons
 		buttons[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,9 +136,8 @@ public class GUI extends JFrame {
 			}
 		});
 		
-		
 		x_coordinate = 10;
-		y_coordinate = 30;
+		y_coordinate = 40;
 		//draw panels and coins
 		for(int k = 0; k < 7; k++) {
 			if (k != 0) {
@@ -199,7 +147,8 @@ public class GUI extends JFrame {
 				if (l != 0) {
 					y_coordinate += 55;
 				}
-				panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 40);
+				panels[k][l] = new JPanel();
+				panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 48);
 				panels[k][l].setBackground(Color.WHITE);
 				switch(board_status[k][l]) {
 				case YOU:
@@ -208,15 +157,16 @@ public class GUI extends JFrame {
 					panels[k][l].add(youCoin);
 				case OPPONENT:
 					JLabel opponentCoin = new JLabel();
-					opponentCoin.setIcon(new ImageIcon(getClass().getResource("redCoin.png")));
+					opponentCoin.setIcon(new ImageIcon(getClass().getResource("red.png")));
 					panels[k][l].add(opponentCoin);
 				case NONE:
 				}
 				
 				getContentPane().add(panels[k][l]);
 			}
-			y_coordinate = 30;
+			y_coordinate = 40;
 		
 		}
 	}
 }
+
