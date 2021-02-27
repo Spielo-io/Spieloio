@@ -1,8 +1,11 @@
+import io.spielo.messages.CreateLobbyMessage;
+import io.spielo.messages.MessageHeader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+
 
 public class LobbyCreateScreen extends SpieloView implements ActionListener {
     private GridBagLayout gridBagLayout;
@@ -54,15 +57,6 @@ public class LobbyCreateScreen extends SpieloView implements ActionListener {
         return lobbySettings_Panel.getLobbySettings();
     }
 
-    public String[] getLobbySettingsAndUsername(){
-        String [] settings = new String[5];
-        for(int i = 0; i< getLobbySettings().length; i++){
-            settings[i] = getLobbySettings()[i];
-        }
-        settings[4] = Spielo.username;
-        return settings;
-    }
-
     private void addActionListeners() {
         createLobby_Button.addActionListener(this);
         backToStartScreen_Button.addActionListener(this);
@@ -74,7 +68,7 @@ public class LobbyCreateScreen extends SpieloView implements ActionListener {
             Spielo.changeView("StartScreen");
         } else if (e.getSource() == createLobby_Button) {
 //            message
-            if (lobbySettings_Panel.getVisibilityLobbySetting().equals("Öffentlich")) {
+            if (lobbySettings_Panel.getVisibilitySetting()) {
                 Spielo.changeView("LobbyScreenHostPublic");
             }
             else {
