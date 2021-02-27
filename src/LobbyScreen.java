@@ -71,15 +71,15 @@ public class LobbyScreen extends SpieloView {
     }
 
     public void setStartConfirmedToPlayerOne(){
-        player1Name_Label.setText("<html>" + Spielo.username + " <b style=\"color:green;\">&#10004</html>");
+        player1Name_Label.setText("<html>" + Spielo.getUsername() + " <b style=\"color:green;\">&#10004</html>");
     }
 
     public void setStartConfirmedToPlayerTwo(){
         player2Name_Label.setText("<html>" + nameOfPlayer2 + " <b style=\"color:green;\">&#10004</b></html>");
     }
 
-    public void setLobbySettings(String [] lobbySettings, boolean userIsHost){
-        lobbySettings_Panel.setLobbySettings(lobbySettings, userIsHost);
+    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
+        lobbySettings_Panel.setLobbySettings(isPublic, game, bestOf, lobbyTimer, userIsHost);
     }
 
     public String [] getLobbySettings(){
