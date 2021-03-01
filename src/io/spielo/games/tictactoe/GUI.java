@@ -1,4 +1,4 @@
-package io.spielo.games;
+package io.spielo.games.tictactoe;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 

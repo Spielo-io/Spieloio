@@ -1,27 +1,18 @@
-package fourwins;
+package io.spielo.games.fourwins;
 
-import io.spielo.Game;
-import io.spielo.Game.player;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.List;
-
-import javax.swing.JFrame;
 import java.awt.Button;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
-import java.awt.Toolkit;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import java.awt.Canvas;
-import java.awt.Color;
+import io.spielo.games.tictactoe.Game.player;
 
 
 public class GUI extends JFrame {

@@ -1,4 +1,4 @@
-package io.spielo.games;
+package io.spielo.games.tictactoe;
 
 public class Game {
 	public Game() {
@@ -79,7 +79,7 @@ public class Game {
 		return gamesDrawn;
 	}
 	
-	public enum player{
+	static public enum player{
 		//contains all possible players
 		YOU, OPPONENT, NONE
 	}

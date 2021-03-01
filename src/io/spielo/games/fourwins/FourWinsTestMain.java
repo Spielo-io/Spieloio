@@ -1,12 +1,14 @@
-import io.spielo.Game;
+package io.spielo.games.fourwins;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import fourwins.*;
+import io.spielo.games.fourwins.Board;
+import io.spielo.games.fourwins.GUI;
+import io.spielo.games.tictactoe.Game;
 
-public class Spielo extends JFrame {
+public class FourWinsTestMain extends JFrame {
 	
 	private JPanel contentPane;
 

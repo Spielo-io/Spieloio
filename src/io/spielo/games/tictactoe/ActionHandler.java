@@ -1,11 +1,9 @@
-package io.spielo.games;
+package io.spielo.games.tictactoe;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import io.spielo.ClientHandler;
-import io.spielo.Game;
-import io.spielo.Game.player;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.TicTacToeMessage;
@@ -18,15 +16,15 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 	{
 		if(GUI.player == 1) // 2 -> Player O  // 1 -> Player X 
 		{
-			Game.message.setPlayer(player.YOU);
+			Game.message.setPlayer(Game.player.YOU);
 		}
 		if(GUI.player == 2)
 		{
-			Game.message.setPlayer(player.OPPONENT);
+			Game.message.setPlayer(Game.player.OPPONENT);
 		}
 		if(GUI.player == 0)
 		{
-			Game.message.setPlayer(player.NONE);
+			Game.message.setPlayer(Game.player.NONE);
 		}
 		
 		while(GUI.winner == false)

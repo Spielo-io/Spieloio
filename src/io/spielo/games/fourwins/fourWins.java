@@ -1,7 +1,6 @@
-package fourwins;
+package io.spielo.games.fourwins;
 
-
-public class fourWins extends Message{
+public class fourWins extends Communication{
 	public fourWins(boolean youAreInitializer) {
 		board = new Board(youAreInitializer);
 		//TODO: initialize GUI with the board

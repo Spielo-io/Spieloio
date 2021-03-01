@@ -1,6 +1,7 @@
 package io.spielo.games.fourwins;
 
-import io.spielo.Game;
+import io.spielo.games.tictactoe.Game;
+import io.spielo.games.tictactoe.Game.player;
 
 public class Board extends Game{
 //public:
