@@ -145,7 +145,6 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == actualizeLobbys_Button){
-            System.out.println("druck");
             Spielo.client.refreshLobbyList();
         }
         if(e.getSource() == backToStartScreen_Button){
@@ -165,7 +164,6 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof PublicLobbyListMessage){
-            System.out.println("lobby");
             addLobbysToLobbyListNew(((PublicLobbyListMessage) message).getList());
         }
     }

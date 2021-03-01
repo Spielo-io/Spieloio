@@ -155,16 +155,6 @@ public class LobbySettings extends JPanel{
         for (JRadioButton radioButton : radioButtons) buttonGroup.add(radioButton);
     }
 
-//    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
-//        activateRadioButtons(true);
-//        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, visibilitySettingToString(isPublic) );
-//        setSettingOfButtonGroup(gameSetting_ButtonGroup, game );
-//        setSettingOfButtonGroup(roundModeSetting_ButtonGroup, bestOf );
-//        setSettingOfButtonGroup(timerSetting_ButtonGroup, lobbyTimer );
-//        activateRadioButtons(userIsHost);
-//    }
-
-
     public void setLobbySettingsEnum(boolean isPublic, LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer, boolean userIsHost){
         activateRadioButtons(true);
         if(isPublic){
@@ -200,10 +190,6 @@ public class LobbySettings extends JPanel{
 
     }
 
-//    public void setVisibilitySetting(boolean setting){
-//        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, visibilitySettingToString(setting));
-//    }
-//
     public boolean getVisibilitySetting(){
         return visibilitySettingToBoolean(visibilitySetting_ButtonGroup.getSelection().getActionCommand());
     }
@@ -220,10 +206,6 @@ public class LobbySettings extends JPanel{
         }
     }
 
-//    public String getGameSetting(){
-//        return gameSetting_ButtonGroup.getSelection().getActionCommand();
-//    }
-
     public LobbyBestOf getRoundModeSettingEnum(){
         return switch (roundModeSetting_ButtonGroup.getSelection().getActionCommand()) {
             case "Best of 1" -> LobbyBestOf.BestOf_1;
@@ -235,10 +217,6 @@ public class LobbySettings extends JPanel{
         };
     }
 
-//    public String getRoundModeSetting(){
-//        return roundModeSetting_ButtonGroup.getSelection().getActionCommand();
-//    }
-
     public LobbyTimer getTimerSettingEnum(){
         return switch (timerSetting_ButtonGroup.getSelection().getActionCommand()) {
             case "30 Sek." -> LobbyTimer.Seconds_30;
@@ -247,19 +225,6 @@ public class LobbySettings extends JPanel{
             default -> null;
         };
     }
-
-//    public String getTimerSetting(){
-//        return timerSetting_ButtonGroup.getSelection().getActionCommand();
-//    }
-
-//    private void setSettingOfButtonGroup(ButtonGroup buttonGroup, String singleSetting){
-//        for(Enumeration<AbstractButton> e = buttonGroup.getElements(); e.hasMoreElements();){
-//            AbstractButton button = e.nextElement();
-//            if(button.getActionCommand().equals(singleSetting)){
-//                button.doClick();
-//            }
-//        }
-//    }
 
     public void disableVisibiltyButtonGroupSetting(){
         for(Enumeration<AbstractButton> a = visibilitySetting_ButtonGroup.getElements(); a.hasMoreElements();) {
@@ -284,31 +249,9 @@ public class LobbySettings extends JPanel{
         mill_RadioButton.setEnabled(false);
     }
 
-//    public String[] getLobbySettings(){
-//        String[] settings = new String[4];
-//        settings[0] = visibilitySetting_ButtonGroup.getSelection().getActionCommand();
-//        settings[1] = gameSetting_ButtonGroup.getSelection().getActionCommand();
-//        settings[2] = roundModeSetting_ButtonGroup.getSelection().getActionCommand();
-//        settings[3] = timerSetting_ButtonGroup.getSelection().getActionCommand();
-//        return settings;
-//    }
-
-//    public String getVisibilityLobbySetting(){
-//        return visibilitySetting_ButtonGroup.getSelection().getActionCommand();
-//    }
-//
     public boolean visibilitySettingToBoolean(String visibilitySetting){
         return !visibilitySetting.equals("Privat");
     }
-//
-//    public String visibilitySettingToString(boolean isPublic){
-//        if(isPublic){
-//            return "Öffentlich";
-//        }
-//        else{
-//            return "Privat";
-//        }
-//    }
 
     private void addElementToPanelUsingGridBagLayout(Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -342,24 +285,4 @@ public class LobbySettings extends JPanel{
 
         return buttons;
     }
-//
-//    private void addActionListeners(){
-//        ticTacToe_RadioButton.addActionListener(this);
-//        fourWins_RadioButton.addActionListener(this);
-//
-//        bestOfOne_RadioButton.addActionListener(this);
-//        bestOfThree_RadioButton.addActionListener(this);
-//        bestOfFive_RadioButton.addActionListener(this);
-//        bestOfSeven_RadioButton.addActionListener(this);
-//        bestOfNine_RadioButton.addActionListener(this);
-//
-//        thirtySeconds_RadioButton.addActionListener(this);
-//        oneMinute_RadioButton.addActionListener(this);
-//        threeMinutes_RadioButton.addActionListener(this);
-//    }
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        System.out.println("pushed");
-//    }
 }
