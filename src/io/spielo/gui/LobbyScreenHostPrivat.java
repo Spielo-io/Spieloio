@@ -5,6 +5,8 @@ import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.lobby.CreateLobbyResponseMessage;
 import io.spielo.messages.lobby.JoinLobbyResponseMessage;
+import io.spielo.messages.lobby.LobbySettingsMessage;
+import io.spielo.messages.lobby.ReadyToPlayMessage;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,8 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
     //          buttons
     private JButton leaveLobby_Button;
     private JButton confirmStart_Button;
+//      boolean
+    private boolean loadedLobbySettings;
 
     public LobbyScreenHostPrivat(){
         initializeElements();
@@ -57,11 +61,20 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
     public void prepareLobbyForNewGame(){
         confirmStart_Button.setText("Spielstart zustimmen");
         setEmptyStringToPlayerTwo();
+        loadedLobbySettings = false;
+    }
+
+    public void setLoadedLobbySettings(boolean isLoaded){
+        loadedLobbySettings = isLoaded;
     }
 
     private void addActionListeners(){
         leaveLobby_Button.addActionListener(this);
         confirmStart_Button.addActionListener(this);
+        for(JRadioButton button : lobbySettings_Panel.getChoosableButtons()){
+            button.addActionListener(this);
+        }
+
     }
 
     @Override
@@ -77,12 +90,22 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
             if(confirmStart_Button.getText().equals("Spielstart zustimmen")){
                 confirmStart_Button.setText("Spielstart verzögern");
                 setStartConfirmedToPlayerOne();
+                Spielo.client.readyToPlay(true);
+                lobbySettings_Panel.getChoosableButtons()[0].doClick();
             }
             else if(confirmStart_Button.getText().equals("Spielstart verzögern")){
                 confirmStart_Button.setText("Spielstart zustimmen");
                 setStartDelayedToPlayerOne();
+                Spielo.client.readyToPlay(false);
             }
         }
+        for(JRadioButton button : lobbySettings_Panel.getChoosableButtons()){
+            if(e.getSource() == button && loadedLobbySettings){
+                System.out.println("gedrückt");
+                Spielo.client.lobbySettings(lobbySettings_Panel.getVisibilitySetting(), lobbySettings_Panel.getGameSettingEnum(), lobbySettings_Panel.getRoundModeSettingEnum(), lobbySettings_Panel.getTimerSettingEnum());
+            }
+        }
+
     }
 
     @Override
@@ -92,6 +115,17 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
         }
         if(message instanceof JoinLobbyResponseMessage){
             setNameForPlayerTwo(((JoinLobbyResponseMessage) message).getPlayerName());
+        }
+        if(message instanceof ReadyToPlayMessage){
+            if(((ReadyToPlayMessage) message).getIsReady()){
+                setStartConfirmedToPlayerTwo();
+            }
+            else{
+                setStartDelayedToPlayerTwo();
+            }
+            if(((ReadyToPlayMessage) message).getIsReady() && confirmStart_Button.getText().equals("Spielstart verzögern")){
+                startGame();
+            }
         }
     }
 

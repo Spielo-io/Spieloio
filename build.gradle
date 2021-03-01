@@ -10,7 +10,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-mainClassName = 'screens.Spielo'
+mainClassName = 'io.spielo.Spielo'
 
 group 'io.spielo'
 version System.getenv("VERSION")
@@ -48,8 +48,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation "io.spielo:messages:+"
-    implementation "io.spielo:client:+"
+    implementation "io.spielo:client:2.1.11"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
