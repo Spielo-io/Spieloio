@@ -1,4 +1,4 @@
-package io.spielo.games;
+package io.spielo.games.tictactoe;
 
 import java.awt.Color;
 import java.awt.Graphics;
