@@ -1,3 +1,6 @@
+package io.spielo.gui;
+
+import io.spielo.Spielo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -71,11 +74,11 @@ public class StartScreen extends SpieloView implements ActionListener {
     }
 
     public String getJoinCode(){
-        return joinCode_TextField.getText().toUpperCase(Locale.ROOT);
+        return joinCode_TextField.getText().toLowerCase(Locale.ROOT);
     }
 
     private boolean isValidJoinCode(String joinCode){
-        return joinCode.length() == 6 && joinCode.matches("[A-Z]*");
+        return joinCode.length() == 6 && joinCode.matches("[a-z]*");
     }
 
     private void addActionListeners(){
@@ -101,6 +104,7 @@ public class StartScreen extends SpieloView implements ActionListener {
                 if(!"".equals(joinCode_TextField.getText())){
 //                              valid joinCode
                     if(isValidJoinCode(getJoinCode())){
+                        Spielo.client.joinLobby(getUsername(), getJoinCode());
                         Spielo.changeView("LobbyScreenClientPrivat");
                     }
 //                              invalid joinCode
@@ -114,6 +118,7 @@ public class StartScreen extends SpieloView implements ActionListener {
                 }
 //                change to LobbyScreen(RandomLobby)
             } else if (e.getSource() == this.randomLobby_Button) {
+                Spielo.client.joinRandomLobby(Spielo.getUsername());
                 Spielo.changeView("LobbyScreenClientPublic");
             }
         }

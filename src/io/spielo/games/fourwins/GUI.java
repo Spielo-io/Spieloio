@@ -1,19 +1,10 @@
-package fourwins;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package io.spielo.games.fourwins;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Button;
-import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
-import javax.swing.JLabel;
 
 public class GUI extends JFrame {
 	private JTextField txtPressTheButton;

@@ -1,14 +1,12 @@
-import io.spielo.client.events.ClientEventHandler;
-import io.spielo.messages.ConnectMessage;
-import io.spielo.messages.Message;
+package io.spielo.gui;
 
+import io.spielo.Spielo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
-public class LobbySelectScreen extends SpieloView implements ActionListener, ClientEventHandler {
+public class LobbySelectScreen extends SpieloView implements ActionListener {
 
         private GridBagLayout gridBagLayout;
 //        heading
@@ -19,6 +17,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         private JList<String> listForLobbys_List;
         private JScrollPane listForLobbys_ScrollPane;
 //          buttons
+        private JButton actualizeLobbys_Button;
         private JButton joinLobby_Button;
         private JButton backToStartScreen_Button;
 //          variables
@@ -44,6 +43,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         listForLobbys_List = new JList<String>(listForLobbys_ListModel);
         listForLobbys_ScrollPane = new JScrollPane(listForLobbys_List);
 //          buttons
+        actualizeLobbys_Button = new JButton("Aktualisieren");
         joinLobby_Button = new JButton("Trete ausgewählter Lobby bei");
         backToStartScreen_Button = new JButton("Zum Startbildschirm");
 
@@ -67,13 +67,15 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         this.setLayout(gridBagLayout);
 //          heading
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, heading_Label, 1, 0, 1, 2, 0, new int[]{0, 0, 20, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, actualizeLobbys_Button, 3, 1, 1, 1, 0, new int[]{0, 0, 20, 0});
+
 //          lobbyList
         panelForLobbyList_Panel.add(listForLobbys_List, BorderLayout.CENTER);
         panelForLobbyList_Panel.add(listForLobbys_ScrollPane, BorderLayout.EAST);
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, panelForLobbyList_Panel, 0, 1, 2, 4, 0, new int[]{0, 30, 0, 30});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, panelForLobbyList_Panel, 0, 2, 2, 4, 0, new int[]{0, 30, 0, 30});
 //          buttons
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, joinLobby_Button, 0, 5, 1, 2, 0, new int[]{20, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 5, 1, 2, 0, new int[]{20, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, joinLobby_Button, 0, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
     public void addLobbysToLobbyList(String [][] lobbyList){
@@ -116,12 +118,16 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
     }
 
     private void addActionListeners(){
+            actualizeLobbys_Button.addActionListener(this);
         backToStartScreen_Button.addActionListener(this);
         joinLobby_Button.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+//        if(e.getSource() == actualizeLobbys_Button){
+//
+//        }
         if(e.getSource() == backToStartScreen_Button){
             Spielo.changeView("StartScreen");
         }
@@ -133,15 +139,5 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
                 Spielo.changeView("LobbyScreenClientPublic");
             }
         }
-    }
-
-    @Override
-    public void onMessageReceived(Message message) {
-
-    }
-
-    @Override
-    public void onDisconnect() {
-
     }
 }

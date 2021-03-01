@@ -1,8 +1,17 @@
+package io.spielo.gui;
+
+import io.spielo.Spielo;
+import io.spielo.client.events.ClientEventSubscriber;
+import io.spielo.messages.Message;
+import io.spielo.messages.lobby.JoinLobbyResponseCode;
+import io.spielo.messages.lobby.JoinLobbyResponseMessage;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
-public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListener {
+public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListener, ClientEventSubscriber {
     //    joinCode
     private JLabel joinCode_Label;
 //          buttons
@@ -37,30 +46,21 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
 //        joinCode
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, joinCode_Label, 3, 0, 1, 1, 0, new int[]{0, 0, 20, 0});
 //        button
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, leaveLobby_Button, 2, 7, 1, 2, 0, new int[]{20, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, confirmStart_Button, 0, 7, 1, 2, 0, new int[]{20, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, leaveLobby_Button, 2, 8, 1, 2, 0, new int[]{20, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, confirmStart_Button, 0, 8, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
     public void setJoinCodeLabel(String joinCode){
-        joinCode_Label.setText("Betritts-Code: " + joinCode);
-    }
-
-    public void startGame(){
-        Spielo.changeView("GameScreen");
+        joinCode_Label.setText("Betritts-Code: " + joinCode.toUpperCase(Locale.ROOT));
     }
 
     public void preparePanelForNewLobby(){
         confirmStart_Button.setText("Spielstart zustimmen");
-        confirmStart_Button.setEnabled(true);
     }
 
     private void addActionListeners(){
         leaveLobby_Button.addActionListener(this);
         confirmStart_Button.addActionListener(this);
-    }
-
-    public void alarmClientToConfirmStartOfGame(){
-        JOptionPane.showMessageDialog(this, "Dein Gegner will das Spiel starten!\nDrücke auf \"Spielstart zustimmen\", um das Spiel zu beginnen.");
     }
 
     @Override
@@ -72,10 +72,32 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
             }
         }
         else if(e.getSource() == confirmStart_Button){
-            confirmStart_Button.setText("Spielstart zugestimmt");
-            confirmStart_Button.setEnabled(false);
-            setStartConfirmedToPlayerOne();
+            if(confirmStart_Button.getText().equals("Spielstart zustimmen")){
+                confirmStart_Button.setText("Spielstart verzögern");
+                setStartConfirmedToPlayerOne();
+            }
+            else if(confirmStart_Button.getText().equals("Spielstart verzögern")){
+                confirmStart_Button.setText("Spielstart zustimmen");
+                setStartDelayedToPlayerOne();
+            }
         }
     }
 
+    @Override
+    public void onMessageReceived(Message message) {
+        if(message instanceof JoinLobbyResponseMessage){
+            if(((JoinLobbyResponseMessage) message).getResponseCode() == JoinLobbyResponseCode.Failed){
+                JOptionPane.showMessageDialog(this, "Dein Join-Code war leider ungültig!");
+                Spielo.changeView("StartScreen");
+            }
+            else{
+                setNameForPlayerTwo(((JoinLobbyResponseMessage) message).getPlayerName());
+            }
+        }
+    }
+
+    @Override
+    public void onDisconnect() {
+
+    }
 }

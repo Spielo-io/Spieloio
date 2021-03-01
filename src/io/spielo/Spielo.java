@@ -1,7 +1,8 @@
-import io.spielo.client.Client;
-import io.spielo.messages.ConnectMessage;
+package io.spielo;
 
-import javax.sound.midi.SysexMessage;
+import io.spielo.client.Client;
+import io.spielo.gui.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,8 +27,9 @@ public class Spielo {
 	private static boolean isHost;
 
 	private static String username;
+	private static String joinCode;
 
-//	public static Client client;
+	public static Client client;
 
 	public static void main(String[] args) {
 		new Spielo();
@@ -54,10 +56,13 @@ public class Spielo {
 
 		isHost = false;
 
-//		client = new Client("20.52.147.95");
-//		client.subscribe(lobbySelectScreen);
-//
-//		client.send(new ConnectMessage(System.currentTimeMillis()));
+		client = new Client();
+		client.subscribe(lobbyScreenClientPublic);
+		client.subscribe(lobbyScreenClientPrivat);
+		client.subscribe(lobbyScreenHostPrivat);
+		client.subscribe(lobbyScreenHostPublic);
+//		client.connect("20.52.147.95");
+		client.connect("127.0.0.1");
 
 	}
 
@@ -107,11 +112,13 @@ public class Spielo {
 				isHost = true;
 			}
 			case "LobbyScreenHostPublic" -> {
-				lobbyScreenHostPublic.setLobbySettings(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSetting(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSetting(), lobbyCreateScreen.lobbySettings_Panel.getTimerSetting(), true);
+				lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettingsEnum(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getTimerSettingEnum(), true);
+				lobbyScreenHostPublic.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 				currentLobbyScreen = lobbyScreenHostPublic;
 			}
 			case "LobbyScreenHostPrivat" -> {
-				lobbyScreenHostPrivat.setLobbySettings(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSetting(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSetting(), lobbyCreateScreen.lobbySettings_Panel.getTimerSetting(), true);
+				lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettingsEnum(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getTimerSettingEnum(), true);
+				lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 				currentLobbyScreen = lobbyScreenHostPrivat;
 			}
 			case "LobbyScreenClientPublic" -> {
@@ -119,11 +126,14 @@ public class Spielo {
 			}
 			case "LobbyScreenClientPrivat" -> {
 				currentLobbyScreen = lobbyScreenClientPrivat;
+				lobbyScreenClientPrivat.setJoinCodeLabel(startScreen.getJoinCode());
 			}
 		}
 //			get and set username
 		if (!newView.equals("StartScreen")) {
 			username = startScreen.getUsername();
+
+
 		}
 
 		if(newView.contains("LobbyScreen")){
@@ -146,6 +156,9 @@ public class Spielo {
 
 	public static String getUsername(){
 		return username;
+	}
+	public static String getJoinCode() {
+		return joinCode;
 	}
 
 }

@@ -1,6 +1,7 @@
+package io.spielo.gui;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class SpieloView extends JPanel {
     public void addElementToPanelUsingGridBagLayout(JPanel panel, GridBagLayout layout, Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){

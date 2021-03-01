@@ -1,3 +1,9 @@
+package io.spielo.gui;
+
+import io.spielo.messages.lobbysettings.LobbyBestOf;
+import io.spielo.messages.lobbysettings.LobbyGame;
+import io.spielo.messages.lobbysettings.LobbyTimer;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -24,9 +30,9 @@ public class LobbySettings extends JPanel{
 //    timerSetting
     private JLabel timerSetting_Label;
     private ButtonGroup timerSetting_ButtonGroup;
-    private JRadioButton offTimer_RadioButton;
     private JRadioButton thirtySeconds_RadioButton;
     private JRadioButton oneMinute_RadioButton;
+    private JRadioButton threeMinutes_RadioButton;
 //    roundModeSetting
     private JLabel roundModeSetting_Label;
     private ButtonGroup roundModeSetting_ButtonGroup;
@@ -34,6 +40,7 @@ public class LobbySettings extends JPanel{
     private JRadioButton bestOfThree_RadioButton;
     private JRadioButton bestOfFive_RadioButton;
     private JRadioButton bestOfSeven_RadioButton;
+    private JRadioButton bestOfNine_RadioButton;
 
     public LobbySettings(){
         initializeElements();
@@ -62,9 +69,9 @@ public class LobbySettings extends JPanel{
 //        timerSetting
         timerSetting_Label = new JLabel(StyleSheet.underlineHeading("Timer"));
         timerSetting_ButtonGroup = new ButtonGroup();
-        offTimer_RadioButton = new JRadioButton("Aus");
         thirtySeconds_RadioButton = new JRadioButton("30 Sek.");
         oneMinute_RadioButton = new JRadioButton("1 Min.");
+        threeMinutes_RadioButton = new JRadioButton("3 Min.");
 //        roundModeSetting
         roundModeSetting_Label = new JLabel(StyleSheet.underlineHeading("Rundenmodus:"));
         roundModeSetting_ButtonGroup = new ButtonGroup();
@@ -72,6 +79,7 @@ public class LobbySettings extends JPanel{
         bestOfThree_RadioButton = new JRadioButton("Best of 3");
         bestOfFive_RadioButton = new JRadioButton("Best of 5");
         bestOfSeven_RadioButton = new JRadioButton("Best of 7");
+        bestOfNine_RadioButton = new JRadioButton("Best of 9");
 
     }
 
@@ -81,13 +89,13 @@ public class LobbySettings extends JPanel{
 //        add RadioButtons to ButtonGroup
         addRadioButtonsToButtonGroup(gameSetting_ButtonGroup, new JRadioButton[] {ticTacToe_RadioButton, fourWinds_RadioButton, checkers_RadioButton, mill_RadioButton});
         addRadioButtonsToButtonGroup(visibilitySetting_ButtonGroup, new JRadioButton[] {publicVisibility_RadioButton, privateVisibility_RadioButton});
-        addRadioButtonsToButtonGroup(timerSetting_ButtonGroup, new JRadioButton[] {offTimer_RadioButton, thirtySeconds_RadioButton, oneMinute_RadioButton});
-        addRadioButtonsToButtonGroup(roundModeSetting_ButtonGroup, new JRadioButton[] {bestOfOne_RadioButton, bestOfThree_RadioButton, bestOfFive_RadioButton, bestOfSeven_RadioButton});
+        addRadioButtonsToButtonGroup(timerSetting_ButtonGroup, new JRadioButton[] {thirtySeconds_RadioButton, oneMinute_RadioButton, threeMinutes_RadioButton});
+        addRadioButtonsToButtonGroup(roundModeSetting_ButtonGroup, new JRadioButton[] {bestOfOne_RadioButton, bestOfThree_RadioButton, bestOfFive_RadioButton, bestOfSeven_RadioButton, bestOfNine_RadioButton});
 //        check one of the RadioButtonsInButtonGroup
         ticTacToe_RadioButton.doClick();
         privateVisibility_RadioButton.doClick();
         bestOfOne_RadioButton.doClick();
-        offTimer_RadioButton.doClick();
+        thirtySeconds_RadioButton.doClick();
 //        set Action Commands for RadioButtons
 //              gameSetting
         ticTacToe_RadioButton.setActionCommand("TicTacToe");
@@ -98,16 +106,20 @@ public class LobbySettings extends JPanel{
         publicVisibility_RadioButton.setActionCommand("Öffentlich");
         privateVisibility_RadioButton.setActionCommand("Privat");
 //              timerSetting
-        offTimer_RadioButton.setActionCommand("Timer aus");
-        thirtySeconds_RadioButton.setActionCommand("30 Sek");
-        oneMinute_RadioButton.setActionCommand("1 Min");
+        thirtySeconds_RadioButton.setActionCommand("30 Sek.");
+        oneMinute_RadioButton.setActionCommand("1 Min.");
+        threeMinutes_RadioButton.setActionCommand("3 Min.");
 //              roundModeSetting
         bestOfOne_RadioButton.setActionCommand("Best of 1");
         bestOfThree_RadioButton.setActionCommand("Best of 3");
         bestOfFive_RadioButton.setActionCommand("Best of 5");
         bestOfSeven_RadioButton.setActionCommand("Best of 7");
+        bestOfNine_RadioButton.setActionCommand("Best of 9");
 //        font
         StyleSheet.changeFontOfLobbySettingsElements(this);
+
+        checkers_RadioButton.setEnabled(false);
+        mill_RadioButton.setEnabled(false);
 
     }
 
@@ -129,54 +141,120 @@ public class LobbySettings extends JPanel{
         addElementToPanelUsingGridBagLayout(bestOfThree_RadioButton, 2, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(bestOfFive_RadioButton, 2, 3, 1, 1, 0, new int[]{0, 0, 0, 0});
         addElementToPanelUsingGridBagLayout(bestOfSeven_RadioButton, 2, 4, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(bestOfNine_RadioButton, 2, 5, 1, 1, 0, new int[]{0, 0, 0, 0});
 //        timerSetting
         addElementToPanelUsingGridBagLayout(timerSetting_Label, 3, 0, 1, 1, 0, new int[]{5, 0, 5, 0});
-        addElementToPanelUsingGridBagLayout(offTimer_RadioButton, 3, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(thirtySeconds_RadioButton, 3, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
-        addElementToPanelUsingGridBagLayout(oneMinute_RadioButton, 3, 3, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(thirtySeconds_RadioButton, 3, 1, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(oneMinute_RadioButton, 3, 2, 1, 1, 0, new int[]{0, 0, 0, 0});
+        addElementToPanelUsingGridBagLayout(threeMinutes_RadioButton, 3, 3, 1, 1, 0, new int[]{0, 0, 0, 0});
     }
 
     private void addRadioButtonsToButtonGroup(ButtonGroup buttonGroup, JRadioButton [] radioButtons){
         for (JRadioButton radioButton : radioButtons) buttonGroup.add(radioButton);
     }
 
-    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
+//    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
+//        activateRadioButtons(true);
+//        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, visibilitySettingToString(isPublic) );
+//        setSettingOfButtonGroup(gameSetting_ButtonGroup, game );
+//        setSettingOfButtonGroup(roundModeSetting_ButtonGroup, bestOf );
+//        setSettingOfButtonGroup(timerSetting_ButtonGroup, lobbyTimer );
+//        activateRadioButtons(userIsHost);
+//    }
+
+    public void setLobbySettingsEnum(boolean isPublic, LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer, boolean userIsHost){
         activateRadioButtons(true);
-        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, visibilitySettingToString(isPublic) );
-        setSettingOfButtonGroup(gameSetting_ButtonGroup, game );
-        setSettingOfButtonGroup(roundModeSetting_ButtonGroup, bestOf );
-        setSettingOfButtonGroup(timerSetting_ButtonGroup, lobbyTimer );
+        if(isPublic){
+            publicVisibility_RadioButton.doClick();
+        }
+        else{
+            privateVisibility_RadioButton.doClick();
+        }
+
+        switch(game){
+            case TicTacToe -> ticTacToe_RadioButton.doClick();
+            case Win4 -> fourWinds_RadioButton.doClick();
+//            case Checkers -> checkers_RadioButton.doClick();
+//            case Mill -> mill_RadioButton.doClick();
+        }
+
+        switch (bestOf){
+            case BestOf_1 -> bestOfOne_RadioButton.doClick();
+            case BestOf_3 -> bestOfThree_RadioButton.doClick();
+            case BestOf_5 -> bestOfFive_RadioButton.doClick();
+            case BestOf_7 -> bestOfSeven_RadioButton.doClick();
+            case BestOf_9 -> bestOfNine_RadioButton.doClick();
+        }
+
+        switch (timer){
+
+            case Seconds_30 -> thirtySeconds_RadioButton.doClick();
+            case Minute_1 -> oneMinute_RadioButton.doClick();
+            case Minute_3 -> threeMinutes_RadioButton.doClick();
+        }
         activateRadioButtons(userIsHost);
     }
 
-    public void setVisibilitySetting(boolean setting){
-        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, visibilitySettingToString(setting));
-    }
-
+//    public void setVisibilitySetting(boolean setting){
+//        setSettingOfButtonGroup(visibilitySetting_ButtonGroup, visibilitySettingToString(setting));
+//    }
+//
     public boolean getVisibilitySetting(){
         return visibilitySettingToBoolean(visibilitySetting_ButtonGroup.getSelection().getActionCommand());
     }
 
-    public String getGameSetting(){
-        return gameSetting_ButtonGroup.getSelection().getActionCommand();
-    }
-
-    public String getRoundModeSetting(){
-        return roundModeSetting_ButtonGroup.getSelection().getActionCommand();
-    }
-
-    public String getTimerSetting(){
-        return timerSetting_ButtonGroup.getSelection().getActionCommand();
-    }
-
-    private void setSettingOfButtonGroup(ButtonGroup buttonGroup, String singleSetting){
-        for(Enumeration<AbstractButton> e = buttonGroup.getElements(); e.hasMoreElements();){
-            AbstractButton button = e.nextElement();
-            if(button.getActionCommand().equals(singleSetting)){
-                button.doClick();
-            }
+    public LobbyGame getGameSettingEnum(){
+        if(gameSetting_ButtonGroup.getSelection().getActionCommand().equals("TicTacToe")){
+            return LobbyGame.TicTacToe;
+        }
+        else if(gameSetting_ButtonGroup.getSelection().getActionCommand().equals("4 Gewinnt")){
+            return LobbyGame.Win4;
+        }
+        else{
+            return null;
         }
     }
+
+//    public String getGameSetting(){
+//        return gameSetting_ButtonGroup.getSelection().getActionCommand();
+//    }
+
+    public LobbyBestOf getRoundModeSettingEnum(){
+        return switch (roundModeSetting_ButtonGroup.getSelection().getActionCommand()) {
+            case "Best of 1" -> LobbyBestOf.BestOf_1;
+            case "Best of 3" -> LobbyBestOf.BestOf_3;
+            case "Best of 5" -> LobbyBestOf.BestOf_5;
+            case "Best of 7" -> LobbyBestOf.BestOf_7;
+            case "Best of 9" -> LobbyBestOf.BestOf_9;
+            default -> null;
+        };
+    }
+
+//    public String getRoundModeSetting(){
+//        return roundModeSetting_ButtonGroup.getSelection().getActionCommand();
+//    }
+
+    public LobbyTimer getTimerSettingEnum(){
+        return switch (timerSetting_ButtonGroup.getSelection().getActionCommand()) {
+            case "30 Sek." -> LobbyTimer.Seconds_30;
+            case "1 Min." -> LobbyTimer.Minute_1;
+            case "3 Min." -> LobbyTimer.Minute_3;
+            default -> null;
+        };
+    }
+
+//    public String getTimerSetting(){
+//        return timerSetting_ButtonGroup.getSelection().getActionCommand();
+//    }
+
+//    private void setSettingOfButtonGroup(ButtonGroup buttonGroup, String singleSetting){
+//        for(Enumeration<AbstractButton> e = buttonGroup.getElements(); e.hasMoreElements();){
+//            AbstractButton button = e.nextElement();
+//            if(button.getActionCommand().equals(singleSetting)){
+//                button.doClick();
+//            }
+//        }
+//    }
 
     public void disableVisibiltyButtonGroupSetting(){
         for(Enumeration<AbstractButton> a = visibilitySetting_ButtonGroup.getElements(); a.hasMoreElements();) {
@@ -197,33 +275,35 @@ public class LobbySettings extends JPanel{
         for(Enumeration<AbstractButton> d = roundModeSetting_ButtonGroup.getElements(); d.hasMoreElements();) {
             d.nextElement().setEnabled(activated);
         }
+        checkers_RadioButton.setEnabled(false);
+        mill_RadioButton.setEnabled(false);
     }
 
-    public String[] getLobbySettings(){
-        String[] settings = new String[4];
-        settings[0] = visibilitySetting_ButtonGroup.getSelection().getActionCommand();
-        settings[1] = gameSetting_ButtonGroup.getSelection().getActionCommand();
-        settings[2] = roundModeSetting_ButtonGroup.getSelection().getActionCommand();
-        settings[3] = timerSetting_ButtonGroup.getSelection().getActionCommand();
-        return settings;
-    }
+//    public String[] getLobbySettings(){
+//        String[] settings = new String[4];
+//        settings[0] = visibilitySetting_ButtonGroup.getSelection().getActionCommand();
+//        settings[1] = gameSetting_ButtonGroup.getSelection().getActionCommand();
+//        settings[2] = roundModeSetting_ButtonGroup.getSelection().getActionCommand();
+//        settings[3] = timerSetting_ButtonGroup.getSelection().getActionCommand();
+//        return settings;
+//    }
 
-    public String getVisibilityLobbySetting(){
-        return visibilitySetting_ButtonGroup.getSelection().getActionCommand();
-    }
-
+//    public String getVisibilityLobbySetting(){
+//        return visibilitySetting_ButtonGroup.getSelection().getActionCommand();
+//    }
+//
     public boolean visibilitySettingToBoolean(String visibilitySetting){
         return !visibilitySetting.equals("Privat");
     }
-
-    public String visibilitySettingToString(boolean isPublic){
-        if(isPublic){
-            return "Öffentlich";
-        }
-        else{
-            return "Privat";
-        }
-    }
+//
+//    public String visibilitySettingToString(boolean isPublic){
+//        if(isPublic){
+//            return "Öffentlich";
+//        }
+//        else{
+//            return "Privat";
+//        }
+//    }
 
     private void addElementToPanelUsingGridBagLayout(Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){
         GridBagConstraints gridBagConstraints = new GridBagConstraints();

@@ -1,3 +1,6 @@
+package io.spielo.gui;
+
+import io.spielo.Spielo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

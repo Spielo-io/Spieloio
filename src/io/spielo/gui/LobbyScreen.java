@@ -1,3 +1,6 @@
+package io.spielo.gui;
+
+import io.spielo.Spielo;
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +16,7 @@ public class LobbyScreen extends SpieloView {
 
     protected String nameOfPlayer2;
 //      lobbySettings
-    protected LobbySettings lobbySettings_Panel;
+    public LobbySettings lobbySettings_Panel;
 
     public LobbyScreen(){
         initializeElements();
@@ -29,7 +32,7 @@ public class LobbyScreen extends SpieloView {
         player1_Label = new JLabel("Du: ");
         player1Name_Label = new JLabel("<html>username1</html>");
         player2_Label = new JLabel("Dein Gegner: ");
-        player2Name_Label = new JLabel("<html>username2</html>");
+        player2Name_Label = new JLabel("<html></html>");
 //        lobbySettings
         lobbySettings_Panel = new LobbySettings();
     }
@@ -58,31 +61,47 @@ public class LobbyScreen extends SpieloView {
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, player2_Label, 2, 1, 1, 1, 0, new int[]{0, 0, 20, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, player2Name_Label, 3, 1, 1, 1, 0, new int[]{0, 0, 20, 0});
 //        lobbySettings
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, lobbySettings_Panel, 0, 2, 5, 4, 0, new int[]{0, 5, 0, 5});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, lobbySettings_Panel, 0, 2, 6, 4, 0, new int[]{0, 5, 0, 5});
     }
 
     public void setNameForPlayerOne(String usernamePlayer1){
-        player1Name_Label.setText("<html>" + usernamePlayer1 + "</html>");
+        player1Name_Label.setText("<html>" + usernamePlayer1 + " <b style=\"color:red;\">&#10060</html>");
     }
 
-    public void setNameForPlayerTwo(String usernamePlayer2){
+    protected void setNameForPlayerTwo(String usernamePlayer2){
         nameOfPlayer2 = usernamePlayer2;
-        player2Name_Label.setText("<html>" + usernamePlayer2 + "</html>");
+        player2Name_Label.setText("<html>" + usernamePlayer2 + " <b style=\"color:red;\">&#10060</html>");
     }
 
-    public void setStartConfirmedToPlayerOne(){
+    protected void setEmptyStringToPlayerTwo(){
+        player2Name_Label.setText("");
+    }
+
+    protected void setStartConfirmedToPlayerOne(){
         player1Name_Label.setText("<html>" + Spielo.getUsername() + " <b style=\"color:green;\">&#10004</html>");
     }
 
-    public void setStartConfirmedToPlayerTwo(){
+    protected void setStartDelayedToPlayerOne(){
+        player1Name_Label.setText("<html>" + Spielo.getUsername() + " <b style=\"color:red;\">&#10060</html>");
+    }
+
+    protected void setStartConfirmedToPlayerTwo(){
         player2Name_Label.setText("<html>" + nameOfPlayer2 + " <b style=\"color:green;\">&#10004</b></html>");
     }
 
-    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
-        lobbySettings_Panel.setLobbySettings(isPublic, game, bestOf, lobbyTimer, userIsHost);
+    protected void setStartDelayedToPlayerTwo(){
+        player2Name_Label.setText("<html>" + nameOfPlayer2 + " <b style=\"color:red;\">&#10060</b></html>");
     }
 
-    public String [] getLobbySettings(){
-        return lobbySettings_Panel.getLobbySettings();
+    protected void startGame(boolean userIsHost){
+        Spielo.changeView("GameScreen");
     }
+
+//    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
+//        lobbySettings_Panel.setLobbySettings(isPublic, game, bestOf, lobbyTimer, userIsHost);
+//    }
+//
+//    public String [] getLobbySettings(){
+//        return lobbySettings_Panel.getLobbySettings();
+//    }
 }

@@ -1,4 +1,4 @@
-package io.spielo;
+package io.spielo.games;
 
 public class Game {
 	public Game() {

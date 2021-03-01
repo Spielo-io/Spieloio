@@ -1,3 +1,5 @@
+package io.spielo.gui;
+
 import javax.swing.*;
 import java.awt.*;
 
