@@ -31,6 +31,7 @@ public class GUI extends JFrame {
 		setBounds(100, 100, 571, 445);
 		getContentPane().setLayout(null);
 		
+		//--------------------------debug start
 		Button button = new Button("print board to console");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -46,24 +47,14 @@ public class GUI extends JFrame {
 				System.out.println(board.getWinner());
 			}
 		});
+		
 		button_70.setBounds(415, 59, 137, 43);
 		getContentPane().add(button_70);
-		
-		drawBoard(board);
-		this.network = network;
-	}
-	
-	private Network network;
-	
-	public void drawBoard(Board board) {
-		player [][] board_status = board.getBoard();
-
+		//----------------debug end
+		this.board = board;
+		//init butons
 		int x_coordinate = 10;
 		int y_coordinate = 10;
-		
-		JButton[] buttons = new JButton[7];
-		JPanel[][] panels = new JPanel[7][6];
-		
 		int counter = 0;
 		//initialize buttons
 		for(int i = 0; i < 7; i++) {
@@ -75,96 +66,115 @@ public class GUI extends JFrame {
 			getContentPane().add(buttons[i]);
 			counter++;
 		}
-		counter = 0;
 		
 		//Action Listeners for Buttons
-		buttons[0].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(0);
-					network.sendMessage(0);
-				}
-			}
-		});
-		buttons[1].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(1);
-					network.sendMessage(1);
-				}
-			}
-		});
-		buttons[2].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(2);
-					network.sendMessage(2);
-				}
-			}
-		});
-		buttons[3].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(3);
-					network.sendMessage(3);
-				}
-			}
-		});
-		buttons[4].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(4);
-					network.sendMessage(4);
-				}
-			}
-		});
-		buttons[5].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(5);
-					network.sendMessage(5);
-				}
-			}
-		});
-		buttons[6].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(board.getPlayer() == player.YOU) {
-					board.insertChip(6);
-					network.sendMessage(6);
-				}
-			}
-		});
-		
-		x_coordinate = 10;
-		y_coordinate = 40;
-		//draw panels and coins
-		for(int k = 0; k < 7; k++) {
-			if (k != 0) {
-				x_coordinate += 55;
-			}
-			for (int l = 0; l < 6; l++) {
-				if (l != 0) {
-					y_coordinate += 55;
-				}
-				panels[k][l] = new JPanel();
-				panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 48);
-				panels[k][l].setBackground(Color.WHITE);
-				switch(board_status[k][l]) {
-				case YOU:
-					JLabel youCoin = new JLabel();
-					youCoin.setIcon(new ImageIcon(getClass().getResource("blue.png")));
-					panels[k][l].add(youCoin);
-				case OPPONENT:
-					JLabel opponentCoin = new JLabel();
-					opponentCoin.setIcon(new ImageIcon(getClass().getResource("red.png")));
-					panels[k][l].add(opponentCoin);
-				case NONE:
-				}
+				buttons[0].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(0);
+							network.sendMessage(0);
+							update();
+						}
+					}
+				});
+				buttons[1].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(1);
+							network.sendMessage(1);
+							update();
+						}
+					}
+				});
+				buttons[2].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(2);
+							network.sendMessage(2);
+							update();
+						}
+					}
+				});
+				buttons[3].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(3);
+							network.sendMessage(3);
+							update();
+						}
+					}
+				});
+				buttons[4].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(4);
+							network.sendMessage(4);
+							update();
+						}
+					}
+				});
+				buttons[5].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(5);
+							network.sendMessage(5);
+							update();
+						}
+					}
+				});
+				buttons[6].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(board.getPlayer() == player.YOU) {
+							board.insertChip(6);
+							network.sendMessage(6);
+							update();
+						}
+					}
+				});
+		//init butons end
 				
-				getContentPane().add(panels[k][l]);
-			}
-			y_coordinate = 40;
+		//init panels start
+				y_coordinate = 350;
+				x_coordinate = 10;
+				for(int k = 0; k < 7; k++) {
+					if (k != 0) {
+						x_coordinate += 55;
+					}
+					for (int l = 0; l < 6; l++) {
+						if (l != 0) {
+							y_coordinate -= 55;
+						}
+						panels[k][l] = new JPanel();
+						panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 48);
+						panels[k][l].setBackground(Color.WHITE);
+						getContentPane().add(panels[k][l]);
+					}
+					y_coordinate = 350;
+				}
+		//init panels end
 		
+		this.network = network;
+	}
+	
+	private Network network;
+	private Board board;
+	private JButton[] buttons = new JButton[7];
+	private JPanel[][] panels = new JPanel[7][6];
+	
+	public void update() {
+
+		player [][] boardStatus = board.getBoard();
+		for(int i = 0; i < 7; i++) {
+			for(int j = 0; j < 6; j++) {
+				if(boardStatus[i][j] != player.NONE) {
+					if(boardStatus[i][j] == player.YOU) {
+						panels[i][j].setBackground(Color.RED);
+					}
+					else {
+						panels[i][j].setBackground(Color.BLUE);
+					}
+				}
+			}
 		}
 	}
 }
