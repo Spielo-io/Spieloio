@@ -1,7 +1,6 @@
 package io.spielo.games.fourwins;
 
 import io.spielo.games.tictactoe.Game;
-import io.spielo.games.tictactoe.Game.player;
 
 public class Board extends Game{
 //public:
@@ -38,8 +37,7 @@ public class Board extends Game{
 			break;
 		default:
 			System.out.println("ERROR: unable to insert coin -> false game status\n");
-		}
-			
+		}		
 	}
 	
 	public player[][] getBoard() {
