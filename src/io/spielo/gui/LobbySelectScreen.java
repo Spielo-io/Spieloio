@@ -1,12 +1,18 @@
 package io.spielo.gui;
 
 import io.spielo.Spielo;
+import io.spielo.client.events.ClientEventSubscriber;
+import io.spielo.messages.Message;
+import io.spielo.messages.lobby.PublicLobby;
+import io.spielo.messages.lobby.PublicLobbyListMessage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-public class LobbySelectScreen extends SpieloView implements ActionListener {
+public class LobbySelectScreen extends SpieloView implements ActionListener, ClientEventSubscriber {
 
         private GridBagLayout gridBagLayout;
 //        heading
@@ -102,6 +108,12 @@ public class LobbySelectScreen extends SpieloView implements ActionListener {
             }
     }
 
+    public void addLobbysToLobbyListNew(List<PublicLobby> lobbyList){
+            for(PublicLobby lobby : lobbyList){
+
+            }
+    }
+
     private void removeLobbysFromLobbyList(){
             listForLobbys_ListModel.removeAllElements();
     }
@@ -139,5 +151,17 @@ public class LobbySelectScreen extends SpieloView implements ActionListener {
                 Spielo.changeView("LobbyScreenClientPublic");
             }
         }
+    }
+
+    @Override
+    public void onMessageReceived(Message message) {
+//        if(message instanceof PublicLobbyListMessage){
+//            ((PublicLobbyListMessage) message).getList()
+//        }
+    }
+
+    @Override
+    public void onDisconnect() {
+
     }
 }

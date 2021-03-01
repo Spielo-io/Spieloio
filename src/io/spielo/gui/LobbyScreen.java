@@ -97,6 +97,7 @@ public class LobbyScreen extends SpieloView {
     }
 
     protected void startGame(){
+        System.out.println("spielen");
         fourWins spiel = new fourWins(Spielo.userIsHost());
     }
 
