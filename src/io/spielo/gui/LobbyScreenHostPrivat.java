@@ -91,7 +91,6 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
                 confirmStart_Button.setText("Spielstart verzögern");
                 setStartConfirmedToPlayerOne();
                 Spielo.client.readyToPlay(true);
-                lobbySettings_Panel.getChoosableButtons()[0].doClick();
             }
             else if(confirmStart_Button.getText().equals("Spielstart verzögern")){
                 confirmStart_Button.setText("Spielstart zustimmen");
