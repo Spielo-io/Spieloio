@@ -154,6 +154,7 @@ public class Spielo {
 		lobbyScreenHostPrivat.prepareLobbyForNewGame();
 		lobbyScreenClientPublic.preparePanelForNewLobby();
 		lobbyScreenClientPrivat.preparePanelForNewLobby();
+		lobbySelectScreen.preparePanelForNewGame();
 
 	}
 

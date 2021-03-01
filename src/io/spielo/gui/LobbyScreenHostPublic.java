@@ -28,7 +28,7 @@ public class LobbyScreenHostPublic extends LobbyScreen implements ActionListener
     private void initializeElements(){
 //        button
         leaveLobby_Button = new JButton("Lobby verlassen");
-        confirmStart_Button = new JButton("Spiel starten");
+        confirmStart_Button = new JButton("Spielstart zustimmen");
     }
 
     private void configureElements(){
@@ -58,6 +58,9 @@ public class LobbyScreenHostPublic extends LobbyScreen implements ActionListener
     private void addActionListeners(){
         leaveLobby_Button.addActionListener(this);
         confirmStart_Button.addActionListener(this);
+        for(JRadioButton button : lobbySettings_Panel.getChoosableButtons()){
+            button.addActionListener(this);
+        }
     }
 
     @Override
@@ -78,6 +81,12 @@ public class LobbyScreenHostPublic extends LobbyScreen implements ActionListener
                 confirmStart_Button.setText("Spielstart zustimmen");
                 setStartDelayedToPlayerOne();
                 Spielo.client.readyToPlay(false);
+            }
+        }
+        for(JRadioButton button : lobbySettings_Panel.getChoosableButtons()){
+            if(e.getSource() == button && loadedLobbySettings){
+                System.out.println("gedrückt");
+                Spielo.client.lobbySettings(lobbySettings_Panel.getVisibilitySetting(), lobbySettings_Panel.getGameSettingEnum(), lobbySettings_Panel.getRoundModeSettingEnum(), lobbySettings_Panel.getTimerSettingEnum());
             }
         }
     }
