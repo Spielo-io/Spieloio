@@ -26,7 +26,7 @@ public class GUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI(Board board) {
+	public GUI(Board board, Network network) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 571, 445);
 		getContentPane().setLayout(null);
@@ -50,7 +50,11 @@ public class GUI extends JFrame {
 		getContentPane().add(button_70);
 		
 		drawBoard(board);
+		this.network = network;
 	}
+	
+	private Network network;
+	
 	public void drawBoard(Board board) {
 		player [][] board_status = board.getBoard();
 
@@ -78,6 +82,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(0);
+					network.sendMessage(0);
 				}
 			}
 		});
@@ -85,6 +90,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(1);
+					network.sendMessage(1);
 				}
 			}
 		});
@@ -92,6 +98,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(2);
+					network.sendMessage(2);
 				}
 			}
 		});
@@ -99,6 +106,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(3);
+					network.sendMessage(3);
 				}
 			}
 		});
@@ -106,6 +114,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(4);
+					network.sendMessage(4);
 				}
 			}
 		});
@@ -113,6 +122,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(5);
+					network.sendMessage(5);
 				}
 			}
 		});
@@ -120,6 +130,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(board.getPlayer() == player.YOU) {
 					board.insertChip(6);
+					network.sendMessage(6);
 				}
 			}
 		});
