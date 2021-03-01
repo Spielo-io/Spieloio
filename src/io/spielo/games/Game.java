@@ -95,6 +95,7 @@ public class Game {
 	private int gamesWon = 0;
 	private int gamesLost = 0;
 	private int gamesDrawn = 0;
+	public static Game message = new Game();
 	
 	
 }
