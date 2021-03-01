@@ -1,4 +1,4 @@
-package fourwins;
+package io.spielo.games.fourwins;
 
 public class Board {
 //public:
