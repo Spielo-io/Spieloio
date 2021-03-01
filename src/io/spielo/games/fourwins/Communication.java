@@ -7,7 +7,7 @@ import io.spielo.messages.games.Win4Message;
 
 public class Communication implements ClientEventSubscriber{
 	public Communication() {
-		Spielo.client.subscribe(this);
+		//Spielo.client.subscribe(this);
 	}
 	
 	private void sendMessage(int message) {
