@@ -8,10 +8,7 @@ import java.awt.EventQueue;
 import java.awt.List;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Button;
-import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;

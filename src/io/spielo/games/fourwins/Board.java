@@ -1,4 +1,4 @@
-package fourwins;
+package io.spielo.games.fourwins;
 
 import io.spielo.Game;
 
