@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id('application')
+    id 'maven'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+mainClassName = 'io.spielo.Spielo'
+
+group 'io.spielo'
+version System.getenv("VERSION")
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/spielo-io/messages")
+        credentials {
+            username = 'lukesaltweather'
+            password = 'f17d254aabb98fc38d5dd37d986a86df8e296938'
+        }
+    }
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/spielo-io/client")
+        credentials {
+            username = 'lukesaltweather'
+            password = 'f17d254aabb98fc38d5dd37d986a86df8e296938'
+        }
+    }
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['tests']
+        }
+    }
+}
+
+dependencies {
+    implementation "io.spielo:client:2.1.11"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.1")
+}
+
+test {
+    useJUnitPlatform()
+
+    maxHeapSize = '1G'
+    filter {
+        includeTestsMatching "io.spielo.*"
+    }
+    reports.junitXml.destination = file("$buildDir/xml")
+    reports.html.destination = file("$buildDir/html")
+}
+
+application {
+    mainClass = mainClassName
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
