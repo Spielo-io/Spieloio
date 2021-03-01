@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 public class LobbySettings extends JPanel{
@@ -17,9 +19,9 @@ public class LobbySettings extends JPanel{
     private EtchedBorder borderForPanel_Border;
 //    gameSetting
     private JLabel gameSetting_Label;
-    private ButtonGroup gameSetting_ButtonGroup;
+    public ButtonGroup gameSetting_ButtonGroup;
     private JRadioButton ticTacToe_RadioButton;
-    private JRadioButton fourWinds_RadioButton;
+    private JRadioButton fourWins_RadioButton;
     private JRadioButton checkers_RadioButton;
     private JRadioButton mill_RadioButton;
 //    visibilitySetting
@@ -42,11 +44,11 @@ public class LobbySettings extends JPanel{
     private JRadioButton bestOfSeven_RadioButton;
     private JRadioButton bestOfNine_RadioButton;
 
+
     public LobbySettings(){
         initializeElements();
         addElementsToLayout();
         configureElements();
-//        hello();
     }
 
     private void initializeElements(){
@@ -58,7 +60,7 @@ public class LobbySettings extends JPanel{
         gameSetting_Label = new JLabel(StyleSheet.underlineHeading("Spiel:"));
         gameSetting_ButtonGroup = new ButtonGroup();
         ticTacToe_RadioButton = new JRadioButton("TicTacToe");
-        fourWinds_RadioButton = new JRadioButton("4 Gewinnt");
+        fourWins_RadioButton = new JRadioButton("4 Gewinnt");
         checkers_RadioButton = new JRadioButton("Dame");
         mill_RadioButton = new JRadioButton("Mühle");
 //        visibilitySetting
@@ -87,7 +89,7 @@ public class LobbySettings extends JPanel{
 //        border
         this.setBorder(borderForPanel_Border);
 //        add RadioButtons to ButtonGroup
-        addRadioButtonsToButtonGroup(gameSetting_ButtonGroup, new JRadioButton[] {ticTacToe_RadioButton, fourWinds_RadioButton, checkers_RadioButton, mill_RadioButton});
+        addRadioButtonsToButtonGroup(gameSetting_ButtonGroup, new JRadioButton[] {ticTacToe_RadioButton, fourWins_RadioButton, checkers_RadioButton, mill_RadioButton});
         addRadioButtonsToButtonGroup(visibilitySetting_ButtonGroup, new JRadioButton[] {publicVisibility_RadioButton, privateVisibility_RadioButton});
         addRadioButtonsToButtonGroup(timerSetting_ButtonGroup, new JRadioButton[] {thirtySeconds_RadioButton, oneMinute_RadioButton, threeMinutes_RadioButton});
         addRadioButtonsToButtonGroup(roundModeSetting_ButtonGroup, new JRadioButton[] {bestOfOne_RadioButton, bestOfThree_RadioButton, bestOfFive_RadioButton, bestOfSeven_RadioButton, bestOfNine_RadioButton});
@@ -99,7 +101,7 @@ public class LobbySettings extends JPanel{
 //        set Action Commands for RadioButtons
 //              gameSetting
         ticTacToe_RadioButton.setActionCommand("TicTacToe");
-        fourWinds_RadioButton.setActionCommand("4 Gewinnt");
+        fourWins_RadioButton.setActionCommand("4 Gewinnt");
         checkers_RadioButton.setActionCommand("Dame");
         mill_RadioButton.setActionCommand("Mühle");
 //              visibilitySetting
@@ -132,7 +134,7 @@ public class LobbySettings extends JPanel{
 //        gameSetting
         addElementToPanelUsingGridBagLayout(gameSetting_Label, 1, 0, 1, 1, 0, new int[]{5, 10, 5, 0});
         addElementToPanelUsingGridBagLayout(ticTacToe_RadioButton, 1, 1, 1, 1, 0, new int[]{0, 10, 0, 0});
-        addElementToPanelUsingGridBagLayout( fourWinds_RadioButton, 1, 2, 1, 1, 0, new int[]{0, 10, 0, 0});
+        addElementToPanelUsingGridBagLayout(fourWins_RadioButton, 1, 2, 1, 1, 0, new int[]{0, 10, 0, 0});
         addElementToPanelUsingGridBagLayout(checkers_RadioButton, 1, 3, 1, 1, 0, new int[]{0, 10, 0, 0});
         addElementToPanelUsingGridBagLayout(mill_RadioButton, 1, 4, 1, 1, 0, new int[]{0, 10, 0, 0});
 //        roundModeSetting
@@ -162,6 +164,7 @@ public class LobbySettings extends JPanel{
 //        activateRadioButtons(userIsHost);
 //    }
 
+
     public void setLobbySettingsEnum(boolean isPublic, LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer, boolean userIsHost){
         activateRadioButtons(true);
         if(isPublic){
@@ -173,7 +176,7 @@ public class LobbySettings extends JPanel{
 
         switch(game){
             case TicTacToe -> ticTacToe_RadioButton.doClick();
-            case Win4 -> fourWinds_RadioButton.doClick();
+            case Win4 -> fourWins_RadioButton.doClick();
 //            case Checkers -> checkers_RadioButton.doClick();
 //            case Mill -> mill_RadioButton.doClick();
         }
@@ -193,6 +196,8 @@ public class LobbySettings extends JPanel{
             case Minute_3 -> threeMinutes_RadioButton.doClick();
         }
         activateRadioButtons(userIsHost);
+
+
     }
 
 //    public void setVisibilitySetting(boolean setting){
@@ -321,4 +326,40 @@ public class LobbySettings extends JPanel{
         gridBagLayout.setConstraints(element, gridBagConstraints);
         this.add(element);
     }
+
+    public JRadioButton [] getChoosableButtons(){
+        JRadioButton [] buttons = new JRadioButton[10];
+        buttons[0] = ticTacToe_RadioButton;
+        buttons[1] = fourWins_RadioButton;
+        buttons[2] = bestOfOne_RadioButton;
+        buttons[3] = bestOfThree_RadioButton;
+        buttons[4] = bestOfFive_RadioButton;
+        buttons[5] = bestOfSeven_RadioButton;
+        buttons[6] = bestOfNine_RadioButton;
+        buttons[7] = thirtySeconds_RadioButton;
+        buttons[8] = oneMinute_RadioButton;
+        buttons[9] = threeMinutes_RadioButton;
+
+        return buttons;
+    }
+//
+//    private void addActionListeners(){
+//        ticTacToe_RadioButton.addActionListener(this);
+//        fourWins_RadioButton.addActionListener(this);
+//
+//        bestOfOne_RadioButton.addActionListener(this);
+//        bestOfThree_RadioButton.addActionListener(this);
+//        bestOfFive_RadioButton.addActionListener(this);
+//        bestOfSeven_RadioButton.addActionListener(this);
+//        bestOfNine_RadioButton.addActionListener(this);
+//
+//        thirtySeconds_RadioButton.addActionListener(this);
+//        oneMinute_RadioButton.addActionListener(this);
+//        threeMinutes_RadioButton.addActionListener(this);
+//    }
+//
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        System.out.println("pushed");
+//    }
 }

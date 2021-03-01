@@ -61,8 +61,9 @@ public class Spielo {
 		client.subscribe(lobbyScreenClientPrivat);
 		client.subscribe(lobbyScreenHostPrivat);
 		client.subscribe(lobbyScreenHostPublic);
-//		client.connect("20.52.147.95");
-		client.connect("127.0.0.1");
+		client.subscribe(lobbySelectScreen);
+		client.connect("20.52.147.95");
+//		client.connect("127.0.0.1");
 
 	}
 
@@ -114,11 +115,13 @@ public class Spielo {
 			case "LobbyScreenHostPublic" -> {
 				lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettingsEnum(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getTimerSettingEnum(), true);
 				lobbyScreenHostPublic.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
+				lobbyScreenHostPublic.setLoadedLobbySettings(true);
 				currentLobbyScreen = lobbyScreenHostPublic;
 			}
 			case "LobbyScreenHostPrivat" -> {
 				lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettingsEnum(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getTimerSettingEnum(), true);
 				lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
+				lobbyScreenHostPrivat.setLoadedLobbySettings(true);
 				currentLobbyScreen = lobbyScreenHostPrivat;
 			}
 			case "LobbyScreenClientPublic" -> {

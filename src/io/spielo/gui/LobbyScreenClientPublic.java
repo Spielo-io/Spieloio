@@ -5,6 +5,9 @@ import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.lobby.JoinLobbyResponseCode;
 import io.spielo.messages.lobby.JoinLobbyResponseMessage;
+import io.spielo.messages.lobby.LobbySettingsMessage;
+import io.spielo.messages.lobby.ReadyToPlayMessage;
+import io.spielo.messages.lobbysettings.LobbySettings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -64,10 +67,12 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
             if(confirmStart_Button.getText().equals("Spielstart zustimmen")){
                 confirmStart_Button.setText("Spielstart verzögern");
                 setStartConfirmedToPlayerOne();
+                Spielo.client.readyToPlay(true);
             }
             else if(confirmStart_Button.getText().equals("Spielstart verzögern")){
                 confirmStart_Button.setText("Spielstart zustimmen");
                 setStartDelayedToPlayerOne();
+                Spielo.client.readyToPlay(false);
             }
         }
     }
@@ -81,6 +86,22 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
             }
             else{
                 setNameForPlayerTwo(((JoinLobbyResponseMessage) message).getPlayerName());
+            }
+        }
+        if(message instanceof LobbySettingsMessage){
+            LobbySettings settings = ((LobbySettingsMessage) message).getSettings();
+            lobbySettings_Panel.setLobbySettingsEnum(settings.getPublic(), settings.getGame(), settings.getBestOf(), settings.getTimer(), false);
+        }
+
+        if(message instanceof ReadyToPlayMessage){
+            if(((ReadyToPlayMessage) message).getIsReady()){
+                setStartConfirmedToPlayerTwo();
+            }
+            else{
+                setStartDelayedToPlayerTwo();
+            }
+            if(((ReadyToPlayMessage) message).getIsReady() && confirmStart_Button.getText().equals("Spielstart verzögern")){
+                startGame();
             }
         }
     }
