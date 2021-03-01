@@ -21,11 +21,12 @@ public class FourWinsTestMain extends JFrame {
 			//System.out.println(game.getTimer());			
 		//}
 		Board board = new Board(true);
+		Network netowork = new Network(board);
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI gui = new GUI(board);
+					GUI gui = new GUI(board, netowork);
 					gui.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

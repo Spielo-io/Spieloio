@@ -1,29 +1,30 @@
 package io.spielo.games.fourwins;
 
-public class fourWins extends Communication{
+import java.awt.EventQueue;
+
+public class fourWins {
 	public fourWins(boolean youAreInitializer) {
 		board = new Board(youAreInitializer);
-		//TODO: initialize GUI with the board
-		//TODO: initialize messageClaient thing
+		network = new Network(board);
+		
+		//-----------------GUi init
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI gui = new GUI(board, network);
+					gui.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		//---------------Gui init end
 	}
 	
-	public void runGame() {
-		while(!closeGame) {
-			switch(board.getPlayer()) {
-			case YOU:
-				//inputEnabled = true;
-				break;
-			case OPPONENT:
-				//inputEnabled = false;
-				break;
-			case NONE:
-				//inputEnabled = false;
-				break;
-			}
-		}
-	}
+	
 	
 	public boolean closeGame = false;
 
 	private Board board;
+	private Network network;
 }
