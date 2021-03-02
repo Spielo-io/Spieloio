@@ -141,6 +141,7 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
 
                 JOptionPane.showMessageDialog(this, "Dein Gegner hat die Lobby verlassen!");
                 Spielo.prepareAppForNewGame();
+                setLoadedLobbySettings(true);
             }
         }
     }
