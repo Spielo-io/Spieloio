@@ -209,7 +209,7 @@ public class Spielo {
 
 	public static void setLobbySettingsToLobbyScreenHostPublic(){
 		lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettingsEnum(lobbyScreenClientPublic.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPublic.lobbySettings_Panel.getGameSettingEnum(), lobbyScreenClientPublic.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyScreenClientPublic.lobbySettings_Panel.getTimerSettingEnum(), true);
-		lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
+		lobbyScreenHostPublic.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 	}
 
 	public static void setOpponentLeftGame(boolean leftGame){

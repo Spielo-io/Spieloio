@@ -103,7 +103,8 @@ public class LobbyScreenHostPublic extends LobbyScreen implements ActionListener
     public void onMessageReceived(Message message) {
         if(message instanceof JoinLobbyResponseMessage){
             setNameForPlayerTwo(((JoinLobbyResponseMessage) message).getPlayerName());
-            confirmStart_Button.setEnabled(false);
+            confirmStart_Button.setEnabled(true);
+            Spielo.setOpponentLeftGame(false);
         }
         if(message instanceof ReadyToPlayMessage){
             if(((ReadyToPlayMessage) message).getIsReady()){

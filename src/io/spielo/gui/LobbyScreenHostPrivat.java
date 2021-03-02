@@ -120,6 +120,7 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
         if(message instanceof JoinLobbyResponseMessage){
             setNameForPlayerTwo(((JoinLobbyResponseMessage) message).getPlayerName());
             confirmStart_Button.setEnabled(true);
+            Spielo.setOpponentLeftGame(false);
         }
         if(message instanceof ReadyToPlayMessage){
             if(((ReadyToPlayMessage) message).getIsReady()){
@@ -136,6 +137,7 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
         }
         if(Spielo.getCurrentLobbyScreen() == this && !Spielo.getOpponentLeftGame()) {
             if (message instanceof LeaveLobbyMessage) {
+
                 JOptionPane.showMessageDialog(this, "Dein Gegner hat die Lobby verlassen!");
                 Spielo.prepareAppForNewGame();
             }
