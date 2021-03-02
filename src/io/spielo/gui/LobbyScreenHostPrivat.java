@@ -106,6 +106,7 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
         }
         for(JRadioButton button : lobbySettings_Panel.getChoosableButtons()){
             if(e.getSource() == button && loadedLobbySettings){
+                System.out.println("settings geändert");
                 Spielo.client.lobbySettings(lobbySettings_Panel.getVisibilitySetting(), lobbySettings_Panel.getGameSettingEnum(), lobbySettings_Panel.getRoundModeSettingEnum(), lobbySettings_Panel.getTimerSettingEnum());
             }
         }

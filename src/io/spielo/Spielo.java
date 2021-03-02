@@ -67,8 +67,8 @@ public class Spielo {
 		client.subscribe(lobbyScreenHostPrivat);
 		client.subscribe(lobbyScreenHostPublic);
 		client.subscribe(lobbySelectScreen);
-		client.connect("20.52.147.95");
-//		client.connect("127.0.0.1");
+//		client.connect("20.52.147.95");
+		client.connect("127.0.0.1");
 
 	}
 
