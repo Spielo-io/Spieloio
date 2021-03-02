@@ -23,8 +23,8 @@ public class Draw extends JLabel
 		
 		// draw///
 		
-		//g.setColor(new Color(255,230,204));
-		//g.fillRect(0, 0, 800, 600);
+		g.setColor(new Color(255,230,204));
+		g.fillRect(0, 0, 800, 600);
 
 		g.setColor(Color.BLACK);
 		

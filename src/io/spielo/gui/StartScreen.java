@@ -98,6 +98,7 @@ public class StartScreen extends SpieloView implements ActionListener {
 //                change to LobbySelectScreen
             } else if (e.getSource() == this.searchLobby_Button) {
                 Spielo.changeView("LobbySelectScreen");
+                Spielo.client.refreshLobbyList();
 //                change to LobbyScreen(PrivateLobby)
             } else if (e.getSource() == this.joinLobby_Button) {
 //                          entered joinCode
