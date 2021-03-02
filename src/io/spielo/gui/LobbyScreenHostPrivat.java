@@ -109,6 +109,7 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof CreateLobbyResponseMessage){
+        	System.out.println(((CreateLobbyResponseMessage) message).getCode().toString());
             setJoinCodeLabel(((CreateLobbyResponseMessage) message).getCode());
         }
         if(message instanceof JoinLobbyResponseMessage){

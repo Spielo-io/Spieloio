@@ -8,10 +8,10 @@ public class GUI
 	Draw draw;
 	
 	static JButton btn[] = new JButton[9];
-	//Ist der Button von Spieler 1 oder Spiele 2 oder garnicht gedrückt? (Zustände: 0 1 2)
 	static int pressed[] = new int[9];
-	static int player = 0; //Welcher Spieler ist am Zug?
-	static boolean winner = false;
+	static int player = 0;
+	static int countButtonspressed = 0;
+	static int opponent = 0;
 	
 	public GUI()
 	{
