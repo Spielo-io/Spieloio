@@ -5,6 +5,8 @@ import io.spielo.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class Spielo {
@@ -25,8 +27,10 @@ public class Spielo {
 
 
 	private static boolean isHost;
+	private static boolean opponentLeftGame;
 
 	private static String username;
+	private static String usernameOfPlayerTwo;
 	private static String joinCode;
 
 	public static Client client;
@@ -55,6 +59,7 @@ public class Spielo {
 		gameScreen = new GameScreen();
 
 		isHost = false;
+		opponentLeftGame = false;
 
 		client = new Client();
 		client.subscribe(lobbyScreenClientPublic);
@@ -97,6 +102,14 @@ public class Spielo {
 		UIManager.put("OptionPane.yesButtonText", "Ja");
 		UIManager.put("OptionPane.noButtonText", "Nein");
 		UIManager.put("OptionPane.cancelButtonText", "Abbrechen");
+
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+				client.close();
+			}
+		});
 	}
 
 	public static boolean userIsHost() {
@@ -130,6 +143,7 @@ public class Spielo {
 			case "LobbyScreenClientPrivat" -> {
 				currentLobbyScreen = lobbyScreenClientPrivat;
 				lobbyScreenClientPrivat.setJoinCodeLabel(startScreen.getJoinCode());
+				joinCode = startScreen.getJoinCode();
 			}
 		}
 //			get and set username
@@ -147,7 +161,7 @@ public class Spielo {
 		cardLayout.show(container, newView);
 	}
 
-	private static void prepareAppForNewGame(){
+	public static void prepareAppForNewGame(){
 		startScreen.clearJoinCodeTextfield();
 
 		lobbyScreenHostPublic.prepareLobbyForNewGame();
@@ -156,13 +170,54 @@ public class Spielo {
 		lobbyScreenClientPrivat.preparePanelForNewLobby();
 		lobbySelectScreen.preparePanelForNewGame();
 
+		usernameOfPlayerTwo = "";
+		opponentLeftGame = false;
+	}
+
+	public static LobbyScreen getCurrentLobbyScreen(){
+		return  currentLobbyScreen;
+	}
+
+	public static void setUserIsHost(boolean userIsHost){
+		isHost = userIsHost;
 	}
 
 	public static String getUsername(){
 		return username;
 	}
+
 	public static String getJoinCode() {
 		return joinCode;
+	}
+
+	public static void setUsernameOfPlayerTwo(String username){
+		usernameOfPlayerTwo = username;
+	}
+
+	public static String getUsernameOfPlayerTwo(){
+		return usernameOfPlayerTwo;
+	}
+
+	public static void setJoinCodeToLobbyScreenHostPrivat(){
+		lobbyScreenHostPrivat.setJoinCodeLabel(joinCode);
+	}
+
+	public static void setLobbySettingsToLobbyScreenHostPrivat(){
+		lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettingsEnum(lobbyScreenClientPrivat.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPrivat.lobbySettings_Panel.getGameSettingEnum(), lobbyScreenClientPrivat.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyScreenClientPrivat.lobbySettings_Panel.getTimerSettingEnum(), true);
+		lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
+	}
+
+	public static void setLobbySettingsToLobbyScreenHostPublic(){
+		lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettingsEnum(lobbyScreenClientPublic.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPublic.lobbySettings_Panel.getGameSettingEnum(), lobbyScreenClientPublic.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyScreenClientPublic.lobbySettings_Panel.getTimerSettingEnum(), true);
+		lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
+	}
+
+	public static void setOpponentLeftGame(boolean leftGame){
+		opponentLeftGame = leftGame;
+	}
+
+	public static boolean getOpponentLeftGame(){
+		return opponentLeftGame;
 	}
 
 }

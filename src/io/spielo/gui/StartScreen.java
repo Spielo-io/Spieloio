@@ -94,6 +94,7 @@ public class StartScreen extends SpieloView implements ActionListener {
         if(!"".equals(username_Textfield.getText())) {
 //                change to LobbyCreateScreen
             if (e.getSource() == this.createLobby_Button) {
+//                Spielo.changeView("GameScreen");
                 Spielo.changeView("LobbyCreateScreen");
 //                change to LobbySelectScreen
             } else if (e.getSource() == this.searchLobby_Button) {

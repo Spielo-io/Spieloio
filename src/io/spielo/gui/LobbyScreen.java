@@ -16,8 +16,6 @@ public class LobbyScreen extends SpieloView {
     protected JLabel player1Name_Label;
     protected JLabel player2_Label;
     protected JLabel player2Name_Label;
-
-    protected String nameOfPlayer2;
 //      lobbySettings
     public LobbySettings lobbySettings_Panel;
 
@@ -48,8 +46,6 @@ public class LobbyScreen extends SpieloView {
         player2_Label.setHorizontalAlignment(JLabel.RIGHT);
         player1Name_Label.setHorizontalAlignment(JLabel.LEFT);
         player2Name_Label.setHorizontalAlignment(JLabel.LEFT);
-
-        nameOfPlayer2 = "username2";
 //        font
         heading_Label.setFont(StyleSheet.heading_Font);
     }
@@ -72,7 +68,7 @@ public class LobbyScreen extends SpieloView {
     }
 
     protected void setNameForPlayerTwo(String usernamePlayer2){
-        nameOfPlayer2 = usernamePlayer2;
+        Spielo.setUsernameOfPlayerTwo(usernamePlayer2);
         player2Name_Label.setText("<html>" + usernamePlayer2 + " <b style=\"color:red;\">&#10060</html>");
     }
 
@@ -89,11 +85,11 @@ public class LobbyScreen extends SpieloView {
     }
 
     protected void setStartConfirmedToPlayerTwo(){
-        player2Name_Label.setText("<html>" + nameOfPlayer2 + " <b style=\"color:green;\">&#10004</b></html>");
+        player2Name_Label.setText("<html>" + Spielo.getUsernameOfPlayerTwo() + " <b style=\"color:green;\">&#10004</b></html>");
     }
 
     protected void setStartDelayedToPlayerTwo(){
-        player2Name_Label.setText("<html>" + nameOfPlayer2 + " <b style=\"color:red;\">&#10060</b></html>");
+        player2Name_Label.setText("<html>" + Spielo.getUsernameOfPlayerTwo() + " <b style=\"color:red;\">&#10060</b></html>");
     }
 
     protected void startGame(){

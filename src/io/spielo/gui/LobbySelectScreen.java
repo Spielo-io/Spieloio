@@ -87,6 +87,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
     }
 
     public void addLobbysToLobbyListNew(List<PublicLobby> lobbyList){
+            System.out.println(lobbyList);
             if(lobbyList.isEmpty()){
                 removeLobbysFromLobbyList();
                 listForLobbys_List.setBackground(new Color(238,238,238));
@@ -125,6 +126,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
     private void removeLobbysFromLobbyList(){
         listForLobbys_List.setBackground(new Color(238,238,238));
         listForLobbys_ListModel.removeAllElements();
+        lobbyCode_List.clear();
 
     }
 
