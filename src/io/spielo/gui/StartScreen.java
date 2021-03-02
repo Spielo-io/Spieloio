@@ -119,7 +119,7 @@ public class StartScreen extends SpieloView implements ActionListener {
                 }
 //                change to LobbyScreen(RandomLobby)
             } else if (e.getSource() == this.randomLobby_Button) {
-                Spielo.client.joinRandomLobby(Spielo.getUsername());
+                Spielo.client.joinRandomLobby(getUsername());
                 Spielo.changeView("LobbyScreenClientPublic");
             }
         }
