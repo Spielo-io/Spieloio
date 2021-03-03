@@ -6,21 +6,23 @@ import io.spielo.games.tictactoe.Game.player;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.Win4Message;
 
-public class Network implements ClientEventSubscriber{
+public class Network{
 	public Network(Board board) {
-		Spielo.client.subscribe(this);
+//		Spielo.client.subscribe(this);
 		this.board = board;
 	}
 	
 	public void sendMessage(int message) {
+		System.out.println("sende" + message);
 		Spielo.client.game4Win(message);
 	}
 
-	@Override
-	public void onMessageReceived(Message message) {
-		if(message instanceof Win4Message) {
-			Win4Message winfourMessage = (Win4Message)message;
-			int value = winfourMessage.getValue();
+	public void messageReceived(int valueNew){
+		System.out.println("message empfangen: " + valueNew);
+//		if(message instanceof Win4Message) {
+//			System.out.println("message received" + ((Win4Message) message).getValue());
+//			Win4Message winfourMessage = (Win4Message)message;
+			int value =  valueNew;  //	winfourMessage.getValue();
 			if(value < 7) {
 				board.insertChip(value);
 			}
@@ -33,12 +35,6 @@ public class Network implements ClientEventSubscriber{
 			}
 		}
 		
-	}
 
-	@Override
-	public void onDisconnect() {
-		// TODO Auto-generated method stub
-	}
-	
 	private Board board;
 }

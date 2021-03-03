@@ -24,5 +24,5 @@ public class fourWins {
 	public boolean closeGame = false;
 
 	private Board board;
-	private Network network;
+	public Network network;
 }
