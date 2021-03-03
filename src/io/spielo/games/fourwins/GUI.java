@@ -158,10 +158,10 @@ public class GUI extends JPanel {
 			for(int j = 0; j < 6; j++) {
 				if(boardStatus[i][j] != player.NONE) {
 					if(boardStatus[i][j] == player.YOU) {
-						panels[i][j].setBackground(Color.RED);
+						panels[i[j].add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("src/io/spielo/games/fourwins/red.png"))));
 					}
 					else {
-						panels[i][j].setBackground(Color.BLUE);
+						panels[i[j].add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("src/io/spielo/games/fourwins/blue.png"))));
 					}
 				}
 			}
