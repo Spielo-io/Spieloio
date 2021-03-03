@@ -100,6 +100,7 @@ public class LobbyScreen extends SpieloView {
 //        new GUI();
 //		new ImageLoader();
 //		new Draw();
+        Spielo.changeView("GameScreen");
         Spielo.getGameScreen().startGame();
     }
 

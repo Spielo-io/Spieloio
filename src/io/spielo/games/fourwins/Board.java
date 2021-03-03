@@ -1,7 +1,7 @@
 package io.spielo.games.fourwins;
 
 import io.spielo.Spielo;
-import io.spielo.games.tictactoe.Game;
+import io.spielo.games.Game;
 
 public class Board extends Game{
 //public:
@@ -79,28 +79,22 @@ public class Board extends Game{
 				if(board[i][j] != player.NONE) {
 					switch(checkHorizontal(i, j)) {
 					case YOU:
-						addWin();
 						return player.YOU;
 					case OPPONENT:
-						addLoss();
 						return player.OPPONENT;
 					}
 					
 					switch(checkVertical(i, j)) {
 					case YOU:
-						addWin();
 						return player.YOU;
 					case OPPONENT:
-						addLoss();
 						return player.OPPONENT;
 					}
 					
 					switch(checkDiagonal(i, j)) {
 					case YOU:
-						addWin();
 						return player.YOU;
 					case OPPONENT:
-						addLoss();
 						return player.OPPONENT;
 					}
 				}

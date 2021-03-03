@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import io.spielo.games.Game;
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
