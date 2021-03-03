@@ -21,8 +21,6 @@ public class fourWins {
 		//---------------Gui init end
 	}
 	
-	
-	
 	public boolean closeGame = false;
 
 	private Board board;
