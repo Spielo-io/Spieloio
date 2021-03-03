@@ -97,10 +97,10 @@ public class LobbyScreen extends SpieloView {
 
     protected void startGame(){
         System.out.println("spielen");
-        //fourWins spiel = new fourWins(Spielo.userIsHost());
-        new GUI();
-		new ImageLoader();
-		new Draw();
+//        new GUI();
+//		new ImageLoader();
+//		new Draw();
+        Spielo.getGameScreen().startGame();
     }
 
 //    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){

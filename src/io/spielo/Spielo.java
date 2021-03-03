@@ -1,6 +1,7 @@
 package io.spielo;
 
 import io.spielo.client.Client;
+import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.gui.*;
 
 import javax.swing.*;
@@ -67,6 +68,8 @@ public class Spielo {
 		client.subscribe(lobbyScreenHostPrivat);
 		client.subscribe(lobbyScreenHostPublic);
 		client.subscribe(lobbySelectScreen);
+		client.subscribe(gameScreen);
+
 //		client.connect("20.52.147.95");
 		client.connect("127.0.0.1");
 
@@ -219,6 +222,10 @@ public class Spielo {
 	public static boolean getOpponentLeftGame(){
 		return opponentLeftGame;
 	}
+	public static GameScreen getGameScreen(){
+		return gameScreen;
+	}
+
 
 }
 

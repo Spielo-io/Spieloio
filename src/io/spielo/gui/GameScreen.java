@@ -1,6 +1,10 @@
 package io.spielo.gui;
 
 import io.spielo.Spielo;
+import io.spielo.client.events.ClientEventSubscriber;
+import io.spielo.games.fourwins.fourWins;
+import io.spielo.messages.Message;
+import io.spielo.messages.games.Win4Message;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
 
 import javax.swing.*;
@@ -9,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameScreen extends JPanel implements ActionListener {
+public class GameScreen extends JPanel implements ActionListener, ClientEventSubscriber {
     private GridBagLayout gridBagLayout;
 //    labels
     private JLabel timer_Label;
@@ -26,6 +30,8 @@ public class GameScreen extends JPanel implements ActionListener {
 
     private int widthOfPlayedGame_Panel;
     private int heightOfPlayedGame_Panel;
+
+    public fourWins vierGewinnt;
 
     public GameScreen(){
         initializeElements();
@@ -133,6 +139,10 @@ public class GameScreen extends JPanel implements ActionListener {
         panel.add(element);
     }
 
+    public void startGame(){
+        vierGewinnt = new fourWins(Spielo.userIsHost());
+    }
+
     private void addActionListeners(){
         exitGame_Button.addActionListener(this);
     }
@@ -145,5 +155,18 @@ public class GameScreen extends JPanel implements ActionListener {
                 Spielo.changeView("StartScreen");
             }
         }
+    }
+
+    @Override
+    public void onMessageReceived(Message message) {
+        if(message instanceof Win4Message){
+            System.out.println("4 gewinnt nachicht empfangen");
+            vierGewinnt.network.messageReceived(((Win4Message) message).getValue());
+        }
+    }
+
+    @Override
+    public void onDisconnect() {
+
     }
 }
