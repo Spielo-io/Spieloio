@@ -101,7 +101,6 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof JoinLobbyResponseMessage){
-            System.out.println(((JoinLobbyResponseMessage) message).getResponseCode());
             if(((JoinLobbyResponseMessage) message).getResponseCode() == JoinLobbyResponseCode.Failed){
                 JOptionPane.showMessageDialog(this, "Dein Join-Code war leider ungültig!");
                 Spielo.changeView("StartScreen");
@@ -111,7 +110,6 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
             }
         }
         if(message instanceof LobbySettingsMessage){
-            System.out.println("settings empfangen");
             LobbySettings settings = ((LobbySettingsMessage) message).getSettings();
             lobbySettings_Panel.setLobbySettingsEnum(settings.getPublic(), settings.getGame(), settings.getBestOf(), settings.getTimer(), false);
         }

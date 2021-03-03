@@ -38,11 +38,14 @@ public class Spielo {
 
 	public static void main(String[] args) {
 		new Spielo();
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 	}
 
 	public Spielo() {
 		initializeElements();
 		configureElements();
+
+
 	}
 
 	private void initializeElements() {

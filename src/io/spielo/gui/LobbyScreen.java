@@ -96,12 +96,8 @@ public class LobbyScreen extends SpieloView {
     }
 
     protected void startGame(){
-        System.out.println("spielen");
-//        new GUI();
-//		new ImageLoader();
-//		new Draw();
+        Spielo.getGameScreen().startGame(Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getGameSettingEnum(), Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getRoundModeSettingEnum(), Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getTimerSettingEnum());
         Spielo.changeView("GameScreen");
-        Spielo.getGameScreen().startGame();
     }
 
 //    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
