@@ -61,8 +61,6 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 
     private void configureElements(){
         timer_Label.setBorder(borderForTimerLabel_Border);
-//        playedGame_Panel.setPreferredSize(new Dimension(450, 450));
-//        playedGame_Panel.setBackground(new Color(100, 100, 100));
         timer_Label.setHorizontalAlignment(SwingConstants.CENTER);
         bestOf_Label.setHorizontalAlignment(SwingConstants.CENTER);
         playerOneWins_Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -167,7 +165,6 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof Win4Message){
-            System.out.println("4 gewinnt nachicht empfangen");
             vierGewinnt.receiveMessage(((Win4Message) message).getValue());
         }
     }
