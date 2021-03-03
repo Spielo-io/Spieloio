@@ -11,11 +11,23 @@ import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.TicTacToeMessage;
+import io.spielo.messages.lobbysettings.LobbyBestOf;
 
 public class ActionHandler implements ActionListener, ClientEventSubscriber
 {
-	
+	private final GameSettings settings;
+
 	private JFrame frame;
+
+	private int hostWins;
+	private int player2Wins;
+	
+	public ActionHandler(final GameSettings settings) {
+		this.settings = settings;
+
+		hostWins = 0;
+		player2Wins = 0;
+	}
 	
 	public void actionPerformed(ActionEvent e) 
 	{

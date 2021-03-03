@@ -13,7 +13,7 @@ public class GUI
 	static int countButtonspressed = 0;
 	static int opponent = 0;
 	
-	public GUI()
+	public GUI(GameSettings settings)
 	{
 		jf = new JFrame();
 		jf.setSize(800, 600);
@@ -26,7 +26,7 @@ public class GUI
 		{
 			btn[i] = new JButton();
 			btn[i].setVisible(true);
-			btn[i].addActionListener(new ActionHandler());
+			btn[i].addActionListener(new ActionHandler(settings));
 			btn[i].setFocusPainted(false);
 			btn[i].setContentAreaFilled(false);
 			btn[i].setBorder(null);

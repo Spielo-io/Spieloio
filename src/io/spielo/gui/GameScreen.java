@@ -1,24 +1,33 @@
 package io.spielo.gui;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.games.fourwins.FourWins;
 import io.spielo.games.fourwins.GUI;
 import io.spielo.games.tictactoe.Draw;
+import io.spielo.games.tictactoe.GameSettings;
 import io.spielo.games.tictactoe.ImageLoader;
-import io.spielo.games.tictactoe.Main;
-import io.spielo.games.tictactoe.TicTacToe;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.Win4Message;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
 import io.spielo.messages.lobbysettings.LobbyGame;
 import io.spielo.messages.lobbysettings.LobbyTimer;
-
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameScreen extends JPanel implements ActionListener, ClientEventSubscriber {
     private GridBagLayout gridBagLayout;
@@ -40,7 +49,6 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     private int heightOfPlayedGame_Panel;
 
     public FourWins vierGewinnt;
-    public TicTacToe ticTacToe;
 
     public GameScreen(){
         initializeElements();
@@ -158,7 +166,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
             vierGewinnt_Panel.setPreferredSize(new Dimension(450, 450));
         }
         else if(game == LobbyGame.TicTacToe){
-            new io.spielo.games.tictactoe.GUI();
+        	new io.spielo.games.tictactoe.GUI(new GameSettings(bestOf, Spielo.userIsHost()));
             new ImageLoader();
             new Draw();
         }
