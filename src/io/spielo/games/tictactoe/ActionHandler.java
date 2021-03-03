@@ -29,8 +29,9 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		player2Wins = 0;
 	}
 	
+	
 	public void actionPerformed(ActionEvent e) 
-	{
+	{ 
 		/*if(GUI.player == 1) // 2 -> Player O  // 1 -> Player X 
 		{
 			Game.message.setPlayer(Game.player.YOU);
@@ -90,6 +91,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
 			{
 				Game.message.addWin();
+				
 				reset();
 			}
 		}
@@ -113,7 +115,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			Game.message.addWin();
 			reset();
 		}
-		//Unentschieden
+		//Draw
 		if(GUI.countButtonspressed == 9)
 		{
 			Game.message.addDraw();
