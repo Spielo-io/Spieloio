@@ -3,7 +3,8 @@ package io.spielo.games.fourwins;
 import java.awt.EventQueue;
 
 import io.spielo.Spielo;
-import io.spielo.games.tictactoe.Game.player;
+import io.spielo.games.Game;
+import io.spielo.games.Game.player;
 
 public class FourWins {
 	public FourWins(boolean youAreInitializer) {
@@ -17,15 +18,15 @@ public class FourWins {
 			board.setPlayer(player.OPPONENT);
 		
 		//-----------------GUi init
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					gui.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					gui.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 		//---------------Gui init end
 	}
 	
@@ -43,6 +44,10 @@ public class FourWins {
 				board.setPlayer(player.YOU);
 				
 		}
+	}
+
+	public GUI getGui(){
+		return gui;
 	}
 	
 	public boolean closeGame = false;

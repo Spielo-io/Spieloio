@@ -1,5 +1,7 @@
 package io.spielo.games;
 
+import io.spielo.Spielo;
+
 public class Game {
 	public Game() {
 
@@ -18,11 +20,15 @@ public class Game {
 	public void addWin() {
 		//should be called if the local player has won a game
 		gamesWon++;
+		System.out.println("spiele gewonnen" + gamesWon);
+		Spielo.getGameScreen().setPlayerOneWins_Label(gamesWon);
 	}
 	
 	public void addLoss() {
 		//should be called if the local player has lost a game
 		gamesLost++;
+		System.out.println("spiele verloren" + gamesLost);
+		Spielo.getGameScreen().setPlayerTwoWins_Label(gamesLost);
 	}
 	
 	public void addDraw() {
@@ -78,8 +84,8 @@ public class Game {
 		//returns the total number of draws
 		return gamesDrawn;
 	}
-	
-	static public enum player{
+
+	public static enum player{
 		//contains all possible players
 		YOU, OPPONENT, NONE
 	}

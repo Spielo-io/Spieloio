@@ -32,7 +32,7 @@ public class StartScreen extends SpieloView implements ActionListener {
         gridBagLayout = new GridBagLayout();
 //        username
         username_Label = new JLabel("Benutzername:");
-        username_Textfield = new JTextField();
+        username_Textfield = new JTextField("asdf");
 //        buttons
         createLobby_Button = new JButton("Lobby erstellen");
         searchLobby_Button = new JButton("Lobby suchen");

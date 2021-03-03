@@ -3,6 +3,7 @@ package io.spielo.gui;
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.games.fourwins.FourWins;
+import io.spielo.games.fourwins.GUI;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.Win4Message;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
@@ -26,7 +27,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //    buttons
     private JButton exitGame_Button;
 //      gamePlay
-    private JPanel playedGame_Panel;
+    private GUI playedGame_Panel;
 
     private int widthOfPlayedGame_Panel;
     private int heightOfPlayedGame_Panel;
@@ -49,7 +50,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //        border
         borderForTimerLabel_Border = new EtchedBorder(EtchedBorder.LOWERED);
 //          gameplay
-        playedGame_Panel = new JPanel();
+//        playedGame_Panel = new JPanel();
 
 //        buttons
         exitGame_Button = new JButton("Spiel verlassen");
@@ -60,8 +61,8 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 
     private void configureElements(){
         timer_Label.setBorder(borderForTimerLabel_Border);
-        playedGame_Panel.setPreferredSize(new Dimension(450, 450));
-        playedGame_Panel.setBackground(new Color(100, 100, 100));
+//        playedGame_Panel.setPreferredSize(new Dimension(450, 450));
+//        playedGame_Panel.setBackground(new Color(100, 100, 100));
         timer_Label.setHorizontalAlignment(SwingConstants.CENTER);
         bestOf_Label.setHorizontalAlignment(SwingConstants.CENTER);
         playerOneWins_Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -79,14 +80,14 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, playerOneWins_Label, widthOfPlayedGame_Panel, 2, 1, 1, 0, new int[]{0, 0, 20, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, playerTwoWins_Label, widthOfPlayedGame_Panel, 3, 1, 1, 0, new int[]{0, 0, 20, 0});
 //        gamePlay
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
+//        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
 //        buttons
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, exitGame_Button, widthOfPlayedGame_Panel, heightOfPlayedGame_Panel -1, 1, 1, 0, new int[]{230, 20, 10, 20});
     }
 
-    public void setPlayedGame_Panel(JPanel gamePanel){
-        playedGame_Panel = gamePanel;
-    }
+//    public void setPlayedGame_Panel(JPanel gamePanel){
+//        playedGame_Panel = gamePanel;
+//    }
 
     public void setBestOf_Label(LobbyBestOf bestOf){
         switch (bestOf){
@@ -140,7 +141,13 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     }
 
     public void startGame(){
+        System.out.println("Start Game");
         vierGewinnt = new FourWins(Spielo.userIsHost());
+        playedGame_Panel = vierGewinnt.getGui();
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
+        playedGame_Panel.setPreferredSize(new Dimension(450, 450));
+        setPlayerOneWins_Label(0);
+        setPlayerTwoWins_Label(0);
     }
 
     private void addActionListeners(){
