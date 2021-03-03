@@ -12,10 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import io.spielo.games.tictactoe.Game.player;
+import io.spielo.games.Game.player;
 
 
-public class GUI extends JFrame {
+public class GUI extends JPanel {
 	private JTextField txtPressTheButton;
 
 	/**
@@ -27,29 +27,29 @@ public class GUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI(FourWins game) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 571, 445);
-		getContentPane().setLayout(null);
+		this.setLayout(null);
 		
 		//--------------------------debug start
-		Button button = new Button("print board to console");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(board.toString());
-			}
-		});
-		button.setBounds(415, 10, 137, 43);
-		getContentPane().add(button);
-		
-		Button button_70 = new Button("print  winner to console");
-		button_70.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(board.getWinner());
-			}
-		});
-		
-		button_70.setBounds(415, 59, 137, 43);
-		getContentPane().add(button_70);
+//		Button button = new Button("print board to console");
+//		button.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println(board.toString());
+//			}
+//		});
+//		button.setBounds(415, 10, 137, 43);
+//		this.add(button);
+//
+//		Button button_70 = new Button("print  winner to console");
+//		button_70.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println(board.getWinner());
+//			}
+//		});
+//
+//		button_70.setBounds(415, 59, 137, 43);
+//		this.add(button_70);
 		//----------------debug end
 		this.board = game.board;
 		//init butons
@@ -63,7 +63,7 @@ public class GUI extends JFrame {
 			}
 			buttons[i] = new JButton("insert");
 			buttons[i].setBounds(x_coordinate, 10, 48, 22);
-			getContentPane().add(buttons[i]);
+			this.add(buttons[i]);
 			counter++;
 		}
 		
@@ -140,7 +140,7 @@ public class GUI extends JFrame {
 						panels[k][l] = new JPanel();
 						panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 48);
 						panels[k][l].setBackground(Color.WHITE);
-						getContentPane().add(panels[k][l]);
+						this.add(panels[k][l]);
 					}
 					y_coordinate = 350;
 				}

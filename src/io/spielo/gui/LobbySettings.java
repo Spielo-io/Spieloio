@@ -95,7 +95,8 @@ public class LobbySettings extends JPanel{
         addRadioButtonsToButtonGroup(roundModeSetting_ButtonGroup, new JRadioButton[] {bestOfOne_RadioButton, bestOfThree_RadioButton, bestOfFive_RadioButton, bestOfSeven_RadioButton, bestOfNine_RadioButton});
 //        check one of the RadioButtonsInButtonGroup
         ticTacToe_RadioButton.doClick();
-        privateVisibility_RadioButton.doClick();
+//        privateVisibility_RadioButton.doClick();
+        publicVisibility_RadioButton.doClick();
         bestOfOne_RadioButton.doClick();
         thirtySeconds_RadioButton.doClick();
 //        set Action Commands for RadioButtons

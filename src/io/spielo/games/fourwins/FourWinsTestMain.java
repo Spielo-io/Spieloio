@@ -4,9 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import io.spielo.games.fourwins.Board;
-import io.spielo.games.fourwins.GUI;
-import io.spielo.games.tictactoe.Game;
+import io.spielo.games.Game;
 
 public class FourWinsTestMain extends JFrame {
 	
