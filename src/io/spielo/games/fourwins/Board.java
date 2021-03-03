@@ -4,13 +4,13 @@ import io.spielo.Spielo;
 import io.spielo.games.Game;
 
 public class Board extends Game{
-//public:
 	public Board(){
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
+		setTimer(30000);
 	}
 	
 	public void insertChip(int column) {

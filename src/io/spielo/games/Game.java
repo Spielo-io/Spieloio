@@ -1,10 +1,23 @@
 package io.spielo.games;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 import io.spielo.Spielo;
 
 public class Game {
+	private final ScheduledExecutorService timer;
+	private int timerValue2;
+	
 	public Game() {
-
+		timer = Executors.newSingleThreadScheduledExecutor();
+		Timer host = new Timer(30);
+		Timer player2 = new Timer(30);
+		
+		timer.scheduleAtFixedRate(host, 1, 1, TimeUnit.SECONDS);
+		timer.scheduleAtFixedRate(player2, 1, 1, TimeUnit.SECONDS);
 	}
 	
 	public void setPlayer(player player) {
@@ -38,7 +51,7 @@ public class Game {
 	
 	public void setTimer(long timer_in_ms) {
 		//sets the initial timer value in milliseconds -> counts down
-		timerStartValue = timer_in_ms;
+		timerValue2 = 30;
 	}
 	
 	public long getTimer() {
@@ -102,6 +115,27 @@ public class Game {
 	private int gamesLost = 0;
 	private int gamesDrawn = 0;
 	public static Game message = new Game();
+
+	private void timerIsZero() {
+		
+	}
 	
-	
+	private final class Timer implements Runnable {
+
+		private int timerValue2;
+		
+		public Timer(int timerValue) {
+			this.timerValue2 = timerValue;
+		}
+		
+		@Override
+		public void run() {
+			timerValue2--;
+			Spielo.getGameScreen().setTimer_Label(String.valueOf(timerValue2));
+			
+			if (timerValue2 == 0) {
+				timerIsZero();
+			}
+		}
+	}
 }
