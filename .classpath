@@ -8,10 +8,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-15/"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="lib" path="C:/Users/Adrian/.gradle/caches/modules-2/files-2.1/io.spielo/messages/1.1.20/66167aecc29b85f822049d86cf02a6dc19a78006/messages-1.1.20.jar" sourcepath="C:/Users/Adrian/.gradle/caches/modules-2/files-2.1/io.spielo/messages/1.1.20/12e94acfd6a76b935a324a0d678270bf3761ce7/messages-1.1.20-sources.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

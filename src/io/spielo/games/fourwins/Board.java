@@ -1,20 +1,16 @@
 package io.spielo.games.fourwins;
 
+import io.spielo.Spielo;
 import io.spielo.games.tictactoe.Game;
 
 public class Board extends Game{
 //public:
-	public Board(boolean youStart){
+	public Board(){
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
-		
-		if(youStart) 
-			setPlayer(player.YOU);
-		else
-			setPlayer(player.OPPONENT);
 	}
 	
 	public void insertChip(int column) {
@@ -30,6 +26,7 @@ public class Board extends Game{
 		case YOU:
 			board[column][height] = player.YOU;
 			setPlayer(player.OPPONENT);
+			sendMessage(column);
 			break;
 		case OPPONENT:
 			board[column][height] = player.OPPONENT;
@@ -162,4 +159,8 @@ public class Board extends Game{
 		}
 		return player.NONE;
 	}	
+	private void sendMessage(int message) {
+		System.out.println("sende" + message);
+		Spielo.client.game4Win(message);
+	}
 }

@@ -2,7 +2,7 @@ package io.spielo.gui;
 
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
-import io.spielo.games.fourwins.fourWins;
+import io.spielo.games.fourwins.FourWins;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.Win4Message;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
@@ -31,7 +31,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     private int widthOfPlayedGame_Panel;
     private int heightOfPlayedGame_Panel;
 
-    public fourWins vierGewinnt;
+    public FourWins vierGewinnt;
 
     public GameScreen(){
         initializeElements();
@@ -140,7 +140,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     }
 
     public void startGame(){
-        vierGewinnt = new fourWins(Spielo.userIsHost());
+        vierGewinnt = new FourWins(Spielo.userIsHost());
     }
 
     private void addActionListeners(){
@@ -161,7 +161,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     public void onMessageReceived(Message message) {
         if(message instanceof Win4Message){
             System.out.println("4 gewinnt nachicht empfangen");
-            vierGewinnt.network.messageReceived(((Win4Message) message).getValue());
+            vierGewinnt.receiveMessage(((Win4Message) message).getValue());
         }
     }
 

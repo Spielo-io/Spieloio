@@ -2,7 +2,7 @@ package io.spielo.gui;
 
 
 import io.spielo.Spielo;
-import io.spielo.games.fourwins.fourWins;
+import io.spielo.games.fourwins.FourWins;
 import io.spielo.games.tictactoe.Draw;
 import io.spielo.games.tictactoe.GUI;
 import io.spielo.games.tictactoe.ImageLoader;
