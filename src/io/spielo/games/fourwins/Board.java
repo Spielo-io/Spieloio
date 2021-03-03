@@ -34,7 +34,14 @@ public class Board extends Game{
 			break;
 		default:
 			System.out.println("ERROR: unable to insert coin -> false game status\n");
-		}		
+		}
+		if(getWinner() != player.NONE) {
+			setPlayer(player.NONE);
+			if(getWinner() == player.YOU)
+				addWin();
+			else
+				addLoss();	
+		}
 	}
 	
 	public player[][] getBoard() {
@@ -51,7 +58,15 @@ public class Board extends Game{
 		}
 		return string;
 	}
-
+	
+	public void reset() {
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height; j++) {
+				board[i][j] = player.NONE;
+			}
+		}
+	}
+	
 //private:
 	private int width = 7, height = 6;
 	private player[][] board = new player[width][height];
