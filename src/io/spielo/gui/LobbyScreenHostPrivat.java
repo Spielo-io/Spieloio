@@ -1,14 +1,18 @@
 package io.spielo.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Locale;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.lobby.*;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener, ClientEventSubscriber {
     //    joinCode
@@ -116,6 +120,7 @@ public class LobbyScreenHostPrivat extends LobbyScreen implements ActionListener
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof CreateLobbyResponseMessage){
+        	System.out.println(((CreateLobbyResponseMessage) message).getCode().toString());
             setJoinCodeLabel(((CreateLobbyResponseMessage) message).getCode());
         }
         if(message instanceof JoinLobbyResponseMessage){

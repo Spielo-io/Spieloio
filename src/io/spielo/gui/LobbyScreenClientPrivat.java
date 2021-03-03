@@ -1,15 +1,18 @@
 package io.spielo.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Locale;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.lobby.*;
 import io.spielo.messages.lobbysettings.LobbySettings;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListener, ClientEventSubscriber {
     //    joinCode

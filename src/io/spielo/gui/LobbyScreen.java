@@ -3,6 +3,9 @@ package io.spielo.gui;
 
 import io.spielo.Spielo;
 import io.spielo.games.fourwins.fourWins;
+import io.spielo.games.tictactoe.Draw;
+import io.spielo.games.tictactoe.GUI;
+import io.spielo.games.tictactoe.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,7 +97,10 @@ public class LobbyScreen extends SpieloView {
 
     protected void startGame(){
         System.out.println("spielen");
-        fourWins spiel = new fourWins(Spielo.userIsHost());
+        //fourWins spiel = new fourWins(Spielo.userIsHost());
+        new GUI();
+		new ImageLoader();
+		new Draw();
     }
 
 //    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
