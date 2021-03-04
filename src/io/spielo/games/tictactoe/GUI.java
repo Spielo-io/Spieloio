@@ -26,11 +26,13 @@ public class GUI
 		{
 			btn[i] = new JButton();
 			btn[i].setVisible(true);			
-			btn[i].addActionListener(new ActionHandler(settings, 1, 1)); //nicht 1,1 verwenden!!! random zahlen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			btn[i].setFocusPainted(false);
 			btn[i].setContentAreaFilled(false);
 			btn[i].setBorder(null);
 			jf.add(btn[i]);
+		}
+		for (int i = 0; i < btn.length; i++) {
+			btn[i].addActionListener(new ActionHandler(settings, 1, 1)); 
 		}
 		
 		ButtonPlacement.place();
@@ -44,9 +46,7 @@ public class GUI
 	}
 	
 	public void receiveMessage(int value) {
-		for (int i = 0; i < btn.length; i++) {
-			((ActionHandler)btn[i].getActionListeners()[0]).receiveMessage(value);
-		}
+			((ActionHandler)btn[0].getActionListeners()[0]).receiveMessage(value);
 	}
 
 }

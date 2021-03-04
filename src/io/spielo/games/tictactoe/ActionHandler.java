@@ -41,27 +41,19 @@ public class ActionHandler extends Game implements ActionListener
 	}
 	public void actionPerformed(ActionEvent e) 
 	{ 
-		if(getTimer() > 0)
+		for(int i = 0; i < 9; i++)
 		{
-			for(int i = 0; i < 9; i++)
+			if(e.getSource() == GUI.btn[i])
 			{
-				if(e.getSource() == GUI.btn[i])
+				if(GUI.pressed[i] == 0)
 				{
-					if(GUI.pressed[i] == 0)
-					{
-						GUI.pressed[i] = GUI.player;
-						GUI.countButtonspressed++;
-						Spielo.client.gameTicTacToe(i);
-						winningGame();
-						disableButtons();
-					}
+					GUI.pressed[i] = GUI.player;
+					GUI.countButtonspressed++;
+					Spielo.client.gameTicTacToe(i);
+					winningGame();
+					disableButtons();
 				}
 			}
-		}
-		else
-		{
-			addLoss();
-			Spielo.client.gameTicTacToe(9);
 		}
 	}	
 	
@@ -190,11 +182,7 @@ public class ActionHandler extends Game implements ActionListener
 	
 	public void receiveMessage(int value) {
 			int i = value;
-			if(i == 9)
-			{
-				addWin();
-			}
-			else if(value == 11) {
+			if(value == 11) {
 				JOptionPane.showMessageDialog(null, "Die Zeit des Gegners ist abgelaufen!", "Runde zu Ende", JOptionPane.PLAIN_MESSAGE);
                 addWin();
 			}

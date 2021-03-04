@@ -72,11 +72,11 @@ public abstract class Game {
 		//should be called after the match ended in a draw
 		gamesDrawn++;
 		currentRound++;
-		alertGameEnd("unntschieden");
+		/*alertGameEnd("unentschieden");
 		if(currentRound <= totalRounds)
 			resetBoard();
 		else
-			pauseTimer();
+			pauseTimer();*/
 	}
 	
 	public void setTimer(long timer_in_ms) {
@@ -180,12 +180,12 @@ public abstract class Game {
 			if (isRunning) {
 				int timer = (int) (getTimer() / 1000);
 				Spielo.getGameScreen().setTimer_Label(timer);
-				if (timer == 0) {
+				/*if (timer == 0) {
 					sendTimeOut();
 					alertGameEnd("Deine Zeit ist abgelaufen!");
 					addLoss();
 					pauseTimer();
-				}
+				}*/
 			}
 		}
 		
