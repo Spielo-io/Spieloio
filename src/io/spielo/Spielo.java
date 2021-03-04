@@ -1,7 +1,6 @@
 package io.spielo;
 
 import io.spielo.client.Client;
-import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.gui.*;
 
 import javax.swing.*;
@@ -38,11 +37,14 @@ public class Spielo {
 
 	public static void main(String[] args) {
 		new Spielo();
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 	}
 
 	public Spielo() {
 		initializeElements();
 		configureElements();
+
+
 	}
 
 	private void initializeElements() {
@@ -70,8 +72,8 @@ public class Spielo {
 		client.subscribe(lobbySelectScreen);
 		client.subscribe(gameScreen);
 
-		client.connect("20.52.147.95");
-//		client.connect("127.0.0.1");
+//		client.connect("20.52.147.95");
+		client.connect("127.0.0.1");
 
 	}
 
@@ -129,13 +131,13 @@ public class Spielo {
 				isHost = true;
 			}
 			case "LobbyScreenHostPublic" -> {
-				lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettingsEnum(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getTimerSettingEnum(), true);
+				lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettings(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSetting(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSetting(), lobbyCreateScreen.lobbySettings_Panel.getTimerSetting(), true);
 				lobbyScreenHostPublic.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 				lobbyScreenHostPublic.setLoadedLobbySettings(true);
 				currentLobbyScreen = lobbyScreenHostPublic;
 			}
 			case "LobbyScreenHostPrivat" -> {
-				lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettingsEnum(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyCreateScreen.lobbySettings_Panel.getTimerSettingEnum(), true);
+				lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettings(lobbyCreateScreen.lobbySettings_Panel.getVisibilitySetting(), lobbyCreateScreen.lobbySettings_Panel.getGameSetting(), lobbyCreateScreen.lobbySettings_Panel.getRoundModeSetting(), lobbyCreateScreen.lobbySettings_Panel.getTimerSetting(), true);
 				lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 				lobbyScreenHostPrivat.setLoadedLobbySettings(true);
 				currentLobbyScreen = lobbyScreenHostPrivat;
@@ -147,6 +149,9 @@ public class Spielo {
 				currentLobbyScreen = lobbyScreenClientPrivat;
 				lobbyScreenClientPrivat.setJoinCodeLabel(startScreen.getJoinCode());
 				joinCode = startScreen.getJoinCode();
+			}
+			case "GameScreen" -> {
+				currentLobbyScreen = null;
 			}
 		}
 //			get and set username
@@ -206,12 +211,12 @@ public class Spielo {
 	}
 
 	public static void setLobbySettingsToLobbyScreenHostPrivat(){
-		lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettingsEnum(lobbyScreenClientPrivat.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPrivat.lobbySettings_Panel.getGameSettingEnum(), lobbyScreenClientPrivat.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyScreenClientPrivat.lobbySettings_Panel.getTimerSettingEnum(), true);
+		lobbyScreenHostPrivat.lobbySettings_Panel.setLobbySettings(lobbyScreenClientPrivat.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPrivat.lobbySettings_Panel.getGameSetting(), lobbyScreenClientPrivat.lobbySettings_Panel.getRoundModeSetting(), lobbyScreenClientPrivat.lobbySettings_Panel.getTimerSetting(), true);
 		lobbyScreenHostPrivat.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 	}
 
 	public static void setLobbySettingsToLobbyScreenHostPublic(){
-		lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettingsEnum(lobbyScreenClientPublic.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPublic.lobbySettings_Panel.getGameSettingEnum(), lobbyScreenClientPublic.lobbySettings_Panel.getRoundModeSettingEnum(), lobbyScreenClientPublic.lobbySettings_Panel.getTimerSettingEnum(), true);
+		lobbyScreenHostPublic.lobbySettings_Panel.setLobbySettings(lobbyScreenClientPublic.lobbySettings_Panel.getVisibilitySetting(), lobbyScreenClientPublic.lobbySettings_Panel.getGameSetting(), lobbyScreenClientPublic.lobbySettings_Panel.getRoundModeSetting(), lobbyScreenClientPublic.lobbySettings_Panel.getTimerSetting(), true);
 		lobbyScreenHostPublic.lobbySettings_Panel.disableVisibiltyButtonGroupSetting();
 	}
 

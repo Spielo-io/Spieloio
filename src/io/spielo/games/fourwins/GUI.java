@@ -1,13 +1,15 @@
 package io.spielo.games.fourwins;
 
-import java.awt.Button;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,7 +19,8 @@ import io.spielo.games.Game.player;
 
 public class GUI extends JPanel {
 	private JTextField txtPressTheButton;
-
+	private ImageIcon blueCoin;
+	private ImageIcon redCoin;
 	/**
 	 * Launch the application.
 	 */
@@ -30,6 +33,7 @@ public class GUI extends JPanel {
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 571, 445);
 		this.setLayout(null);
+		createCoinImgaes();
 		
 		//--------------------------debug start
 //		Button button = new Button("print board to console");
@@ -158,14 +162,37 @@ public class GUI extends JPanel {
 			for(int j = 0; j < 6; j++) {
 				if(boardStatus[i][j] != player.NONE) {
 					if(boardStatus[i][j] == player.YOU) {
-						panels[i[j].add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("src/io/spielo/games/fourwins/red.png"))));
+						JLabel imageLabel = new JLabel();
+						imageLabel.setIcon(redCoin);
+						panels[i][j].add(imageLabel);
 					}
 					else {
-						panels[i[j].add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("src/io/spielo/games/fourwins/blue.png"))));
+						JLabel imageLabel = new JLabel();
+						imageLabel.setIcon(blueCoin);
+						panels[i][j].add(imageLabel);
 					}
 				}
 			}
 		}
 	}
+	private void createCoinImgaes(){
+		BufferedImage bufferedImage = null;
+		try{
+			bufferedImage = ImageIO.read(new File("redCoin.png"));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		Image image = bufferedImage.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+		redCoin = new ImageIcon(image);
+
+		try{
+			bufferedImage = ImageIO.read(new File("blueCoin.png"));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		image = bufferedImage.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+		blueCoin = new ImageIcon(image);
+	}
+
 }
 

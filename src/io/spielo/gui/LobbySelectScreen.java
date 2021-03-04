@@ -86,8 +86,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
-    public void addLobbysToLobbyListNew(List<PublicLobby> lobbyList){
-            System.out.println(lobbyList);
+    public void addLobbysToLobbyList(List<PublicLobby> lobbyList){
             if(lobbyList.isEmpty()){
                 removeLobbysFromLobbyList();
                 listForLobbys_List.setBackground(new Color(238,238,238));
@@ -166,7 +165,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof PublicLobbyListMessage){
-            addLobbysToLobbyListNew(((PublicLobbyListMessage) message).getList());
+            addLobbysToLobbyList(((PublicLobbyListMessage) message).getList());
         }
     }
 

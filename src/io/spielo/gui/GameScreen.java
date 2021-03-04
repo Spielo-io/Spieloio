@@ -1,18 +1,34 @@
 package io.spielo.gui;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.games.fourwins.FourWins;
 import io.spielo.games.fourwins.GUI;
+import io.spielo.games.tictactoe.Draw;
+import io.spielo.games.tictactoe.GameSettings;
+import io.spielo.games.tictactoe.ImageLoader;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.Win4Message;
+import io.spielo.messages.lobby.LeaveLobbyMessage;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
-
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import io.spielo.messages.lobbysettings.LobbyGame;
+import io.spielo.messages.lobbysettings.LobbyTimer;
 
 public class GameScreen extends JPanel implements ActionListener, ClientEventSubscriber {
     private GridBagLayout gridBagLayout;
@@ -27,7 +43,8 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //    buttons
     private JButton exitGame_Button;
 //      gamePlay
-    private GUI playedGame_Panel;
+    private GUI vierGewinnt_Panel;
+    private GUI tiacTacToe_Panel;
 
     private int widthOfPlayedGame_Panel;
     private int heightOfPlayedGame_Panel;
@@ -50,7 +67,6 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //        border
         borderForTimerLabel_Border = new EtchedBorder(EtchedBorder.LOWERED);
 //          gameplay
-//        playedGame_Panel = new JPanel();
 
 //        buttons
         exitGame_Button = new JButton("Spiel verlassen");
@@ -61,8 +77,6 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 
     private void configureElements(){
         timer_Label.setBorder(borderForTimerLabel_Border);
-//        playedGame_Panel.setPreferredSize(new Dimension(450, 450));
-//        playedGame_Panel.setBackground(new Color(100, 100, 100));
         timer_Label.setHorizontalAlignment(SwingConstants.CENTER);
         bestOf_Label.setHorizontalAlignment(SwingConstants.CENTER);
         playerOneWins_Label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -84,10 +98,6 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //        buttons
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, exitGame_Button, widthOfPlayedGame_Panel, heightOfPlayedGame_Panel -1, 1, 1, 0, new int[]{230, 20, 10, 20});
     }
-
-//    public void setPlayedGame_Panel(JPanel gamePanel){
-//        playedGame_Panel = gamePanel;
-//    }
 
     public void setBestOf_Label(LobbyBestOf bestOf){
         switch (bestOf){
@@ -121,8 +131,17 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         playerTwoWins_Label.setText(Spielo.getUsernameOfPlayerTwo() + ": " + String.valueOf(numberOfWins) + winText);
     }
 
-    public void setTimer_Label(String timerText){
-        timer_Label.setText(timerText);
+    public void setTimer_Label(int currentTimer){
+        if(currentTimer > 10){
+            timer_Label.setForeground(Color.BLACK);
+        }
+        else if(currentTimer > 5){
+            timer_Label.setForeground(Color.ORANGE);
+        }
+        else{
+            timer_Label.setForeground(Color.RED);
+        }
+        timer_Label.setText(String.valueOf(currentTimer));
     }
 
     public void addElementToPanelUsingGridBagLayout(JPanel panel, GridBagLayout layout, Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){
@@ -140,12 +159,19 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         panel.add(element);
     }
 
-    public void startGame(){
-        System.out.println("Start Game");
-        vierGewinnt = new FourWins(Spielo.userIsHost());
-        playedGame_Panel = vierGewinnt.getGui();
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
-        playedGame_Panel.setPreferredSize(new Dimension(450, 450));
+    public void startGame(LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer){
+        if(game == LobbyGame.Win4){
+            vierGewinnt = new FourWins(Spielo.userIsHost());
+            vierGewinnt_Panel = vierGewinnt.getGui();
+            addElementToPanelUsingGridBagLayout(this, gridBagLayout, vierGewinnt_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
+            vierGewinnt_Panel.setPreferredSize(new Dimension(450, 450));
+        }
+        else if(game == LobbyGame.TicTacToe){
+        	new io.spielo.games.tictactoe.GUI(new GameSettings(bestOf, Spielo.userIsHost()));
+            new ImageLoader();
+            new Draw();
+        }
+
         setPlayerOneWins_Label(0);
         setPlayerTwoWins_Label(0);
     }
@@ -159,6 +185,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         if(e.getSource() == exitGame_Button){
             int answer = JOptionPane.showConfirmDialog(this, "Willst du das Spiel wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
             if(answer == JOptionPane.YES_OPTION) {
+                Spielo.client.leaveLobby();
                 Spielo.changeView("StartScreen");
             }
         }
@@ -167,8 +194,14 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     @Override
     public void onMessageReceived(Message message) {
         if(message instanceof Win4Message){
-            System.out.println("4 gewinnt nachicht empfangen");
             vierGewinnt.receiveMessage(((Win4Message) message).getValue());
+        }
+        if(Spielo.getCurrentLobbyScreen() == null){
+            if(message instanceof LeaveLobbyMessage){
+                JOptionPane.showMessageDialog(this, "Dein Gegner hat das Spiel verlassen!\nDu wirst nun zum Homescreen zurückgeleitet.");
+                Spielo.client.leaveLobby();
+                Spielo.changeView("StartScreen");
+            }
         }
     }
 

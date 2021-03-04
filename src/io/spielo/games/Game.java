@@ -131,7 +131,7 @@ public class Game {
 		@Override
 		public void run() {
 			timerValue2--;
-			Spielo.getGameScreen().setTimer_Label(String.valueOf(timerValue2));
+			Spielo.getGameScreen().setTimer_Label(timerValue2);
 			
 			if (timerValue2 == 0) {
 				timerIsZero();

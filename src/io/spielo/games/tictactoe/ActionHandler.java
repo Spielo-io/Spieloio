@@ -11,27 +11,23 @@ import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.TicTacToeMessage;
+import io.spielo.messages.lobbysettings.LobbyBestOf;
 
 public class ActionHandler implements ActionListener, ClientEventSubscriber
 {
-	
+	private final GameSettings settings;
 	private JFrame frame;
+	private int localPlayerWins;
+	private int remotePlayerWins;
 	
+	public ActionHandler(final GameSettings settings) {
+		this.settings = settings;
+
+		localPlayerWins = 0;
+		remotePlayerWins = 0;
+	}
 	public void actionPerformed(ActionEvent e) 
-	{
-		/*if(GUI.player == 1) // 2 -> Player O  // 1 -> Player X 
-		{
-			Game.message.setPlayer(Game.player.YOU);
-		}
-		if(GUI.player == 2)
-		{
-			Game.message.setPlayer(Game.player.OPPONENT);
-		}
-		if(GUI.player == 0)
-		{
-			Game.message.setPlayer(Game.player.NONE);
-		}*/
-		
+	{ 
 		if(GUI.player == 1) 
 		{
 			GUI.player = 2;
@@ -40,8 +36,6 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			GUI.player = 1;
 		}
-		
-		Game.message.setTimer(10000);
 		
 			if(Game.message.getTimer() > 0)
 			{
@@ -66,10 +60,8 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 				Spielo.client.gameTicTacToe(9);
 				
 			}
-		}		
+		}	
 	
-	
-	//Gewinner pruefen
 	public void winningGame()
 	{
 		//Vertikal
@@ -78,6 +70,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
 			{
 				Game.message.addWin();
+				localPlayerWins++;
 				reset();
 			}
 		}
@@ -87,6 +80,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
 			{
 				Game.message.addWin();
+				localPlayerWins++;
 				reset();
 			}
 		}
@@ -94,14 +88,16 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
 		{
 			Game.message.addWin();
+			localPlayerWins++;
 			reset();
 		}
 		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
 		{
 			Game.message.addWin();
+			localPlayerWins++;
 			reset();
 		}
-		//Unentschieden
+		//Draw
 		if(GUI.countButtonspressed == 9)
 		{
 			Game.message.addDraw();
@@ -117,6 +113,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
 			{
 				Game.message.addLoss();
+				remotePlayerWins++;
 				reset();
 			}
 		}
@@ -126,6 +123,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
 			{
 				Game.message.addLoss();
+				remotePlayerWins++;
 				reset();
 			}
 		}
@@ -133,11 +131,13 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
 		{
 			Game.message.addLoss();
+			remotePlayerWins++;
 			reset();
 		}
 		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
 		{
 			Game.message.addLoss();
+			remotePlayerWins++;
 			reset();
 		}
 		//Unentschieden
@@ -177,6 +177,20 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			GUI.player = 1;
 			enableButtons();
+		}
+	}
+	
+	public void rounds()
+	{
+		if(localPlayerWins == settings.getRoundsToWin())
+		{
+			JOptionPane.showMessageDialog(frame, "You win!", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			disableButtons();
+		}
+		else if(remotePlayerWins == settings.getRoundsToWin())
+		{
+			JOptionPane.showMessageDialog(frame, "You lose!", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			disableButtons();
 		}
 	}
 	
