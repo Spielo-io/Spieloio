@@ -72,11 +72,11 @@ public abstract class Game {
 		//should be called after the match ended in a draw
 		gamesDrawn++;
 		currentRound++;
-		/*alertGameEnd("unentschieden");
+		alertGameEnd("unentschieden");
 		if(currentRound <= totalRounds)
 			resetBoard();
 		else
-			pauseTimer();*/
+			pauseTimer();
 	}
 	
 	public void setTimer(long timer_in_ms) {
