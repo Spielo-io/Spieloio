@@ -160,15 +160,18 @@ public class ActionHandler extends Game implements ActionListener
 		if(GUI.player == 1) 
 		{
 			GUI.player = 2;
+			GUI.opponent = 1;
 			Spielo.getGameScreen().setYourTurnLabel(false);
 			disableButtons();
 		}
 		else
 		{
 			GUI.player = 1;
+			GUI.opponent = 2;
 			Spielo.getGameScreen().setYourTurnLabel(true);
 			enableButtons();
 		}
+		GUI.countButtonspressed = 0;
 	}
 	
 	public void rounds()

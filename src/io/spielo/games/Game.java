@@ -44,6 +44,7 @@ public abstract class Game {
 		else {
 			pauseTimer();
 			setPlayer(player.NONE);
+			resetBoard();
 			JOptionPane.showMessageDialog(null, "Gratulation, du hast dieses Spiel gewonnen.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
 			Spielo.changeView("StartScreen");
 		}
@@ -64,6 +65,7 @@ public abstract class Game {
 		else {
 			pauseTimer();
 			setPlayer(player.NONE);
+			resetBoard();
 			JOptionPane.showMessageDialog(null, "Schade, du hast dieses Spiel verloren.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
 			Spielo.changeView("StartScreen");
 		}
