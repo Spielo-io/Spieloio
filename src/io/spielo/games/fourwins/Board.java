@@ -1,16 +1,21 @@
 package io.spielo.games.fourwins;
 
+import javax.swing.JOptionPane;
+
 import io.spielo.Spielo;
 import io.spielo.games.Game;
 
 public class Board extends Game{
-	public Board(FourWins fourWins){
+	public Board(FourWins fourWins, int maxTimer, int totalRounds){
+		super(maxTimer, totalRounds);
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
 		this.fourWins = fourWins;
+		if(getPlayer() == player.YOU)
+			startTimer();
 	}
 	
 	public void insertChip(int column) {
@@ -26,10 +31,12 @@ public class Board extends Game{
 		case YOU:
 			board[column][height] = player.YOU;
 			setPlayer(player.OPPONENT);
+			pauseTimer();
 			sendMessage(column);
 			break;
 		case OPPONENT:
 			board[column][height] = player.OPPONENT;
+			startTimer();
 			setPlayer(player.YOU);
 			break;
 		default:
@@ -37,10 +44,14 @@ public class Board extends Game{
 		}
 		if(getWinner() != player.NONE) {
 			setPlayer(player.NONE);
-			if(getWinner() == player.YOU)
+			if(getWinner() == player.YOU) {
+				fourWins.gui.update();
 				addWin();
-			else
-				addLoss();	
+			}
+			else {
+				fourWins.gui.update();
+				addLoss();
+			}
 		}
 	}
 	
@@ -172,8 +183,12 @@ public class Board extends Game{
 		}
 		return player.NONE;
 	}	
+	
+	public void sendTimeOut() {
+		sendMessage(9);
+	}
+	
 	private void sendMessage(int message) {
-		System.out.println("sende" + message);
 		Spielo.client.game4Win(message);
 	}
 }

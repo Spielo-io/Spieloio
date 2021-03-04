@@ -2,13 +2,15 @@ package io.spielo.games.fourwins;
 
 import java.awt.EventQueue;
 
+import javax.swing.JOptionPane;
+
 import io.spielo.Spielo;
 import io.spielo.games.Game;
 import io.spielo.games.Game.player;
 
 public class FourWins {
-	public FourWins(boolean youAreInitializer) {
-		board = new Board(this);
+	public FourWins(boolean youAreInitializer, int maxTimer, int totalRounds) {
+		board = new Board(this, maxTimer, totalRounds);
 		gui = new GUI(this);
 		
 		//determine start player
@@ -16,18 +18,6 @@ public class FourWins {
 			board.setPlayer(player.YOU);
 		else
 			board.setPlayer(player.OPPONENT);
-		
-		//-----------------GUi init
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					gui.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-		//---------------Gui init end
 	}
 	
 	public void receiveMessage(int value){
@@ -42,6 +32,10 @@ public class FourWins {
 				board.setPlayer(player.OPPONENT);
 			else if(value == 8)
 				board.setPlayer(player.YOU);
+			else if(value == 9) {
+				JOptionPane.showMessageDialog(null, "Die Zeit des Gegners ist abgelaufen!", "Runde zu Ende", JOptionPane.PLAIN_MESSAGE);
+				board.addWin();
+			}
 				
 		}
 	}

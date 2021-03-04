@@ -161,9 +161,41 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         panel.add(element);
     }
 
+    private int getTimer(LobbyTimer timer) {
+    	switch(timer) {
+    	case Seconds_30:
+    		return 30000;
+    	case Minute_1:
+    		return 60000;
+    	case Minute_3:
+    		return 180000;
+    	default:
+    		return -1;
+    	}
+    }
+    
+    private int getRounds(LobbyBestOf round) {
+    	switch (round) {
+		case BestOf_1:
+			return 1;
+		case BestOf_3:
+			return 2;
+		case BestOf_5:
+			return 3;
+		case BestOf_7:
+			return 4;
+		case BestOf_9:
+			return 5;
+		default:
+			return -1;
+		} 
+    }
+    
     public void startGame(LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer){
+    	setTimer_Label(getTimer(timer) / 1000);
+    	setBestOf_Label(bestOf);
         if(game == LobbyGame.Win4){
-            vierGewinnt = new FourWins(Spielo.userIsHost());
+            vierGewinnt = new FourWins(Spielo.userIsHost(), getTimer(timer), getRounds(bestOf));
             vierGewinnt_Panel = vierGewinnt.getGui();
             addElementToPanelUsingGridBagLayout(this, gridBagLayout, vierGewinnt_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
             vierGewinnt_Panel.setPreferredSize(new Dimension(450, 450));
