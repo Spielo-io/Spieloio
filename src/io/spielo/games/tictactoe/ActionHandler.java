@@ -31,16 +31,19 @@ public class ActionHandler extends Game implements ActionListener
 		if(settings.getIsHost() == true) 
 		{
 			GUI.player = 1;
+			Spielo.getGameScreen().setYourTurnLabel(true);
 			GUI.opponent = 2;
 		}
 		else {
 			GUI.player = 2;
+			Spielo.getGameScreen().setYourTurnLabel(false);
 			disableButtons();
 			GUI.opponent = 1;
 		}
 	}
 	public void actionPerformed(ActionEvent e)
 	{
+		Spielo.getGameScreen().setYourTurnLabel(false);
 		for(int i = 0; i < 9; i++)
 		{
 			if(e.getSource() == GUI.btn[i])
@@ -184,6 +187,7 @@ public class ActionHandler extends Game implements ActionListener
 	
 	public void receiveMessage(int value) {
 			int i = value;
+		Spielo.getGameScreen().setYourTurnLabel(true);
 			if(value == 11) {
 				JOptionPane.showMessageDialog(null, "Die Zeit des Gegners ist abgelaufen!", "Runde zu Ende", JOptionPane.PLAIN_MESSAGE);
                 addWin();
