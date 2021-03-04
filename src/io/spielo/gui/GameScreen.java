@@ -25,6 +25,7 @@ import io.spielo.games.tictactoe.GameSettings;
 import io.spielo.games.tictactoe.ImageLoader;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.Win4Message;
+import io.spielo.messages.lobby.LeaveLobbyMessage;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
 import io.spielo.messages.lobbysettings.LobbyGame;
 import io.spielo.messages.lobbysettings.LobbyTimer;
@@ -184,6 +185,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         if(e.getSource() == exitGame_Button){
             int answer = JOptionPane.showConfirmDialog(this, "Willst du das Spiel wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
             if(answer == JOptionPane.YES_OPTION) {
+                Spielo.client.leaveLobby();
                 Spielo.changeView("StartScreen");
             }
         }
@@ -193,6 +195,13 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     public void onMessageReceived(Message message) {
         if(message instanceof Win4Message){
             vierGewinnt.receiveMessage(((Win4Message) message).getValue());
+        }
+        if(Spielo.getCurrentLobbyScreen() == null){
+            if(message instanceof LeaveLobbyMessage){
+                JOptionPane.showMessageDialog(this, "Dein Gegner hat das Spiel verlassen!\nDu wirst nun zum Homescreen zurückgeleitet.");
+                Spielo.client.leaveLobby();
+                Spielo.changeView("StartScreen");
+            }
         }
     }
 

@@ -64,7 +64,7 @@ public class LobbyCreateScreen extends SpieloView implements ActionListener {
             Spielo.changeView("StartScreen");
         } else if (e.getSource() == createLobby_Button) {
 //            message
-            Spielo.client.createLobby(lobbySettings_Panel.getVisibilitySetting(), lobbySettings_Panel.getGameSettingEnum(), lobbySettings_Panel.getRoundModeSettingEnum(), lobbySettings_Panel.getTimerSettingEnum(), Spielo.getUsername());
+            Spielo.client.createLobby(lobbySettings_Panel.getVisibilitySetting(), lobbySettings_Panel.getGameSetting(), lobbySettings_Panel.getRoundModeSetting(), lobbySettings_Panel.getTimerSetting(), Spielo.getUsername());
             if (lobbySettings_Panel.getVisibilitySetting()) {
                 Spielo.changeView("LobbyScreenHostPublic");
             }
