@@ -38,6 +38,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     private JLabel bestOf_Label;
     private JLabel playerOneWins_Label;
     private JLabel playerTwoWins_Label;
+    private JLabel yourTurnLabel;
 //    borders
     private EtchedBorder borderForTimerLabel_Border;
 
@@ -46,6 +47,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //      gamePlay
     private GUI vierGewinnt_Panel;
     private io.spielo.games.tictactoe.GUI ticTacToe_Panel;
+    private Draw draw;
 
     private int widthOfPlayedGame_Panel;
     private int heightOfPlayedGame_Panel;
@@ -62,10 +64,11 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     private void initializeElements(){
         gridBagLayout = new GridBagLayout();
 //        label
-        timer_Label = new JLabel("0:30");
-        bestOf_Label = new JLabel("Best of 3");
-        playerOneWins_Label = new JLabel("Username1: 2 Wins");
-        playerTwoWins_Label = new JLabel("Username2: 1 Win");
+        timer_Label = new JLabel("");
+        bestOf_Label = new JLabel("");
+        playerOneWins_Label = new JLabel("");
+        playerTwoWins_Label = new JLabel("");
+        yourTurnLabel = new JLabel("Du bist dran!");
 //        border
         borderForTimerLabel_Border = new EtchedBorder(EtchedBorder.LOWERED);
 //          gameplay
@@ -73,8 +76,8 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
 //        buttons
         exitGame_Button = new JButton("Spiel verlassen");
 
-        widthOfPlayedGame_Panel = 5;
-        heightOfPlayedGame_Panel = 5;
+        widthOfPlayedGame_Panel = 6;
+        heightOfPlayedGame_Panel = 6;
     }
 
     private void configureElements(){
@@ -83,6 +86,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         bestOf_Label.setHorizontalAlignment(SwingConstants.CENTER);
         playerOneWins_Label.setHorizontalAlignment(SwingConstants.CENTER);
         playerTwoWins_Label.setHorizontalAlignment(SwingConstants.CENTER);
+        yourTurnLabel.setHorizontalAlignment(SwingConstants.CENTER);
         StyleSheet.changeFontOfGameScreenElements(this);
     }
 
@@ -95,19 +99,20 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, bestOf_Label, widthOfPlayedGame_Panel, 1, 1, 1, 0, new int[]{0, 0, 20, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, playerOneWins_Label, widthOfPlayedGame_Panel, 2, 1, 1, 0, new int[]{0, 0, 20, 0});
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, playerTwoWins_Label, widthOfPlayedGame_Panel, 3, 1, 1, 0, new int[]{0, 0, 20, 0});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, yourTurnLabel, widthOfPlayedGame_Panel, 4, 1, 1, 0, new int[]{170, 0, 20, 0});
 //        gamePlay
 //        addElementToPanelUsingGridBagLayout(this, gridBagLayout, playedGame_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
 //        buttons
-        addElementToPanelUsingGridBagLayout(this, gridBagLayout, exitGame_Button, widthOfPlayedGame_Panel, heightOfPlayedGame_Panel -1, 1, 1, 0, new int[]{230, 20, 10, 20});
+        addElementToPanelUsingGridBagLayout(this, gridBagLayout, exitGame_Button, widthOfPlayedGame_Panel, heightOfPlayedGame_Panel -1, 1, 1, 0, new int[]{10, 20, 10, 20});
     }
 
     public void setBestOf_Label(LobbyBestOf bestOf){
         switch (bestOf){
-            case BestOf_1 -> bestOf_Label.setText("Best of 1");
-            case BestOf_3 -> bestOf_Label.setText("Best of 3");
-            case BestOf_5 -> bestOf_Label.setText("Best of 5");
-            case BestOf_7 -> bestOf_Label.setText("Best of 7");
-            case BestOf_9 -> bestOf_Label.setText("Best of 9");
+            case BestOf_1 -> bestOf_Label.setText(StyleSheet.underlineHeading("Best of 1"));
+            case BestOf_3 -> bestOf_Label.setText(StyleSheet.underlineHeading("Best of 3"));
+            case BestOf_5 -> bestOf_Label.setText(StyleSheet.underlineHeading("Best of 5"));
+            case BestOf_7 -> bestOf_Label.setText(StyleSheet.underlineHeading("Best of 7"));
+            case BestOf_9 -> bestOf_Label.setText(StyleSheet.underlineHeading("Best of 9"));
         }
     }
 
@@ -144,6 +149,15 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
             timer_Label.setForeground(Color.RED);
         }
         timer_Label.setText(String.valueOf(currentTimer));
+    }
+
+    public void setYourTurnLabel(boolean itsYourTurn){
+        if(itsYourTurn){
+            yourTurnLabel.setForeground(Color.BLACK);
+        }
+        else{
+            yourTurnLabel.setForeground(new Color(238,238,238));
+        }
     }
 
     public void addElementToPanelUsingGridBagLayout(JPanel panel, GridBagLayout layout, Component element, int xDimension, int yDimension, int height, int width, int ipady, int [] insets){
@@ -195,15 +209,30 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     	setTimer_Label(getTimer(timer) / 1000);
     	setBestOf_Label(bestOf);
         if(game == LobbyGame.Win4){
+            if(ticTacToe_Panel != null){
+                gridBagLayout.removeLayoutComponent(ticTacToe_Panel.getPanel());
+            }
+            if(vierGewinnt != null){
+                gridBagLayout.removeLayoutComponent(vierGewinnt_Panel);
+                this.remove(vierGewinnt_Panel);
+            }
             vierGewinnt = new FourWins(Spielo.userIsHost(), getTimer(timer), getRounds(bestOf));
             vierGewinnt_Panel = vierGewinnt.getGui();
             addElementToPanelUsingGridBagLayout(this, gridBagLayout, vierGewinnt_Panel, 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
             vierGewinnt_Panel.setPreferredSize(new Dimension(450, 450));
         }
         else if(game == LobbyGame.TicTacToe){
+            if(vierGewinnt_Panel != null){
+                gridBagLayout.removeLayoutComponent(vierGewinnt_Panel);
+            }
+            if(ticTacToe_Panel != null){
+                gridBagLayout.removeLayoutComponent(ticTacToe_Panel.getPanel());
+                this.remove(ticTacToe_Panel.getPanel());
+            }
         	ticTacToe_Panel = new io.spielo.games.tictactoe.GUI(new GameSettings(bestOf, Spielo.userIsHost(), timer));
             new ImageLoader();
-            new Draw();
+            ticTacToe_Panel.getPanel().setPreferredSize(new Dimension(450, 450));
+            addElementToPanelUsingGridBagLayout(this, gridBagLayout, ticTacToe_Panel.getPanel(), 0, 0, heightOfPlayedGame_Panel, widthOfPlayedGame_Panel, 0, new int[]{0, 10, 0, 0});
         }
 
         setPlayerOneWins_Label(0);

@@ -37,12 +37,14 @@ public abstract class Game {
 		currentRound++;
 		alertGameEnd("Du hast diese Runde gewonnen!");
 		if((totalRounds / 2) >= gamesWon) {
+			pauseTimer();
 			resetBoard();
 			setPlayer(player.OPPONENT);
 		}
 		else {
 			pauseTimer();
 			setPlayer(player.NONE);
+			resetBoard();
 			JOptionPane.showMessageDialog(null, "Gratulation, du hast dieses Spiel gewonnen.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
 			Spielo.changeView("StartScreen");
 		}
@@ -55,16 +57,18 @@ public abstract class Game {
 		currentRound++;
 		alertGameEnd("Du hast diese Runde verloren!");
 		if((totalRounds / 2) >= gamesLost) {
+			System.out.println("reset");
+			pauseTimer();
 			resetBoard();
 			setPlayer(player.YOU);
 		}
 		else {
 			pauseTimer();
 			setPlayer(player.NONE);
+			resetBoard();
 			JOptionPane.showMessageDialog(null, "Schade, du hast dieses Spiel verloren.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
 			Spielo.changeView("StartScreen");
 		}
-		System.out.println("spiele verloren" + gamesLost);
 		Spielo.getGameScreen().setPlayerTwoWins_Label(gamesLost);
 	}
 	
@@ -72,11 +76,11 @@ public abstract class Game {
 		//should be called after the match ended in a draw
 		gamesDrawn++;
 		currentRound++;
-		/*alertGameEnd("unentschieden");
+		alertGameEnd("unentschieden");
 		if(currentRound <= totalRounds)
 			resetBoard();
 		else
-			pauseTimer();*/
+			pauseTimer();
 	}
 	
 	public void setTimer(long timer_in_ms) {

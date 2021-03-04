@@ -45,7 +45,7 @@ public class GUI extends JPanel {
 			if (counter != 0) {
 				x_coordinate += 55;
 			}
-			buttons[i] = new JButton("insert");
+			buttons[i] = new JButton("");
 			buttons[i].setBounds(x_coordinate, 10, 48, 22);
 			this.add(buttons[i]);
 			counter++;
@@ -140,7 +140,6 @@ public class GUI extends JPanel {
 	private JLabel[][] labels = new JLabel[7][6];
 	
 	public void update() {
-		System.out.println("update GUI");
 		player [][] boardStatus = board.getBoard();
 		for(int i = 0; i < 7; i++) {
 			for(int j = 0; j < 6; j++) {
