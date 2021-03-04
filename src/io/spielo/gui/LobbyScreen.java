@@ -2,10 +2,6 @@ package io.spielo.gui;
 
 
 import io.spielo.Spielo;
-import io.spielo.games.fourwins.FourWins;
-import io.spielo.games.tictactoe.Draw;
-import io.spielo.games.tictactoe.GUI;
-import io.spielo.games.tictactoe.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,15 +92,7 @@ public class LobbyScreen extends SpieloView {
     }
 
     protected void startGame(){
-        Spielo.getGameScreen().startGame(Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getGameSettingEnum(), Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getRoundModeSettingEnum(), Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getTimerSettingEnum());
+        Spielo.getGameScreen().startGame(Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getGameSetting(), Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getRoundModeSetting(), Spielo.getCurrentLobbyScreen().lobbySettings_Panel.getTimerSetting());
         Spielo.changeView("GameScreen");
     }
-
-//    public void setLobbySettings(boolean isPublic, String game, String bestOf, String lobbyTimer, boolean userIsHost){
-//        lobbySettings_Panel.setLobbySettings(isPublic, game, bestOf, lobbyTimer, userIsHost);
-//    }
-//
-//    public String [] getLobbySettings(){
-//        return lobbySettings_Panel.getLobbySettings();
-//    }
 }

@@ -111,7 +111,7 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
         }
         if(message instanceof LobbySettingsMessage){
             LobbySettings settings = ((LobbySettingsMessage) message).getSettings();
-            lobbySettings_Panel.setLobbySettingsEnum(settings.getPublic(), settings.getGame(), settings.getBestOf(), settings.getTimer(), false);
+            lobbySettings_Panel.setLobbySettings(settings.getPublic(), settings.getGame(), settings.getBestOf(), settings.getTimer(), false);
         }
         if(message instanceof ReadyToPlayMessage){
             if(((ReadyToPlayMessage) message).getIsReady()){
@@ -137,11 +137,6 @@ public class LobbyScreenClientPrivat extends LobbyScreen implements ActionListen
                 Spielo.setOpponentLeftGame(true);
             }
         }
-
-//        Spielo.client.leaveLobby();
-//        if(message instanceof LeaveLobbyMessage){
-////            message.
-//        }
     }
 
     @Override
