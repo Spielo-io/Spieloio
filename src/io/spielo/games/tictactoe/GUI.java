@@ -25,8 +25,8 @@ public class GUI
 		for(int i = 0; i<btn.length; i++)
 		{
 			btn[i] = new JButton();
-			btn[i].setVisible(true);
-			btn[i].addActionListener(new ActionHandler(settings));
+			btn[i].setVisible(true);			
+			btn[i].addActionListener(new ActionHandler(settings, 1, 1)); //nicht 1,1 verwenden!!! random zahlen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			btn[i].setFocusPainted(false);
 			btn[i].setContentAreaFilled(false);
 			btn[i].setBorder(null);

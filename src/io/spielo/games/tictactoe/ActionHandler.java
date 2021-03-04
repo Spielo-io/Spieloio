@@ -20,7 +20,8 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 	private int localPlayerWins;
 	private int remotePlayerWins;
 	
-	public ActionHandler(final GameSettings settings) {
+	public ActionHandler(final GameSettings settings, int maxTimer, int totalRounds) {
+		super(maxTimer, totalRounds);
 		this.settings = settings;
 
 		localPlayerWins = 0;
@@ -215,5 +216,11 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 
 	@Override
 	public void onDisconnect() {		
+	}
+	
+	@Override
+	public void sendTimeOut() {
+		// TODO Auto-generated method stub
+		
 	}
 }

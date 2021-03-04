@@ -122,6 +122,9 @@ public class GUI extends JPanel {
 							y_coordinate -= 55;
 						}
 						panels[k][l] = new JPanel();
+						labels[k][l] = new JLabel();
+						labels[k][l].setIcon(null);
+						panels[k][l].add(labels[k][l]);
 						panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 48);
 						panels[k][l].setBackground(Color.WHITE);
 						this.add(panels[k][l]);
@@ -134,32 +137,26 @@ public class GUI extends JPanel {
 	private Board board;
 	private JButton[] buttons = new JButton[7];
 	private JPanel[][] panels = new JPanel[7][6];
+	private JLabel[][] labels = new JLabel[7][6];
 	
 	public void update() {
 		System.out.println("update GUI");
 		player [][] boardStatus = board.getBoard();
 		for(int i = 0; i < 7; i++) {
 			for(int j = 0; j < 6; j++) {
-				if(boardStatus[i][j] != player.NONE) {
-					if(boardStatus[i][j] == player.YOU) {
-						System.out.println("you");
-						JLabel imageLabel = new JLabel();
-						imageLabel.setIcon(redCoin);
-						panels[i][j].add(imageLabel);
-					}
-					else if(boardStatus[i][j] == player.OPPONENT){
-						System.out.println("opponent");
-						JLabel imageLabel = new JLabel();
-						imageLabel.setIcon(blueCoin);
-						panels[i][j].add(imageLabel);
-					}
-					else {
-						System.out.println("all to zero");
-						JLabel imageLabel = new JLabel();
-						imageLabel.setIcon(null);
-						panels[i][j].add(imageLabel);
-					}
+				if(boardStatus[i][j] == player.YOU) {
+					//System.out.println("you");
+					labels[i][j].setIcon(redCoin);
 				}
+				else if(boardStatus[i][j] == player.OPPONENT){
+					//System.out.println("opponent");
+					labels[i][j].setIcon(blueCoin);
+				}
+				else {
+					//System.out.println("all to zero");
+					labels[i][j].setIcon(null);
+				}
+				
 			}
 		}
 	}

@@ -4,18 +4,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JOptionPane;
+
 import io.spielo.Spielo;
+import io.spielo.games.Game.player;
+import io.spielo.gui.StartScreen;
 
 public abstract class Game {
 	private static final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 	private final Timer timer;
 	
-	public Game() {
+	public Game(int maxTimer, int totalRounds) {
 		timer = new Timer();
 		scheduledExecutor.scheduleAtFixedRate(timer, 1, 1, TimeUnit.SECONDS);
-	
-		setTimer(30000);
-		startTimer();
+		
+		this.totalRounds = totalRounds;
+		setTimer(maxTimer);
 	}
 	
 	public void setPlayer(player player) {
@@ -32,9 +36,17 @@ public abstract class Game {
 		//should be called if the local player has won a game
 		gamesWon++;
 		currentRound++;
-		if(currentRound <= totalRounds)
+		alertGameEnd("Du hast diese Runde gewonnen!");
+		if((totalRounds / 2) >= gamesWon) {
 			resetBoard();
-		System.out.println("spiele gewonnen" + gamesWon);
+			setPlayer(player.OPPONENT);
+		}
+		else {
+			pauseTimer();
+			setPlayer(player.NONE);
+			JOptionPane.showMessageDialog(null, "Gratulation, du hast dieses Spiel gewonnen.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
+			Spielo.changeView("StartScreen");
+		}
 		Spielo.getGameScreen().setPlayerOneWins_Label(gamesWon);
 	}
 	
@@ -42,8 +54,17 @@ public abstract class Game {
 		//should be called if the local player has lost a game
 		gamesLost++;
 		currentRound++;
-		if(currentRound <= totalRounds)
+		alertGameEnd("Du hast diese Runde verloren!");
+		if((totalRounds / 2) >= gamesLost) {
 			resetBoard();
+			setPlayer(player.YOU);
+		}
+		else {
+			pauseTimer();
+			setPlayer(player.NONE);
+			JOptionPane.showMessageDialog(null, "Schade, du hast dieses Spiel verloren.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
+			Spielo.changeView("StartScreen");
+		}
 		System.out.println("spiele verloren" + gamesLost);
 		Spielo.getGameScreen().setPlayerTwoWins_Label(gamesLost);
 	}
@@ -52,8 +73,11 @@ public abstract class Game {
 		//should be called after the match ended in a draw
 		gamesDrawn++;
 		currentRound++;
+		alertGameEnd("unntschieden");
 		if(currentRound <= totalRounds)
 			resetBoard();
+		else
+			pauseTimer();
 	}
 	
 	public void setTimer(long timer_in_ms) {
@@ -77,6 +101,7 @@ public abstract class Game {
 		timerValue = timerStartValue;
 		startTime = System.currentTimeMillis();		
 		timer.setIsRunning(true);
+		timerPause = false;
 	}
 	
 	public void pauseTimer() {
@@ -112,7 +137,13 @@ public abstract class Game {
 		totalRounds = rounds;
 	}
 		
+	private void alertGameEnd(String message) {
+		//JOptionPane.showConfirmDialog(this, "Willst du das Spiel wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
+		JOptionPane.showMessageDialog(null, message, "Runde zu Ende", JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	public abstract void resetBoard();
+	public abstract void sendTimeOut();
 	
 	public static enum player{
 		//contains all possible players
@@ -120,9 +151,9 @@ public abstract class Game {
 	}
 	
 
-	private long timerStartValue = 0;
-	private long startTime = 0;
-	private long timerValue = 0;
+	private long timerStartValue = 30000;
+	private long startTime = 30000;
+	private long timerValue = 30000;
 	private boolean timerPause = false;
 	
 	private player turn;
@@ -149,9 +180,13 @@ public abstract class Game {
 		public void run() {
 			if (isRunning) {
 				int timer = (int) (getTimer() / 1000);
-				if (timer <= 0)
-					timer = 0;
 				Spielo.getGameScreen().setTimer_Label(timer);
+				if (timer == 0) {
+					sendTimeOut();
+					alertGameEnd("Deine Zeit ist abgelaufen!");
+					addLoss();
+					pauseTimer();
+				}
 			}
 		}
 		
