@@ -26,6 +26,7 @@ public class ActionHandler extends Game implements ActionListener
 		localPlayerWins = 0;
 		remotePlayerWins = 0;
 		setTimer(settings.getTimer());
+		setRounds(settings.getRoundsToWin());
 		
 		if(settings.getIsHost() == true) 
 		{
@@ -193,6 +194,10 @@ public class ActionHandler extends Game implements ActionListener
 			{
 				addWin();
 			}
+			else if(value == 11) {
+				JOptionPane.showMessageDialog(null, "Die Zeit des Gegners ist abgelaufen!", "Runde zu Ende", JOptionPane.PLAIN_MESSAGE);
+                addWin();
+			}
 			else
 			{
 				GUI.countButtonspressed++;
@@ -205,6 +210,6 @@ public class ActionHandler extends Game implements ActionListener
 	@Override
 	public void sendTimeOut() {
 		// TODO Auto-generated method stub
-		
+		Spielo.client.gameTicTacToe(11);
 	}
 }

@@ -8,8 +8,6 @@ public class GameSettings {
 	private final Boolean isHost;
 	private final int timer;
 	
-	
-
 	public GameSettings(final LobbyBestOf round, final Boolean isHost,final LobbyTimer lobbyTimer) {
 		switch (round) {
 		case BestOf_1:
