@@ -13,7 +13,7 @@ import io.spielo.messages.Message;
 import io.spielo.messages.games.TicTacToeMessage;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
 
-public class ActionHandler implements ActionListener, ClientEventSubscriber
+public class ActionHandler extends Game implements ActionListener, ClientEventSubscriber
 {
 	private final GameSettings settings;
 	private JFrame frame;
@@ -37,7 +37,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			GUI.player = 1;
 		}
 		
-			if(Game.message.getTimer() > 0)
+			if(getTimer() > 0)
 			{
 				for(int i = 0; i < 9; i++)
 				{
@@ -56,7 +56,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			}
 			else
 			{
-				Game.message.addLoss();
+				addLoss();
 				Spielo.client.gameTicTacToe(9);
 				
 			}
@@ -69,9 +69,9 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
 			{
-				Game.message.addWin();
+				addWin();
 				localPlayerWins++;
-				reset();
+				
 			}
 		}
 		//Horizontal
@@ -79,29 +79,29 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
 			{
-				Game.message.addWin();
+				addWin();
 				localPlayerWins++;
-				reset();
+				
 			}
 		}
 		//Diagonal
 		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
 		{
-			Game.message.addWin();
+			addWin();
 			localPlayerWins++;
-			reset();
+			
 		}
 		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
 		{
-			Game.message.addWin();
+			addWin();
 			localPlayerWins++;
-			reset();
+			
 		}
 		//Draw
 		if(GUI.countButtonspressed == 9)
 		{
-			Game.message.addDraw();
-			reset();
+			addDraw();
+			
 		}
 	}
 	
@@ -112,9 +112,9 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
 			{
-				Game.message.addLoss();
+				addLoss();
 				remotePlayerWins++;
-				reset();
+				
 			}
 		}
 		//Horizontal
@@ -122,29 +122,29 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
 			{
-				Game.message.addLoss();
+				addLoss();
 				remotePlayerWins++;
-				reset();
+				
 			}
 		}
 		//Diagonal
 		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
 		{
-			Game.message.addLoss();
+			addLoss();
 			remotePlayerWins++;
-			reset();
+			
 		}
 		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
 		{
-			Game.message.addLoss();
+			addLoss();
 			remotePlayerWins++;
-			reset();
+			
 		}
 		//Unentschieden
 		if(GUI.countButtonspressed == 9)
 		{
-			Game.message.addDraw();
-			reset();
+			addDraw();
+			
 		}
 	}
 	
@@ -162,7 +162,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		}
 	}
 	
-	public void reset()
+	public void resetBoard()
 	{
 		for (int i = 0; i < GUI.pressed.length; i++) {
 			GUI.pressed[i] = 0;
@@ -202,8 +202,7 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 			int i = ticTacToeMessage.getValue();
 			if(i == 9)
 			{
-				Game.message.addWin();
-				reset();
+				addWin();
 			}
 			else
 			{

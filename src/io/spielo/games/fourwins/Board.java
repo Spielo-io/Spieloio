@@ -4,13 +4,13 @@ import io.spielo.Spielo;
 import io.spielo.games.Game;
 
 public class Board extends Game{
-	public Board(){
+	public Board(FourWins fourWins){
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
-		setTimer(30000);
+		this.fourWins = fourWins;
 	}
 	
 	public void insertChip(int column) {
@@ -59,15 +59,19 @@ public class Board extends Game{
 		return string;
 	}
 	
-	public void reset() {
+	public void resetBoard() {
+		System.out.println("reset Board");
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
+		System.out.println(toString());
+		fourWins.gui.update();
 	}
 	
 //private:
+	private FourWins fourWins;
 	private int width = 7, height = 6;
 	private player[][] board = new player[width][height];
 	
