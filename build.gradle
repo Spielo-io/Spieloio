@@ -4,6 +4,10 @@ plugins {
     id 'maven'
 }
 
+apply plugin: 'java'
+sourceCompatibility = 1.14
+targetCompatibility = 1.14
+
 compileJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile) {
@@ -48,7 +52,8 @@ sourceSets {
 }
 
 dependencies {
-    implementation "io.spielo:client:2.1.11"
+    implementation "io.spielo:client:2.1.22"
+    implementation "io.spielo:client:2.1.22:sources"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
@@ -76,6 +81,6 @@ jar {
     }
 
     from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
