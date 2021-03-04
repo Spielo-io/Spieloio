@@ -22,3 +22,11 @@ jobs:
         run: ./gradlew -x test build
       - name: Run Unit Tests
         run: ./gradlew test
+      - name: Generate Jar
+        run: ./gradlew jar
+      - name: Upload Jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: Application Jar
+          path: |
+            build/libs/spieloio.jar

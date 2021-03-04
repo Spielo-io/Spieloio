@@ -21,6 +21,9 @@ public class StyleSheet {
 //    lobbyScreen
     public static Font lobbyScreenButtons_Font = new Font(Font.DIALOG, Font.BOLD, 15);
     public static Font lobbyScreenLabels_Font = new Font("Arial", Font.PLAIN, 16);
+//    game screen
+    public static Font gameScreenLabels_Font = new Font("Arial", Font.PLAIN, 20);
+    public static Font gameScreenButton_Font = new Font("Arial", Font.PLAIN, 20);
 
 
 
@@ -76,6 +79,18 @@ public class StyleSheet {
             }
             else if(comp instanceof JLabel && !((JLabel) comp).getText().equals("<html><u>Lobby</u></<html>")){
                 ((JLabel)comp).setFont(lobbyScreenLabels_Font);
+            }
+
+        }
+    }
+
+    public static void changeFontOfGameScreenElements(JPanel panel){
+        for (Component comp : panel.getComponents()) {
+            if(comp instanceof JButton){
+                ((JButton)comp).setFont(gameScreenButton_Font);
+            }
+            else if(comp instanceof JLabel){
+                ((JLabel)comp).setFont(gameScreenLabels_Font);
             }
 
         }

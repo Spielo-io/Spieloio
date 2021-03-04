@@ -6,70 +6,60 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import io.spielo.games.Game;
 import io.spielo.Spielo;
-import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.TicTacToeMessage;
+import io.spielo.messages.lobbysettings.LobbyBestOf;
 
-public class ActionHandler implements ActionListener, ClientEventSubscriber
+public class ActionHandler extends Game implements ActionListener
 {
-	
+	private final GameSettings settings;
 	private JFrame frame;
+	private int localPlayerWins;
+	private int remotePlayerWins;
 	
-	public void actionPerformed(ActionEvent e) 
-	{
-		/*if(GUI.player == 1) // 2 -> Player O  // 1 -> Player X 
-		{
-			Game.message.setPlayer(Game.player.YOU);
-		}
-		if(GUI.player == 2)
-		{
-			Game.message.setPlayer(Game.player.OPPONENT);
-		}
-		if(GUI.player == 0)
-		{
-			Game.message.setPlayer(Game.player.NONE);
-		}*/
+	public ActionHandler(final GameSettings settings, int maxTimer, int totalRounds) {
+		super(maxTimer, totalRounds);
+		this.settings = settings;
+
+		localPlayerWins = 0;
+		remotePlayerWins = 0;
+		setTimer(settings.getTimer());
+		setRounds(settings.getRoundsToWin());
 		
-		if(GUI.player == 1) 
-		{
-			GUI.player = 2;
-		}
-		else
+		if(settings.getIsHost() == true) 
 		{
 			GUI.player = 1;
+			Spielo.getGameScreen().setYourTurnLabel(true);
+			GUI.opponent = 2;
 		}
-		
-		Game.message.setTimer(10000);
-		
-			if(Game.message.getTimer() > 0)
+		else {
+			GUI.player = 2;
+			Spielo.getGameScreen().setYourTurnLabel(false);
+			disableButtons();
+			GUI.opponent = 1;
+		}
+	}
+	public void actionPerformed(ActionEvent e)
+	{
+		Spielo.getGameScreen().setYourTurnLabel(false);
+		for(int i = 0; i < 9; i++)
+		{
+			if(e.getSource() == GUI.btn[i])
 			{
-				for(int i = 0; i < 9; i++)
+				if(GUI.pressed[i] == 0)
 				{
-					if(e.getSource() == GUI.btn[i])
-					{
-						if(GUI.pressed[i] == 0)
-						{
-							GUI.pressed[i] = GUI.player;
-							GUI.countButtonspressed++;
-							Spielo.client.gameTicTacToe(i);
-							winningGame();
-							disableButtons();
-						}
-					}
+					GUI.pressed[i] = GUI.player;
+					GUI.countButtonspressed++;
+					Spielo.client.gameTicTacToe(i);
+					winningGame();
+					disableButtons();
 				}
 			}
-			else
-			{
-				Game.message.addLoss();
-				Spielo.client.gameTicTacToe(9);
-				
-			}
-		}		
+		}
+	}	
 	
-	
-	//Gewinner pruefen
 	public void winningGame()
 	{
 		//Vertikal
@@ -77,8 +67,8 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
 			{
-				Game.message.addWin();
-				reset();
+				addWin();
+				localPlayerWins++;
 			}
 		}
 		//Horizontal
@@ -86,26 +76,25 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		{
 			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
 			{
-				Game.message.addWin();
-				reset();
+				addWin();
+				localPlayerWins++;
 			}
 		}
 		//Diagonal
 		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
 		{
-			Game.message.addWin();
-			reset();
+			addWin();
+			localPlayerWins++;
 		}
 		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
 		{
-			Game.message.addWin();
-			reset();
+			addWin();
+			localPlayerWins++;
 		}
-		//Unentschieden
+		//Draw
 		if(GUI.countButtonspressed == 9)
 		{
-			Game.message.addDraw();
-			reset();
+			addDraw();
 		}
 	}
 	
@@ -114,37 +103,36 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		//Vertikal
 		for(int button = 0; button < 3; button++)
 		{
-			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
+			if(GUI.pressed[button] == GUI.opponent && GUI.pressed[button+3] == GUI.opponent && GUI.pressed[button+6] == GUI.opponent)
 			{
-				Game.message.addLoss();
-				reset();
+				addLoss();
+				remotePlayerWins++;
 			}
 		}
 		//Horizontal
 		for(int button = 0; button < 7; button+=3)
 		{
-			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
+			if(GUI.pressed[button] == GUI.opponent && GUI.pressed[button+1] == GUI.opponent && GUI.pressed[button+2] == GUI.opponent)
 			{
-				Game.message.addLoss();
-				reset();
+				addLoss();
+				remotePlayerWins++;
 			}
 		}
 		//Diagonal
-		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
+		if(GUI.pressed[0] == GUI.opponent && GUI.pressed[4] == GUI.opponent && GUI.pressed[8] == GUI.opponent)
 		{
-			Game.message.addLoss();
-			reset();
+			addLoss();
+			remotePlayerWins++;
 		}
-		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
+		if(GUI.pressed[2] == GUI.opponent && GUI.pressed[4] == GUI.opponent && GUI.pressed[6] == GUI.opponent)
 		{
-			Game.message.addLoss();
-			reset();
+			addLoss();
+			remotePlayerWins++;
 		}
 		//Unentschieden
 		if(GUI.countButtonspressed == 9)
 		{
-			Game.message.addDraw();
-			reset();
+			addDraw();
 		}
 	}
 	
@@ -160,9 +148,10 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		for (int i = 0; i < 9; i++) {
 			GUI.btn[i].setEnabled(true);
 		}
+		startTimer();
 	}
 	
-	public void reset()
+	public void resetBoard()
 	{
 		for (int i = 0; i < GUI.pressed.length; i++) {
 			GUI.pressed[i] = 0;
@@ -171,36 +160,53 @@ public class ActionHandler implements ActionListener, ClientEventSubscriber
 		if(GUI.player == 1) 
 		{
 			GUI.player = 2;
+			GUI.opponent = 1;
+			Spielo.getGameScreen().setYourTurnLabel(false);
 			disableButtons();
 		}
 		else
 		{
 			GUI.player = 1;
+			GUI.opponent = 2;
+			Spielo.getGameScreen().setYourTurnLabel(true);
 			enableButtons();
+		}
+		GUI.countButtonspressed = 0;
+	}
+	
+	public void rounds()
+	{
+		if(localPlayerWins == settings.getRoundsToWin())
+		{
+			JOptionPane.showMessageDialog(frame, "You win!", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			disableButtons();
+		}
+		else if(remotePlayerWins == settings.getRoundsToWin())
+		{
+			JOptionPane.showMessageDialog(frame, "You lose!", "Tic Tac Toe", JOptionPane.INFORMATION_MESSAGE);
+			disableButtons();
 		}
 	}
 	
-	@Override
-	public void onMessageReceived(Message message) {
-		if (message instanceof TicTacToeMessage) {
-			TicTacToeMessage ticTacToeMessage = (TicTacToeMessage) message;
-			
-			int i = ticTacToeMessage.getValue();
-			if(i == 9)
-			{
-				Game.message.addWin();
-				reset();
+	public void receiveMessage(int value) {
+			int i = value;
+		Spielo.getGameScreen().setYourTurnLabel(true);
+			if(value == 11) {
+				JOptionPane.showMessageDialog(null, "Die Zeit des Gegners ist abgelaufen!", "Runde zu Ende", JOptionPane.PLAIN_MESSAGE);
+                addWin();
 			}
 			else
 			{
+				GUI.countButtonspressed++;
 				GUI.pressed[i] = GUI.opponent;
 				opponentWinningGame();
 				enableButtons();
 			}
-		}
 	}
-
+	
 	@Override
-	public void onDisconnect() {		
+	public void sendTimeOut() {
+		// TODO Auto-generated method stub
+		Spielo.client.gameTicTacToe(11);
 	}
 }

@@ -1,23 +1,26 @@
 package io.spielo.games.fourwins;
 
-import java.awt.Button;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import io.spielo.games.tictactoe.Game.player;
+import io.spielo.games.Game.player;
 
 
-public class GUI extends JFrame {
+public class GUI extends JPanel {
 	private JTextField txtPressTheButton;
-
+	private ImageIcon blueCoin;
+	private ImageIcon redCoin;
 	/**
 	 * Launch the application.
 	 */
@@ -26,32 +29,13 @@ public class GUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI(Board board, Network network) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public GUI(FourWins game) {
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 571, 445);
-		getContentPane().setLayout(null);
+		this.setLayout(null);
+		createCoinImgaes();
 		
-		//--------------------------debug start
-		Button button = new Button("print board to console");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(board.toString());
-			}
-		});
-		button.setBounds(415, 10, 137, 43);
-		getContentPane().add(button);
-		
-		Button button_70 = new Button("print  winner to console");
-		button_70.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(board.getWinner());
-			}
-		});
-		
-		button_70.setBounds(415, 59, 137, 43);
-		getContentPane().add(button_70);
-		//----------------debug end
-		this.board = board;
+		this.board = game.board;
 		//init butons
 		int x_coordinate = 10;
 		int y_coordinate = 10;
@@ -61,9 +45,9 @@ public class GUI extends JFrame {
 			if (counter != 0) {
 				x_coordinate += 55;
 			}
-			buttons[i] = new JButton("insert");
+			buttons[i] = new JButton("");
 			buttons[i].setBounds(x_coordinate, 10, 48, 22);
-			getContentPane().add(buttons[i]);
+			this.add(buttons[i]);
 			counter++;
 		}
 		
@@ -72,7 +56,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(0);
-							network.sendMessage(0);
 							update();
 						}
 					}
@@ -81,7 +64,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(1);
-							network.sendMessage(1);
 							update();
 						}
 					}
@@ -90,7 +72,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(2);
-							network.sendMessage(2);
 							update();
 						}
 					}
@@ -99,7 +80,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(3);
-							network.sendMessage(3);
 							update();
 						}
 					}
@@ -108,7 +88,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(4);
-							network.sendMessage(4);
 							update();
 						}
 					}
@@ -117,7 +96,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(5);
-							network.sendMessage(5);
 							update();
 						}
 					}
@@ -126,7 +104,6 @@ public class GUI extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						if(board.getPlayer() == player.YOU) {
 							board.insertChip(6);
-							network.sendMessage(6);
 							update();
 						}
 					}
@@ -145,37 +122,61 @@ public class GUI extends JFrame {
 							y_coordinate -= 55;
 						}
 						panels[k][l] = new JPanel();
+						labels[k][l] = new JLabel();
+						labels[k][l].setIcon(null);
+						panels[k][l].add(labels[k][l]);
 						panels[k][l].setBounds(x_coordinate, y_coordinate, 48, 48);
 						panels[k][l].setBackground(Color.WHITE);
-						getContentPane().add(panels[k][l]);
+						this.add(panels[k][l]);
 					}
 					y_coordinate = 350;
 				}
 		//init panels end
-		
-		this.network = network;
 	}
 	
-	private Network network;
 	private Board board;
 	private JButton[] buttons = new JButton[7];
 	private JPanel[][] panels = new JPanel[7][6];
+	private JLabel[][] labels = new JLabel[7][6];
 	
 	public void update() {
-
 		player [][] boardStatus = board.getBoard();
 		for(int i = 0; i < 7; i++) {
 			for(int j = 0; j < 6; j++) {
-				if(boardStatus[i][j] != player.NONE) {
-					if(boardStatus[i][j] == player.YOU) {
-						panels[i][j].setBackground(Color.RED);
-					}
-					else {
-						panels[i][j].setBackground(Color.BLUE);
-					}
+				if(boardStatus[i][j] == player.YOU) {
+					//System.out.println("you");
+					labels[i][j].setIcon(redCoin);
 				}
+				else if(boardStatus[i][j] == player.OPPONENT){
+					//System.out.println("opponent");
+					labels[i][j].setIcon(blueCoin);
+				}
+				else {
+					//System.out.println("all to zero");
+					labels[i][j].setIcon(null);
+				}
+				
 			}
 		}
 	}
+	private void createCoinImgaes(){
+		BufferedImage bufferedImage = null;
+		try{
+			bufferedImage = ImageIO.read(new File("redCoin.png"));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		Image image = bufferedImage.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+		redCoin = new ImageIcon(image);
+
+		try{
+			bufferedImage = ImageIO.read(new File("blueCoin.png"));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		image = bufferedImage.getScaledInstance(48, 48, Image.SCALE_SMOOTH);
+		blueCoin = new ImageIcon(image);
+	}
+
 }
 

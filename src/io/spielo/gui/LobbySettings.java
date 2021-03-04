@@ -8,8 +8,6 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 public class LobbySettings extends JPanel{
@@ -19,7 +17,7 @@ public class LobbySettings extends JPanel{
     private EtchedBorder borderForPanel_Border;
 //    gameSetting
     private JLabel gameSetting_Label;
-    public ButtonGroup gameSetting_ButtonGroup;
+    private ButtonGroup gameSetting_ButtonGroup;
     private JRadioButton ticTacToe_RadioButton;
     private JRadioButton fourWins_RadioButton;
     private JRadioButton checkers_RadioButton;
@@ -95,7 +93,8 @@ public class LobbySettings extends JPanel{
         addRadioButtonsToButtonGroup(roundModeSetting_ButtonGroup, new JRadioButton[] {bestOfOne_RadioButton, bestOfThree_RadioButton, bestOfFive_RadioButton, bestOfSeven_RadioButton, bestOfNine_RadioButton});
 //        check one of the RadioButtonsInButtonGroup
         ticTacToe_RadioButton.doClick();
-        privateVisibility_RadioButton.doClick();
+//        privateVisibility_RadioButton.doClick();
+        publicVisibility_RadioButton.doClick();
         bestOfOne_RadioButton.doClick();
         thirtySeconds_RadioButton.doClick();
 //        set Action Commands for RadioButtons
@@ -155,7 +154,7 @@ public class LobbySettings extends JPanel{
         for (JRadioButton radioButton : radioButtons) buttonGroup.add(radioButton);
     }
 
-    public void setLobbySettingsEnum(boolean isPublic, LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer, boolean userIsHost){
+    public void setLobbySettings(boolean isPublic, LobbyGame game, LobbyBestOf bestOf, LobbyTimer timer, boolean userIsHost){
         activateRadioButtons(true);
         if(isPublic){
             publicVisibility_RadioButton.doClick();
@@ -194,7 +193,7 @@ public class LobbySettings extends JPanel{
         return visibilitySettingToBoolean(visibilitySetting_ButtonGroup.getSelection().getActionCommand());
     }
 
-    public LobbyGame getGameSettingEnum(){
+    public LobbyGame getGameSetting(){
         if(gameSetting_ButtonGroup.getSelection().getActionCommand().equals("TicTacToe")){
             return LobbyGame.TicTacToe;
         }
@@ -206,7 +205,7 @@ public class LobbySettings extends JPanel{
         }
     }
 
-    public LobbyBestOf getRoundModeSettingEnum(){
+    public LobbyBestOf getRoundModeSetting(){
         return switch (roundModeSetting_ButtonGroup.getSelection().getActionCommand()) {
             case "Best of 1" -> LobbyBestOf.BestOf_1;
             case "Best of 3" -> LobbyBestOf.BestOf_3;
@@ -217,7 +216,7 @@ public class LobbySettings extends JPanel{
         };
     }
 
-    public LobbyTimer getTimerSettingEnum(){
+    public LobbyTimer getTimerSetting(){
         return switch (timerSetting_ButtonGroup.getSelection().getActionCommand()) {
             case "30 Sek." -> LobbyTimer.Seconds_30;
             case "1 Min." -> LobbyTimer.Minute_1;
