@@ -31,7 +31,6 @@ public class GUI
 			btn[i].setContentAreaFilled(false);
 			btn[i].setBorder(null);
 			jf.add(btn[i]);
-			
 		}
 		
 		ButtonPlacement.place();
@@ -42,6 +41,12 @@ public class GUI
 		jf.add(draw);
 		jf.setVisible(true);
 		
+	}
+	
+	public void receiveMessage(int value) {
+		for (int i = 0; i < btn.length; i++) {
+			((ActionHandler)btn[i].getActionListeners()[0]).receiveMessage(value);
+		}
 	}
 
 }

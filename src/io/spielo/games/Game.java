@@ -17,7 +17,6 @@ public abstract class Game {
 	public Game(int maxTimer, int totalRounds) {
 		timer = new Timer();
 		scheduledExecutor.scheduleAtFixedRate(timer, 1, 1, TimeUnit.SECONDS);
-		
 		this.totalRounds = totalRounds;
 		setTimer(maxTimer);
 	}

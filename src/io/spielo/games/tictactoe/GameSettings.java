@@ -1,12 +1,16 @@
 package io.spielo.games.tictactoe;
 
 import io.spielo.messages.lobbysettings.LobbyBestOf;
+import io.spielo.messages.lobbysettings.LobbyTimer;
 
 public class GameSettings {
 	private final int roundsToWin;
 	private final Boolean isHost;
+	private final int timer;
 	
-	public GameSettings(final LobbyBestOf round, final Boolean isHost) {
+	
+
+	public GameSettings(final LobbyBestOf round, final Boolean isHost,final LobbyTimer lobbyTimer) {
 		switch (round) {
 		case BestOf_1:
 			roundsToWin = 1;
@@ -26,7 +30,22 @@ public class GameSettings {
 		default:
 			roundsToWin = -1;
 			break;
-		} 
+		}
+		
+		switch (lobbyTimer) {
+		case Seconds_30:
+			timer = 30000;
+			break;
+		case Minute_1:
+			timer = 60000;
+			break;
+		case Minute_3:
+			timer = 180000;
+			break;
+		default:
+			timer = -1;
+			break;
+		}
 		this.isHost = isHost;
 	}
 
@@ -36,5 +55,8 @@ public class GameSettings {
 	
 	public final Boolean getIsHost() {
 		return isHost;
+	}
+	public int getTimer() {
+		return timer;
 	}
 }

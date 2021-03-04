@@ -8,12 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import io.spielo.games.Game;
 import io.spielo.Spielo;
-import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
 import io.spielo.messages.games.TicTacToeMessage;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
 
-public class ActionHandler extends Game implements ActionListener, ClientEventSubscriber
+public class ActionHandler extends Game implements ActionListener
 {
 	private final GameSettings settings;
 	private JFrame frame;
@@ -26,42 +25,44 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 
 		localPlayerWins = 0;
 		remotePlayerWins = 0;
+		setTimer(settings.getTimer());
+		
+		if(settings.getIsHost() == true) 
+		{
+			GUI.player = 1;
+			GUI.opponent = 2;
+		}
+		else {
+			GUI.player = 2;
+			disableButtons();
+			GUI.opponent = 1;
+		}
 	}
 	public void actionPerformed(ActionEvent e) 
 	{ 
-		if(GUI.player == 1) 
+		if(getTimer() > 0)
 		{
-			GUI.player = 2;
-		}
-		else
-		{
-			GUI.player = 1;
-		}
-		
-			if(getTimer() > 0)
+			for(int i = 0; i < 9; i++)
 			{
-				for(int i = 0; i < 9; i++)
+				if(e.getSource() == GUI.btn[i])
 				{
-					if(e.getSource() == GUI.btn[i])
+					if(GUI.pressed[i] == 0)
 					{
-						if(GUI.pressed[i] == 0)
-						{
-							GUI.pressed[i] = GUI.player;
-							GUI.countButtonspressed++;
-							Spielo.client.gameTicTacToe(i);
-							winningGame();
-							disableButtons();
-						}
+						GUI.pressed[i] = GUI.player;
+						GUI.countButtonspressed++;
+						Spielo.client.gameTicTacToe(i);
+						winningGame();
+						disableButtons();
 					}
 				}
 			}
-			else
-			{
-				addLoss();
-				Spielo.client.gameTicTacToe(9);
-				
-			}
-		}	
+		}
+		else
+		{
+			addLoss();
+			Spielo.client.gameTicTacToe(9);
+		}
+	}	
 	
 	public void winningGame()
 	{
@@ -72,7 +73,6 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 			{
 				addWin();
 				localPlayerWins++;
-				
 			}
 		}
 		//Horizontal
@@ -82,7 +82,6 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 			{
 				addWin();
 				localPlayerWins++;
-				
 			}
 		}
 		//Diagonal
@@ -90,19 +89,16 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 		{
 			addWin();
 			localPlayerWins++;
-			
 		}
 		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
 		{
 			addWin();
 			localPlayerWins++;
-			
 		}
 		//Draw
 		if(GUI.countButtonspressed == 9)
 		{
 			addDraw();
-			
 		}
 	}
 	
@@ -111,41 +107,36 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 		//Vertikal
 		for(int button = 0; button < 3; button++)
 		{
-			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+3] == GUI.player && GUI.pressed[button+6] == GUI.player)
+			if(GUI.pressed[button] == GUI.opponent && GUI.pressed[button+3] == GUI.opponent && GUI.pressed[button+6] == GUI.opponent)
 			{
 				addLoss();
 				remotePlayerWins++;
-				
 			}
 		}
 		//Horizontal
 		for(int button = 0; button < 7; button+=3)
 		{
-			if(GUI.pressed[button] == GUI.player && GUI.pressed[button+1] == GUI.player && GUI.pressed[button+2] == GUI.player)
+			if(GUI.pressed[button] == GUI.opponent && GUI.pressed[button+1] == GUI.opponent && GUI.pressed[button+2] == GUI.opponent)
 			{
 				addLoss();
 				remotePlayerWins++;
-				
 			}
 		}
 		//Diagonal
-		if(GUI.pressed[0] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[8] == GUI.player)
+		if(GUI.pressed[0] == GUI.opponent && GUI.pressed[4] == GUI.opponent && GUI.pressed[8] == GUI.opponent)
 		{
 			addLoss();
 			remotePlayerWins++;
-			
 		}
-		if(GUI.pressed[2] == GUI.player && GUI.pressed[4] == GUI.player && GUI.pressed[6] == GUI.player)
+		if(GUI.pressed[2] == GUI.opponent && GUI.pressed[4] == GUI.opponent && GUI.pressed[6] == GUI.opponent)
 		{
 			addLoss();
 			remotePlayerWins++;
-			
 		}
 		//Unentschieden
 		if(GUI.countButtonspressed == 9)
 		{
 			addDraw();
-			
 		}
 	}
 	
@@ -161,6 +152,7 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 		for (int i = 0; i < 9; i++) {
 			GUI.btn[i].setEnabled(true);
 		}
+		startTimer();
 	}
 	
 	public void resetBoard()
@@ -195,27 +187,19 @@ public class ActionHandler extends Game implements ActionListener, ClientEventSu
 		}
 	}
 	
-	@Override
-	public void onMessageReceived(Message message) {
-		if (message instanceof TicTacToeMessage) {
-			TicTacToeMessage ticTacToeMessage = (TicTacToeMessage) message;
-			
-			int i = ticTacToeMessage.getValue();
+	public void receiveMessage(int value) {
+			int i = value;
 			if(i == 9)
 			{
 				addWin();
 			}
 			else
 			{
+				GUI.countButtonspressed++;
 				GUI.pressed[i] = GUI.opponent;
 				opponentWinningGame();
 				enableButtons();
 			}
-		}
-	}
-
-	@Override
-	public void onDisconnect() {		
 	}
 	
 	@Override
