@@ -24,6 +24,7 @@ import io.spielo.games.tictactoe.Draw;
 import io.spielo.games.tictactoe.GameSettings;
 import io.spielo.games.tictactoe.ImageLoader;
 import io.spielo.messages.Message;
+import io.spielo.messages.games.TicTacToeMessage;
 import io.spielo.messages.games.Win4Message;
 import io.spielo.messages.lobby.LeaveLobbyMessage;
 import io.spielo.messages.lobbysettings.LobbyBestOf;
@@ -44,12 +45,13 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
     private JButton exitGame_Button;
 //      gamePlay
     private GUI vierGewinnt_Panel;
-    private GUI tiacTacToe_Panel;
+    private io.spielo.games.tictactoe.GUI ticTacToe_Panel;
 
     private int widthOfPlayedGame_Panel;
     private int heightOfPlayedGame_Panel;
 
     public FourWins vierGewinnt;
+
 
     public GameScreen(){
         initializeElements();
@@ -167,7 +169,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
             vierGewinnt_Panel.setPreferredSize(new Dimension(450, 450));
         }
         else if(game == LobbyGame.TicTacToe){
-        	new io.spielo.games.tictactoe.GUI(new GameSettings(bestOf, Spielo.userIsHost()));
+        	ticTacToe_Panel = new io.spielo.games.tictactoe.GUI(new GameSettings(bestOf, Spielo.userIsHost(), timer));
             new ImageLoader();
             new Draw();
         }
@@ -202,6 +204,9 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
                 Spielo.client.leaveLobby();
                 Spielo.changeView("StartScreen");
             }
+        }
+        if(message instanceof TicTacToeMessage) {
+        	ticTacToe_Panel.receiveMessage(((TicTacToeMessage) message).getValue());
         }
     }
 

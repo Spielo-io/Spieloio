@@ -13,9 +13,6 @@ public abstract class Game {
 	public Game() {
 		timer = new Timer();
 		scheduledExecutor.scheduleAtFixedRate(timer, 1, 1, TimeUnit.SECONDS);
-	
-		setTimer(30000);
-		startTimer();
 	}
 	
 	public void setPlayer(player player) {
