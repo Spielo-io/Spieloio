@@ -2,22 +2,20 @@ package io.spielo.games;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import io.spielo.Spielo;
 
 public abstract class Game {
-	private final ScheduledExecutorService timer;
-	private int timerValue2;
+	private static final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+	private final Timer timer;
 	
 	public Game() {
-		timer = Executors.newSingleThreadScheduledExecutor();
-		Timer host = new Timer(30);
-		Timer player2 = new Timer(30);
-		
-		timer.scheduleAtFixedRate(host, 1, 1, TimeUnit.SECONDS);
-		timer.scheduleAtFixedRate(player2, 1, 1, TimeUnit.SECONDS);
+		timer = new Timer();
+		scheduledExecutor.scheduleAtFixedRate(timer, 1, 1, TimeUnit.SECONDS);
+	
+		setTimer(30000);
+		startTimer();
 	}
 	
 	public void setPlayer(player player) {
@@ -60,7 +58,7 @@ public abstract class Game {
 	
 	public void setTimer(long timer_in_ms) {
 		//sets the initial timer value in milliseconds -> counts down
-		timerValue2 = 30;
+		timerStartValue = timer_in_ms;
 	}
 	
 	public long getTimer() {
@@ -77,19 +75,22 @@ public abstract class Game {
 		//as soon this function is called the timer starts
 		//you need to set the timer first
 		timerValue = timerStartValue;
-		startTime = System.currentTimeMillis();
+		startTime = System.currentTimeMillis();		
+		timer.setIsRunning(true);
 	}
 	
 	public void pauseTimer() {
 		//pauses the timer. It will continue at the paused time if "continueTimer" is called
 		timerValue = getTimer();
 		timerPause = true;
+		timer.setIsRunning(false);
 	}
 	
 	public void continueTimer() {
 		//the timer starts at the time when "pauseTimer" was called
 		startTime = System.currentTimeMillis();
 		timerPause = false;
+		timer.setIsRunning(false);
 	}
 	
 	public int getWinCount() {
@@ -136,26 +137,26 @@ public abstract class Game {
 	private int currentRound = 1;
 	//multiple rounds end
 	
-	private void timerIsZero() {
-		
-	}
-	
 	private final class Timer implements Runnable {
 
-		private int timerValue2;
+		private Boolean isRunning;
 		
-		public Timer(int timerValue) {
-			this.timerValue2 = timerValue;
+		public Timer() {
+			isRunning = false;
 		}
 		
 		@Override
 		public void run() {
-			timerValue2--;
-			Spielo.getGameScreen().setTimer_Label(timerValue2);
-			
-			if (timerValue2 == 0) {
-				timerIsZero();
+			if (isRunning) {
+				int timer = (int) (getTimer() / 1000);
+				if (timer <= 0)
+					timer = 0;
+				Spielo.getGameScreen().setTimer_Label(timer);
 			}
+		}
+		
+		public void setIsRunning(final Boolean isRunning) {
+			this.isRunning = isRunning;
 		}
 	}
 }
