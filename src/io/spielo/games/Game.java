@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.spielo.Spielo;
 
-public class Game {
+public abstract class Game {
 	private final ScheduledExecutorService timer;
 	private int timerValue2;
 	
@@ -33,6 +33,9 @@ public class Game {
 	public void addWin() {
 		//should be called if the local player has won a game
 		gamesWon++;
+		currentRound++;
+		if(currentRound <= totalRounds)
+			resetBoard();
 		System.out.println("spiele gewonnen" + gamesWon);
 		Spielo.getGameScreen().setPlayerOneWins_Label(gamesWon);
 	}
@@ -40,6 +43,9 @@ public class Game {
 	public void addLoss() {
 		//should be called if the local player has lost a game
 		gamesLost++;
+		currentRound++;
+		if(currentRound <= totalRounds)
+			resetBoard();
 		System.out.println("spiele verloren" + gamesLost);
 		Spielo.getGameScreen().setPlayerTwoWins_Label(gamesLost);
 	}
@@ -47,6 +53,9 @@ public class Game {
 	public void addDraw() {
 		//should be called after the match ended in a draw
 		gamesDrawn++;
+		currentRound++;
+		if(currentRound <= totalRounds)
+			resetBoard();
 	}
 	
 	public void setTimer(long timer_in_ms) {
@@ -98,6 +107,12 @@ public class Game {
 		return gamesDrawn;
 	}
 
+	public void setRounds(int rounds) {
+		totalRounds = rounds;
+	}
+		
+	public abstract void resetBoard();
+	
 	public static enum player{
 		//contains all possible players
 		YOU, OPPONENT, NONE
@@ -114,8 +129,13 @@ public class Game {
 	private int gamesWon = 0;
 	private int gamesLost = 0;
 	private int gamesDrawn = 0;
-	public static Game message = new Game();
+	//public static Game message = new Game();
 
+	//multiple rounds start
+	private int totalRounds = 3;
+	private int currentRound = 1;
+	//multiple rounds end
+	
 	private void timerIsZero() {
 		
 	}

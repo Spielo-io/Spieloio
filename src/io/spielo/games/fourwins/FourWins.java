@@ -8,7 +8,7 @@ import io.spielo.games.Game.player;
 
 public class FourWins {
 	public FourWins(boolean youAreInitializer) {
-		board = new Board();
+		board = new Board(this);
 		gui = new GUI(this);
 		
 		//determine start player

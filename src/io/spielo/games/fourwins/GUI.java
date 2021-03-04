@@ -35,26 +35,6 @@ public class GUI extends JPanel {
 		this.setLayout(null);
 		createCoinImgaes();
 		
-		//--------------------------debug start
-//		Button button = new Button("print board to console");
-//		button.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				System.out.println(board.toString());
-//			}
-//		});
-//		button.setBounds(415, 10, 137, 43);
-//		this.add(button);
-//
-//		Button button_70 = new Button("print  winner to console");
-//		button_70.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				System.out.println(board.getWinner());
-//			}
-//		});
-//
-//		button_70.setBounds(415, 59, 137, 43);
-//		this.add(button_70);
-		//----------------debug end
 		this.board = game.board;
 		//init butons
 		int x_coordinate = 10;
@@ -156,19 +136,27 @@ public class GUI extends JPanel {
 	private JPanel[][] panels = new JPanel[7][6];
 	
 	public void update() {
-
+		System.out.println("update GUI");
 		player [][] boardStatus = board.getBoard();
 		for(int i = 0; i < 7; i++) {
 			for(int j = 0; j < 6; j++) {
 				if(boardStatus[i][j] != player.NONE) {
 					if(boardStatus[i][j] == player.YOU) {
+						System.out.println("you");
 						JLabel imageLabel = new JLabel();
 						imageLabel.setIcon(redCoin);
 						panels[i][j].add(imageLabel);
 					}
-					else {
+					else if(boardStatus[i][j] == player.OPPONENT){
+						System.out.println("opponent");
 						JLabel imageLabel = new JLabel();
 						imageLabel.setIcon(blueCoin);
+						panels[i][j].add(imageLabel);
+					}
+					else {
+						System.out.println("all to zero");
+						JLabel imageLabel = new JLabel();
+						imageLabel.setIcon(null);
 						panels[i][j].add(imageLabel);
 					}
 				}
