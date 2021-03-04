@@ -37,6 +37,7 @@ public abstract class Game {
 		currentRound++;
 		alertGameEnd("Du hast diese Runde gewonnen!");
 		if((totalRounds / 2) >= gamesWon) {
+			pauseTimer();
 			resetBoard();
 			setPlayer(player.OPPONENT);
 		}
@@ -55,6 +56,8 @@ public abstract class Game {
 		currentRound++;
 		alertGameEnd("Du hast diese Runde verloren!");
 		if((totalRounds / 2) >= gamesLost) {
+			System.out.println("reset");
+			pauseTimer();
 			resetBoard();
 			setPlayer(player.YOU);
 		}
@@ -64,7 +67,6 @@ public abstract class Game {
 			JOptionPane.showMessageDialog(null, "Schade, du hast dieses Spiel verloren.", "Spiel zu Ende", JOptionPane.PLAIN_MESSAGE);
 			Spielo.changeView("StartScreen");
 		}
-		System.out.println("spiele verloren" + gamesLost);
 		Spielo.getGameScreen().setPlayerTwoWins_Label(gamesLost);
 	}
 	

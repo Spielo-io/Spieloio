@@ -2,6 +2,9 @@ package io.spielo;
 
 import io.spielo.client.Client;
 import io.spielo.gui.*;
+import io.spielo.messages.lobbysettings.LobbyBestOf;
+import io.spielo.messages.lobbysettings.LobbyGame;
+import io.spielo.messages.lobbysettings.LobbyTimer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +52,7 @@ public class Spielo {
 
 	private void initializeElements() {
 		frame = new JFrame();
+		System.out.println();
 		container = frame.getContentPane();
 		cardLayout = new CardLayout();
 
@@ -96,13 +100,14 @@ public class Spielo {
 		cardLayout.addLayoutComponent(gameScreen, "GameScreen");
 
 		frame.add(startScreen);
+		frame.add(gameScreen);
 		frame.add(lobbyCreateScreen);
 		frame.add(lobbySelectScreen);
 		frame.add(lobbyScreenHostPublic);
 		frame.add(lobbyScreenHostPrivat);
 		frame.add(lobbyScreenClientPublic);
 		frame.add(lobbyScreenClientPrivat);
-		frame.add(gameScreen);
+//		gameScreen.startGame(LobbyGame.TicTacToe, LobbyBestOf.BestOf_1, LobbyTimer.Seconds_30);
 
 		UIManager.put("OptionPane.yesButtonText", "Ja");
 		UIManager.put("OptionPane.noButtonText", "Nein");

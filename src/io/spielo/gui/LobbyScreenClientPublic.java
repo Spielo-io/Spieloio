@@ -84,7 +84,7 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
 
     @Override
     public void onMessageReceived(Message message) {
-        if(message instanceof JoinLobbyResponseMessage){
+        if(message instanceof JoinLobbyResponseMessage && Spielo.getCurrentLobbyScreen() == this){
             if(((JoinLobbyResponseMessage) message).getResponseCode() == JoinLobbyResponseCode.Failed){
                 JOptionPane.showMessageDialog(this, "Es sind zurzeit keine öffentlichen Lobbys verfügbar! ");
                 Spielo.changeView("StartScreen");

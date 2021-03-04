@@ -14,15 +14,17 @@ public class FourWins {
 		gui = new GUI(this);
 		
 		//determine start player
-		if(youAreInitializer) 
+		if(youAreInitializer) {
 			board.setPlayer(player.YOU);
-		else
+			Spielo.getGameScreen().setYourTurnLabel(true);
+		}
+		else {
 			board.setPlayer(player.OPPONENT);
+			Spielo.getGameScreen().setYourTurnLabel(false);
+		}
 	}
 	
 	public void receiveMessage(int value){
-		System.out.println("message empfangen: " + value);
-
 		if(value < 7) {
 			board.insertChip(value);
 			gui.update();

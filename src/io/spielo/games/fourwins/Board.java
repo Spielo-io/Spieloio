@@ -31,6 +31,7 @@ public class Board extends Game{
 		case YOU:
 			board[column][height] = player.YOU;
 			setPlayer(player.OPPONENT);
+			Spielo.getGameScreen().setYourTurnLabel(false);
 			pauseTimer();
 			sendMessage(column);
 			break;
@@ -38,6 +39,7 @@ public class Board extends Game{
 			board[column][height] = player.OPPONENT;
 			startTimer();
 			setPlayer(player.YOU);
+			Spielo.getGameScreen().setYourTurnLabel(true);
 			break;
 		default:
 			System.out.println("ERROR: unable to insert coin -> false game status\n");
@@ -71,13 +73,11 @@ public class Board extends Game{
 	}
 	
 	public void resetBoard() {
-		System.out.println("reset Board");
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
-		System.out.println(toString());
 		fourWins.gui.update();
 	}
 	
