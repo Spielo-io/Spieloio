@@ -39,8 +39,8 @@ public class ActionHandler extends Game implements ActionListener
 			GUI.opponent = 1;
 		}
 	}
-	public void actionPerformed(ActionEvent e) 
-	{ 
+	public void actionPerformed(ActionEvent e)
+	{
 		for(int i = 0; i < 9; i++)
 		{
 			if(e.getSource() == GUI.btn[i])
@@ -157,11 +157,13 @@ public class ActionHandler extends Game implements ActionListener
 		if(GUI.player == 1) 
 		{
 			GUI.player = 2;
+			Spielo.getGameScreen().setYourTurnLabel(false);
 			disableButtons();
 		}
 		else
 		{
 			GUI.player = 1;
+			Spielo.getGameScreen().setYourTurnLabel(true);
 			enableButtons();
 		}
 	}
