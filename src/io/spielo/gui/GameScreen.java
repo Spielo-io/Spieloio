@@ -211,6 +211,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         if(game == LobbyGame.Win4){
             if(ticTacToe_Panel != null){
                 gridBagLayout.removeLayoutComponent(ticTacToe_Panel.getPanel());
+                this.remove(ticTacToe_Panel.getPanel());
             }
             if(vierGewinnt != null){
                 gridBagLayout.removeLayoutComponent(vierGewinnt_Panel);
@@ -224,6 +225,7 @@ public class GameScreen extends JPanel implements ActionListener, ClientEventSub
         else if(game == LobbyGame.TicTacToe){
             if(vierGewinnt_Panel != null){
                 gridBagLayout.removeLayoutComponent(vierGewinnt_Panel);
+                this.remove(vierGewinnt_Panel);
             }
             if(ticTacToe_Panel != null){
                 gridBagLayout.removeLayoutComponent(ticTacToe_Panel.getPanel());

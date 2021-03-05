@@ -162,6 +162,7 @@ public class ActionHandler extends Game implements ActionListener
 			GUI.player = 2;
 			GUI.opponent = 1;
 			Spielo.getGameScreen().setYourTurnLabel(false);
+			pauseTimer();
 			disableButtons();
 		}
 		else
