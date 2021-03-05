@@ -32,7 +32,7 @@ public class StartScreen extends SpieloView implements ActionListener {
         gridBagLayout = new GridBagLayout();
 //        username
         username_Label = new JLabel("Benutzername:");
-        username_Textfield = new JTextField();
+        username_Textfield = new JTextField("asdf");
 //        buttons
         createLobby_Button = new JButton("Lobby erstellen");
         searchLobby_Button = new JButton("Lobby suchen");
@@ -94,6 +94,7 @@ public class StartScreen extends SpieloView implements ActionListener {
         if(!"".equals(username_Textfield.getText())) {
 //                change to LobbyCreateScreen
             if (e.getSource() == this.createLobby_Button) {
+//                Spielo.changeView("GameScreen");
                 Spielo.changeView("LobbyCreateScreen");
 //                change to LobbySelectScreen
             } else if (e.getSource() == this.searchLobby_Button) {
@@ -119,7 +120,7 @@ public class StartScreen extends SpieloView implements ActionListener {
                 }
 //                change to LobbyScreen(RandomLobby)
             } else if (e.getSource() == this.randomLobby_Button) {
-                Spielo.client.joinRandomLobby(Spielo.getUsername());
+                Spielo.client.joinRandomLobby(getUsername());
                 Spielo.changeView("LobbyScreenClientPublic");
             }
         }

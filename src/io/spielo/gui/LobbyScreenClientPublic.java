@@ -3,10 +3,7 @@ package io.spielo.gui;
 import io.spielo.Spielo;
 import io.spielo.client.events.ClientEventSubscriber;
 import io.spielo.messages.Message;
-import io.spielo.messages.lobby.JoinLobbyResponseCode;
-import io.spielo.messages.lobby.JoinLobbyResponseMessage;
-import io.spielo.messages.lobby.LobbySettingsMessage;
-import io.spielo.messages.lobby.ReadyToPlayMessage;
+import io.spielo.messages.lobby.*;
 import io.spielo.messages.lobbysettings.LobbySettings;
 
 import javax.swing.*;
@@ -18,6 +15,8 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
     //          buttons
     private JButton leaveLobby_Button;
     private JButton confirmStart_Button;
+    //      boolean
+    private boolean opponentConfirmedStart;
 
     public LobbyScreenClientPublic(){
         initializeElements();
@@ -36,6 +35,7 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
 //        lobbySettings
         lobbySettings_Panel.activateRadioButtons(false);
 
+        opponentConfirmedStart = false;
         StyleSheet.changeFontOfLobbyScreenElements(this);
 
     }
@@ -53,6 +53,7 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
 
     public void preparePanelForNewLobby(){
         confirmStart_Button.setText("Spielstart zustimmen");
+        opponentConfirmedStart = false;
     }
 
     @Override
@@ -60,6 +61,7 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
         if(e.getSource() == leaveLobby_Button){
             int answer = JOptionPane.showConfirmDialog(this, "Willst du die Lobby wirklich verlassen?", "Wähle eine Option!", JOptionPane.YES_NO_OPTION);
             if(answer == JOptionPane.YES_OPTION) {
+                Spielo.client.leaveLobby();
                 Spielo.changeView("StartScreen");
             }
         }
@@ -68,6 +70,9 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
                 confirmStart_Button.setText("Spielstart verzögern");
                 setStartConfirmedToPlayerOne();
                 Spielo.client.readyToPlay(true);
+                if (opponentConfirmedStart) {
+                    startGame();
+                }
             }
             else if(confirmStart_Button.getText().equals("Spielstart verzögern")){
                 confirmStart_Button.setText("Spielstart zustimmen");
@@ -79,9 +84,9 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
 
     @Override
     public void onMessageReceived(Message message) {
-        if(message instanceof JoinLobbyResponseMessage){
+        if(message instanceof JoinLobbyResponseMessage && Spielo.getCurrentLobbyScreen() == this){
             if(((JoinLobbyResponseMessage) message).getResponseCode() == JoinLobbyResponseCode.Failed){
-                JOptionPane.showMessageDialog(this, "Dein Join-Code war leider ungültig!");
+                JOptionPane.showMessageDialog(this, "Es sind zurzeit keine öffentlichen Lobbys verfügbar! ");
                 Spielo.changeView("StartScreen");
             }
             else{
@@ -90,18 +95,31 @@ public class LobbyScreenClientPublic extends LobbyScreen implements ActionListen
         }
         if(message instanceof LobbySettingsMessage){
             LobbySettings settings = ((LobbySettingsMessage) message).getSettings();
-            lobbySettings_Panel.setLobbySettingsEnum(settings.getPublic(), settings.getGame(), settings.getBestOf(), settings.getTimer(), false);
+            lobbySettings_Panel.setLobbySettings(settings.getPublic(), settings.getGame(), settings.getBestOf(), settings.getTimer(), false);
         }
 
         if(message instanceof ReadyToPlayMessage){
             if(((ReadyToPlayMessage) message).getIsReady()){
                 setStartConfirmedToPlayerTwo();
+                opponentConfirmedStart = true;
             }
             else{
                 setStartDelayedToPlayerTwo();
+                opponentConfirmedStart = false;
             }
             if(((ReadyToPlayMessage) message).getIsReady() && confirmStart_Button.getText().equals("Spielstart verzögern")){
                 startGame();
+            }
+        }
+
+        if(Spielo.getCurrentLobbyScreen() == this) {
+            if (message instanceof LeaveLobbyMessage) {
+                JOptionPane.showMessageDialog(this, "Dein Gegner hat die Lobby verlassen!\nDu bist nun der Host dieser Lobby.");
+                Spielo.prepareAppForNewGame();
+                Spielo.setUserIsHost(true);
+                Spielo.changeView("LobbyScreenHostPublic");
+                Spielo.setLobbySettingsToLobbyScreenHostPublic();
+                Spielo.setOpponentLeftGame(true);
             }
         }
     }

@@ -1,21 +1,21 @@
 package io.spielo.games.fourwins;
 
-import io.spielo.games.tictactoe.Game;
-import io.spielo.games.tictactoe.Game.player;
+import javax.swing.JOptionPane;
+
+import io.spielo.Spielo;
+import io.spielo.games.Game;
 
 public class Board extends Game{
-//public:
-	public Board(boolean youStart){
+	public Board(FourWins fourWins, int maxTimer, int totalRounds){
+		super(maxTimer, totalRounds);
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
 				board[i][j] = player.NONE;
 			}
 		}
-		
-		if(youStart) 
-			setPlayer(player.YOU);
-		else
-			setPlayer(player.OPPONENT);
+		this.fourWins = fourWins;
+		if(getPlayer() == player.YOU)
+			startTimer();
 	}
 	
 	public void insertChip(int column) {
@@ -31,15 +31,30 @@ public class Board extends Game{
 		case YOU:
 			board[column][height] = player.YOU;
 			setPlayer(player.OPPONENT);
+			Spielo.getGameScreen().setYourTurnLabel(false);
+			pauseTimer();
+			sendMessage(column);
 			break;
 		case OPPONENT:
 			board[column][height] = player.OPPONENT;
+			startTimer();
 			setPlayer(player.YOU);
+			Spielo.getGameScreen().setYourTurnLabel(true);
 			break;
 		default:
 			System.out.println("ERROR: unable to insert coin -> false game status\n");
 		}
-			
+		if(getWinner() != player.NONE) {
+			setPlayer(player.NONE);
+			if(getWinner() == player.YOU) {
+				fourWins.gui.update();
+				addWin();
+			}
+			else {
+				fourWins.gui.update();
+				addLoss();
+			}
+		}
 	}
 	
 	public player[][] getBoard() {
@@ -56,8 +71,18 @@ public class Board extends Game{
 		}
 		return string;
 	}
-
+	
+	public void resetBoard() {
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height; j++) {
+				board[i][j] = player.NONE;
+			}
+		}
+		fourWins.gui.update();
+	}
+	
 //private:
+	private FourWins fourWins;
 	private int width = 7, height = 6;
 	private player[][] board = new player[width][height];
 	
@@ -69,28 +94,22 @@ public class Board extends Game{
 				if(board[i][j] != player.NONE) {
 					switch(checkHorizontal(i, j)) {
 					case YOU:
-						addWin();
 						return player.YOU;
 					case OPPONENT:
-						addLoss();
 						return player.OPPONENT;
 					}
 					
 					switch(checkVertical(i, j)) {
 					case YOU:
-						addWin();
 						return player.YOU;
 					case OPPONENT:
-						addLoss();
 						return player.OPPONENT;
 					}
 					
 					switch(checkDiagonal(i, j)) {
 					case YOU:
-						addWin();
 						return player.YOU;
 					case OPPONENT:
-						addLoss();
 						return player.OPPONENT;
 					}
 				}
@@ -164,4 +183,12 @@ public class Board extends Game{
 		}
 		return player.NONE;
 	}	
+	
+	public void sendTimeOut() {
+		sendMessage(9);
+	}
+	
+	private void sendMessage(int message) {
+		Spielo.client.game4Win(message);
+	}
 }

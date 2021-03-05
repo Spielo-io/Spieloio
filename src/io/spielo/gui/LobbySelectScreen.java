@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 public class LobbySelectScreen extends SpieloView implements ActionListener, ClientEventSubscriber {
@@ -29,14 +30,13 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
 //          variables
         private String [][] lobbyList_Array;
 
+        private HashMap<Integer, String> lobbyCode_List;
+
         public LobbySelectScreen(){
             initializeElements();
             addElementsToLayout();
             configureElements();
             addActionListeners();
-
-            addLobbysToLobbyList(new String [][] {{"jap", "hilfe", "public", "TicTacToe"}, {"Schach", "2", "2", "2"}});
-
         }
 
     private void initializeElements(){
@@ -52,6 +52,8 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         actualizeLobbys_Button = new JButton("Aktualisieren");
         joinLobby_Button = new JButton("Trete ausgewählter Lobby bei");
         backToStartScreen_Button = new JButton("Zum Startbildschirm");
+
+        lobbyCode_List = new HashMap<Integer, String>();
 
 
     }
@@ -84,49 +86,51 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         addElementToPanelUsingGridBagLayout(this, gridBagLayout, backToStartScreen_Button, 2, 6, 1, 2, 0, new int[]{20, 0, 0, 0});
     }
 
-    public void addLobbysToLobbyList(String [][] lobbyList){
-            if(lobbyList == null){
+    public void addLobbysToLobbyList(List<PublicLobby> lobbyList){
+            if(lobbyList.isEmpty()){
                 removeLobbysFromLobbyList();
                 listForLobbys_List.setBackground(new Color(238,238,238));
                 JOptionPane.showMessageDialog(this, "Zur Zeit sind keine öffentlichen Lobbys verfügbar!");
             }
-            else{
+            else {
+                removeLobbysFromLobbyList();
                 listForLobbys_List.setBackground(new Color(255, 255, 255));
-                lobbyList_Array = lobbyList;
-                    StringBuilder output = new StringBuilder();
-                    for(int i = 0; i< lobbyList.length; i++) {
-                        output = new StringBuilder("Lobby" + String.valueOf(i) + ": ");
-                        for (int k = 0; k < lobbyList[i].length; k++) {
-                            if (k == lobbyList[i].length - 1) {
-                                output.append(lobbyList[i][k]);
-                            } else {
-                                output.append(lobbyList[i][k]).append(", ");
-                            }
-                        }
-                        listForLobbys_ListModel.addElement(output.toString());
+                int counter = 0;
+                for (PublicLobby lobby : lobbyList) {
+                    StringBuilder output = new StringBuilder("Lobby" + String.valueOf(counter + 1) + ": ");
+                    lobbyCode_List.put(counter, lobby.getLobbyCode());
+                    output.append(lobby.getHostname()).append(", ");
+                    switch (lobby.getSettings().getGame()) {
+                        case TicTacToe -> output.append("TicTacToe, ");
+                        case Win4 -> output.append("4 Gewinnt, ");
                     }
-            }
-    }
-
-    public void addLobbysToLobbyListNew(List<PublicLobby> lobbyList){
-            for(PublicLobby lobby : lobbyList){
-
+                    switch (lobby.getSettings().getBestOf()) {
+                        case BestOf_1 -> output.append("Best of 1, ");
+                        case BestOf_3 -> output.append("Best of 3, ");
+                        case BestOf_5 -> output.append("Best of 5, ");
+                        case BestOf_7 -> output.append("Best of 7, ");
+                        case BestOf_9 -> output.append("Best of 9, ");
+                    }
+                    switch (lobby.getSettings().getTimer()) {
+                        case Seconds_30 -> output.append("30 Sek.");
+                        case Minute_1 -> output.append("1 Min.");
+                        case Minute_3 -> output.append("3 Min.");
+                    }
+                    listForLobbys_ListModel.addElement(output.toString());
+                    counter++;
+                }
             }
     }
 
     private void removeLobbysFromLobbyList(){
-            listForLobbys_ListModel.removeAllElements();
+        listForLobbys_List.setBackground(new Color(238,238,238));
+        listForLobbys_ListModel.removeAllElements();
+        lobbyCode_List.clear();
+
     }
 
-    private String [] getSelectedLobby(){
-            int selectedLobbyNumber = listForLobbys_List.getSelectedIndices()[0];
-            String [] selectedLobby = new String[4];
-            for(int i = 0; i < lobbyList_Array.length; i++){
-                if(i == selectedLobbyNumber){
-                    selectedLobby = lobbyList_Array[i];
-                }
-            }
-            return selectedLobby;
+    private int getSelectedLobby() {
+        return listForLobbys_List.getSelectedIndices()[0];
     }
 
     private void addActionListeners(){
@@ -135,11 +139,15 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
         joinLobby_Button.addActionListener(this);
     }
 
+    public void preparePanelForNewGame(){
+            removeLobbysFromLobbyList();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if(e.getSource() == actualizeLobbys_Button){
-//
-//        }
+        if(e.getSource() == actualizeLobbys_Button){
+            Spielo.client.refreshLobbyList();
+        }
         if(e.getSource() == backToStartScreen_Button){
             Spielo.changeView("StartScreen");
         }
@@ -148,6 +156,7 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
                 JOptionPane.showMessageDialog(this, "Du musst zuerst eine Lobby auswählen!");
             }
             else{
+                Spielo.client.joinLobby(Spielo.getUsername(), lobbyCode_List.get(getSelectedLobby()));
                 Spielo.changeView("LobbyScreenClientPublic");
             }
         }
@@ -155,9 +164,9 @@ public class LobbySelectScreen extends SpieloView implements ActionListener, Cli
 
     @Override
     public void onMessageReceived(Message message) {
-//        if(message instanceof PublicLobbyListMessage){
-//            ((PublicLobbyListMessage) message).getList()
-//        }
+        if(message instanceof PublicLobbyListMessage){
+            addLobbysToLobbyList(((PublicLobbyListMessage) message).getList());
+        }
     }
 
     @Override
